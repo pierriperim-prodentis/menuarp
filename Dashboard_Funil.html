@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Desempenho de Campanha · Pródentis</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --purple-header: #7c3aed;
+    --purple: #8b5cf6;
+    --purple-soft: #ede9fe;
+    --purple-text: #6d28d9;
+    --teal: #0d9488;
+    --teal-soft: #ccfbf1;
+    --teal-text: #0f766e;
+    --red: #dc2626;
+    --red-soft: #fee2e2;
+    --green: #059669;
+    --green-soft: #d1fae5;
+    --amber: #d97706;
+    --amber-soft: #fef3c7;
+    --bg: #f4f4f8;
+    --surface: #ffffff;
+    --border: #e5e5ef;
+    --text-primary: #1a1a2e;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+  }
+
+  /* ── HEADER ── */
+  .top-bar {
+    background: var(--purple-header);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .top-bar h1 { font-size: 18px; font-weight: 700; color: #fff; }
+  .top-bar p  { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+  .top-bar-right { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); }
+
+  /* ── TABS ── */
+  .tabs-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 28px;
+    display: flex;
+  }
+  .tab {
+    padding: 13px 22px;
+    font-size: 13px; font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: color .15s, border-color .15s;
+    user-select: none;
+  }
+  .tab:hover { color: var(--purple-text); }
+  .tab.active { color: var(--purple-text); border-bottom-color: var(--purple-header); }
+
+  /* ── FILTERS ── */
+  .filters-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 28px;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .filters-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--text-muted); margin-right: 4px;
+  }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 5px 12px;
+    font-size: 12px; font-weight: 500; color: var(--text-secondary);
+  }
+  .pill-dot { width: 7px; height: 7px; border-radius: 50%; }
+
+  /* ── PANELS ── */
+  .panel { display: none; padding: 20px 28px; }
+  .panel.active { display: block; }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-muted);
+    margin-bottom: 12px; margin-top: 24px;
+  }
+  .section-title:first-child { margin-top: 0; }
+
+  /* ── KPI GRID ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+    gap: 12px;
+  }
+  .kpi-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 16px 18px;
+  }
+  .kpi-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px;
+  }
+  .kpi-value {
+    font-size: 24px; font-weight: 700; line-height: 1;
+    margin-bottom: 6px; font-variant-numeric: tabular-nums;
+  }
+  .kpi-value.purple { color: var(--purple-text); }
+  .kpi-value.teal   { color: var(--teal); }
+  .kpi-sub { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; }
+
+  .meta-row {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;
+  }
+  .meta-label { font-size: 10px; color: var(--text-muted); }
+  .meta-pct   { font-size: 10px; font-weight: 700; }
+  .meta-pct.ok   { color: var(--green); }
+  .meta-pct.warn { color: var(--amber); }
+  .meta-pct.low  { color: var(--red); }
+  .meta-track { height: 5px; background: var(--bg); border-radius: 99px; overflow: hidden; }
+  .meta-fill  { height: 100%; border-radius: 99px; }
+
+  /* ── EVOLUÇÃO SEMANAS ── */
+  .evo-table-wrap {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+  }
+  .evo-table-wrap table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .evo-table-wrap thead th {
+    text-align: left; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--purple-text); padding: 10px 16px;
+    background: var(--purple-soft); border-bottom: 1px solid var(--border);
+  }
+  .evo-table-wrap thead th:not(:first-child) { text-align: center; }
+  .evo-table-wrap tbody td {
+    padding: 11px 16px; border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .evo-table-wrap tbody tr:last-child td { border-bottom: none; }
+  .evo-table-wrap tbody td:not(:first-child) { text-align: center; font-variant-numeric: tabular-nums; }
+  .evo-metric { font-weight: 600; color: var(--text-primary); }
+  .evo-sub    { font-size: 11px; color: var(--text-muted); }
+  .delta-up   { color: var(--green); font-weight: 700; font-size: 12px; }
+  .delta-down { color: var(--red);   font-weight: 700; font-size: 12px; }
+  .delta-flat { color: var(--amber); font-weight: 700; font-size: 12px; }
+
+  /* ── FUNIL SVG CARDS ── */
+  .funil-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 12px;
+  }
+  .funil-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 18px 20px;
+  }
+  .funil-card.best { border-color: var(--teal); border-width: 2px; }
+  .funil-card-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
+  .funil-card-date  { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+  .funil-card-conv  { font-size: 11px; color: var(--text-muted); margin-bottom: 14px; }
+  .funil-card-conv strong { color: var(--teal); }
+  .best-badge {
+    display: inline-block; background: var(--teal-soft); color: var(--teal-text);
+    font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px;
+    text-transform: uppercase; letter-spacing: 0.04em; margin-left: 6px;
+  }
+  .funnel-svg { width: 100%; }
+  .funnel-legend { margin-top: 10px; display: flex; flex-direction: column; gap: 4px; }
+  .fl-row { display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
+  .fl-label { color: var(--text-secondary); display: flex; align-items: center; gap: 5px; }
+  .fl-dot   { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+  .fl-val   { font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+  .fl-pct   { color: var(--text-muted); font-size: 10px; margin-left: 4px; }
+
+  /* ── DATE BUTTONS / BAR CHART ── */
+  .date-btn {
+    font-family: inherit;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .date-btn:hover { border-color: var(--purple); color: var(--purple-text); }
+  .date-btn.active {
+    background: var(--purple-header);
+    border-color: var(--purple-header);
+    color: #fff;
+  }
+  .month-btn {
+    font-family: inherit;
+    background: #fce7f3;
+    border: 2px solid #ec4899;
+    color: #be185d;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .month-btn:hover { background: #fbcfe8; }
+  .month-btn.active-month {
+    background: #ec4899;
+    border-color: #ec4899;
+    color: #fff;
+  }
+  .week-row { animation: fadeIn .2s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
+  /* ── COMPARATIVO MENSAL ── */
+  .comp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:8px; }
+  .comp-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+  .comp-head { padding:8px 14px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:#fff; }
+  .comp-row  { display:flex; justify-content:space-between; padding:7px 14px; border-bottom:1px solid var(--border); font-size:12px; }
+  .comp-row:last-child { border-bottom:none; }
+  .comp-label { color:var(--text-secondary); }
+  .comp-val   { font-weight:700; color:var(--text-primary); }
+  .comp-val.highlight { color:var(--teal); }
+  /* ── PRODUTO RESUMO ── */
+  .produto-grid { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+  .produto-chip { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:8px 14px; display:flex; align-items:center; gap:8px; }
+  .produto-nome { font-size:12px; font-weight:700; color:var(--text-primary); }
+  .produto-count { font-size:18px; font-weight:800; color:var(--purple); line-height:1; }
+  .produto-lbl  { font-size:10px; color:var(--text-muted); }
+  /* ── TREND CHART ── */
+  .trend-section { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:20px 24px; margin-top:8px; }
+  .trend-legend  { display:flex; gap:16px; flex-wrap:wrap; margin-top:12px; padding-top:12px; border-top:1px solid var(--border); }
+  .trend-dot     { width:10px; height:10px; border-radius:50%; display:inline-block; }
+  .bar-row { display: flex; flex-direction: column; gap: 5px; }
+  .bar-row-top { display: flex; justify-content: space-between; align-items: baseline; }
+  .bar-row-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
+  .bar-row-val { font-size: 13px; font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+  .bar-row-val small { font-weight: 400; color: var(--text-muted); font-size: 11px; }
+  .bar-track-lg { height: 22px; background: var(--bg); border-radius: 6px; overflow: hidden; }
+  .bar-fill-lg { height: 100%; border-radius: 6px; transition: width .5s ease; }
+
+  /* ── LEADS TABLE ── */
+  .leads-wrap {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+  }
+  .leads-wrap table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .leads-wrap thead th {
+    text-align: left; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--purple-text); padding: 10px 14px;
+    background: var(--purple-soft); border-bottom: 1px solid var(--border);
+  }
+  .leads-wrap tbody td {
+    padding: 13px 14px; border-bottom: 1px solid var(--border); vertical-align: middle;
+  }
+  .leads-wrap tbody tr:last-child td { border-bottom: none; }
+  .leads-wrap tbody tr.highlight td { background: #f0fdf9; }
+  .leads-wrap tbody tr.highlight td:first-child { border-left: 3px solid var(--teal); }
+  .leads-wrap tbody tr:not(.highlight):hover td { background: #fafafe; }
+
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700;
+  }
+  .badge-green  { background: var(--green-soft);  color: #065f46; }
+  .badge-amber  { background: var(--amber-soft);  color: #78350f; }
+  .badge-red    { background: var(--red-soft);    color: #991b1b; }
+  .badge-gray   { background: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; }
+  .badge-etapa-contato   { background: #dbeafe; color: #1d4ed8; border:1px solid #bfdbfe; }
+  .badge-etapa-proposta  { background: #fef3c7; color: #92400e; border:1px solid #fde68a; }
+  .badge-etapa-negociando{ background: #ede9fe; color: #5b21b6; border:1px solid #c4b5fd; }
+  .badge-etapa-ganho     { background: #d1fae5; color: #065f46; border:1px solid #6ee7b7; font-weight:800; }
+  .badge-etapa-perdido   { background: #fee2e2; color: #991b1b; border:1px solid #fca5a5; }
+  .badge-etapa-none      { color:var(--text-muted); }
+  .badge-golpe       { background:#fff7ed; color:#c2410c; border:1px solid #fed7aa; }
+  .badge-n-atendemos { background:#1f2937; color:#f9fafb; border:1px solid #374151; }
+
+  .action-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 20px; padding: 4px 10px;
+    font-size: 11px; color: var(--text-secondary); font-weight: 500;
+  }
+  .action-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+  .leads-footer {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    padding: 10px 14px; background: #fafafe;
+    border-top: 1px solid var(--border);
+    font-size: 12px; color: var(--text-muted);
+  }
+  .leads-footer b { color: var(--text-primary); }
+
+  /* ── INSIGHT ── */
+  .insight {
+    margin-top: 14px;
+    background: var(--purple-soft);
+    border-left: 3px solid var(--purple);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    font-size: 13px; color: var(--text-primary); line-height: 1.65;
+  }
+  .insight strong { color: var(--purple-text); }
+
+  @media print {
+    body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .top-bar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .tabs-bar, .filters-bar { display: none !important; }
+    .panel { display: block !important; page-break-after: always; }
+    .panel:last-child { page-break-after: avoid; }
+    .funil-grid { grid-template-columns: repeat(3, 1fr); }
+    .kpi-grid   { grid-template-columns: repeat(3, 1fr); }
+    button { display: none !important; }
+  }
+
+  @media (max-width: 600px) {
+    .panel { padding: 16px 14px; }
+    .top-bar, .tabs-bar, .filters-bar { padding-left: 14px; padding-right: 14px; }
+    .kpi-value { font-size: 20px; }
+    .funil-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="top-bar">
+  <div>
+    <h1>Dashboard — Desempenho de Campanha</h1>
+    <p>Evolução semanal do funil · Leads WhatsApp desde 17/06</p>
+  </div>
+  <div style="display:flex;align-items:center;gap:14px">
+    <button onclick="exportPDF()" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);color:#fff;font-size:12px;font-weight:600;padding:7px 14px;border-radius:6px;cursor:pointer;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Exportar PDF
+    </button>
+    <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.9)">Pródentis</span>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-bar">
+  <div class="tab active" onclick="switchTab('midia')">📊 Mídia</div>
+  <div class="tab" onclick="switchTab('leads')">💬 Leads</div>
+</div>
+
+<!-- FILTERS -->
+<div class="filters-bar">
+  <span class="filters-label">Filtros:</span>
+  <span class="pill"><span class="pill-dot" style="background:#8b5cf6"></span>Funil único — 3 semanas</span>
+  <span class="pill"><span class="pill-dot" style="background:#0d9488"></span>07/08 → 28/08</span>
+  <span class="pill"><span class="pill-dot" style="background:#6b7280"></span>Canal — WhatsApp + Funil</span>
+</div>
+
+<!-- ══════ PAINEL MÍDIA ══════ -->
+<div class="panel active" id="panel-midia">
+
+  <!-- KPIs da semana mais recente -->
+  <div class="section-title">Semana mais recente — 28/08</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Impressões</div>
+      <div class="kpi-value purple">35.777</div>
+      <div class="kpi-sub">semana 28/08</div>
+      <div class="meta-row"><span class="meta-label">Meta: 50.000</span><span class="meta-pct warn">71,6%</span></div>
+      <div class="meta-track"><div class="meta-fill" style="width:71.6%;background:#d97706"></div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Alcance</div>
+      <div class="kpi-value purple">26.773</div>
+      <div class="kpi-sub">semana 28/08</div>
+      <div class="meta-row"><span class="meta-label">Meta: 35.000</span><span class="meta-pct warn">76,5%</span></div>
+      <div class="meta-track"><div class="meta-fill" style="width:76.5%;background:#d97706"></div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Cliques no link</div>
+      <div class="kpi-value teal">515</div>
+      <div class="kpi-sub">semana 28/08</div>
+      <div class="meta-row"><span class="meta-label">Meta: 600</span><span class="meta-pct warn">85,8%</span></div>
+      <div class="meta-track"><div class="meta-fill" style="width:85.8%;background:#d97706"></div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Contatos gerados</div>
+      <div class="kpi-value teal">16</div>
+      <div class="kpi-sub">semana 28/08</div>
+      <div class="meta-row"><span class="meta-label">Meta: 20</span><span class="meta-pct warn">80,0%</span></div>
+      <div class="meta-track"><div class="meta-fill" style="width:80%;background:#d97706"></div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Conv. link → contato</div>
+      <div class="kpi-value teal">3,11%</div>
+      <div class="kpi-sub">semana 28/08</div>
+      <div class="meta-row"><span class="meta-label">Meta: 2,5%</span><span class="meta-pct ok">124,4%</span></div>
+      <div class="meta-track"><div class="meta-fill" style="width:100%;background:#059669"></div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Leads WhatsApp</div>
+      <div class="kpi-value purple">6</div>
+      <div class="kpi-sub">julho 2026</div>
+      <div class="meta-row"><span class="meta-label">Meta: 10</span><span class="meta-pct warn">60,0%</span></div>
+      <div class="meta-track"><div class="meta-fill" style="width:60%;background:#d97706"></div></div>
+    </div>
+  </div>
+
+  <!-- EVOLUÇÃO SEMANAL TABELA -->
+  <div class="section-title">Evolução semana a semana</div>
+  <div class="evo-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Métrica</th>
+          <th>14/08</th>
+          <th>21/08</th>
+          <th>28/08</th>
+          <th>Var. 14→21</th>
+          <th>Var. 21→28</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="evo-metric">Impressões</span></td>
+          <td>41.564</td>
+          <td>39.262</td>
+          <td>35.777</td>
+          <td><span class="delta-down">▼ −5,5%</span></td>
+          <td><span class="delta-down">▼ −8,9%</span></td>
+        </tr>
+        <tr>
+          <td><span class="evo-metric">Alcance</span></td>
+          <td>30.058</td>
+          <td>31.393</td>
+          <td>26.773</td>
+          <td><span class="delta-up">▲ +4,4%</span></td>
+          <td><span class="delta-down">▼ −14,7%</span></td>
+        </tr>
+        <tr>
+          <td><span class="evo-metric">Total de cliques</span></td>
+          <td>645</td>
+          <td>543</td>
+          <td>549</td>
+          <td><span class="delta-down">▼ −15,8%</span></td>
+          <td><span class="delta-flat">▶ +1,1%</span></td>
+        </tr>
+        <tr>
+          <td><span class="evo-metric">Cliques no link</span></td>
+          <td>606</td>
+          <td>519</td>
+          <td>515</td>
+          <td><span class="delta-down">▼ −14,4%</span></td>
+          <td><span class="delta-flat">▶ −0,8%</span></td>
+        </tr>
+        <tr>
+          <td><span class="evo-metric">Contatos</span></td>
+          <td>16</td>
+          <td>16</td>
+          <td>16</td>
+          <td><span class="delta-flat">▶ 0%</span></td>
+          <td><span class="delta-flat">▶ 0%</span></td>
+        </tr>
+        <tr>
+          <td><span class="evo-metric">Conv. link → contato</span></td>
+          <td>2,64%</td>
+          <td>3,08%</td>
+          <td>3,11%</td>
+          <td><span class="delta-up">▲ +16,7%</span></td>
+          <td><span class="delta-up">▲ +1,0%</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══ RESUMO MENSAL — SELETOR ══ -->
+  <div class="section-title" style="margin-top:28px">Resumo Mensal</div>
+
+  <!-- Seletor de mês -->
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+    <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-right:4px;">Mês:</span>
+    <button class="month-btn" onclick="selectResumo('junho')" id="rbtn-junho">Jun/26</button>
+    <button class="month-btn" onclick="selectResumo('julho')" id="rbtn-julho">Jul/26</button>
+    <button class="month-btn active-month" onclick="selectResumo('agosto')" id="rbtn-agosto" style="background:#0d9488;border-color:#0d9488;color:#fff;">Ago/26 <span style="font-size:9px;opacity:.8">parcial</span></button>
+  </div>
+
+  <!-- PAINEL JUNHO -->
+  <div id="resumo-junho" style="display:none;">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);margin-bottom:10px;">Principais Métricas — Junho/2026</div>
+    <div class="kpi-grid" style="margin-bottom:20px">
+      <div class="kpi-card"><div class="kpi-label">Alcance Total</div><div class="kpi-value purple">110.418</div><div class="kpi-sub">junho 2026</div></div>
+      <div class="kpi-card"><div class="kpi-label">Impressões</div><div class="kpi-value purple">204.552</div><div class="kpi-sub">junho 2026</div></div>
+      <div class="kpi-card"><div class="kpi-label">Cliques</div><div class="kpi-value teal">2.620</div><div class="kpi-sub">junho 2026</div></div>
+      <div class="kpi-card"><div class="kpi-label">CTR</div><div class="kpi-value teal">1,28%</div><div class="kpi-sub">junho 2026</div></div>
+      <div class="kpi-card"><div class="kpi-label">CPC</div><div class="kpi-value" style="color:var(--text-primary)">R$ 0,38</div><div class="kpi-sub">junho 2026</div></div>
+    </div>
+    <div class="funil-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px">
+        <div style="font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:14px">📢 Campanhas de Visibilidade</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-secondary)">Impressões</span><span style="font-weight:700;color:var(--purple)">135.232</span></div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-secondary)">Alcance</span><span style="font-weight:700;color:var(--purple)">79.567</span></div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-secondary)">Cliques</span><span style="font-weight:700;color:var(--teal)">1.287</span></div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-secondary)">Novos seguidores</span><span style="font-weight:700;color:var(--teal)">33</span></div>
+        </div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px">
+        <div style="font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:14px">📲 Campanhas de Contatos</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-secondary)">Impressões</span><span style="font-weight:700;color:var(--purple)">69.320</span></div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-secondary)">Alcance</span><span style="font-weight:700;color:var(--purple)">34.887</span></div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-secondary)">Cliques</span><span style="font-weight:700;color:var(--teal)">1.333</span></div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-secondary)">Contatos gerados</span><span style="font-weight:700;color:var(--teal)">46</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px;margin-bottom:8px">
+      <div style="font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:14px">📸 Instagram — Junho/2026</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center">
+        <div><div style="font-size:20px;font-weight:800;color:var(--purple)">33</div><div style="font-size:11px;color:var(--text-muted);margin-top:3px">Novos seguidores</div></div>
+        <div><div style="font-size:20px;font-weight:800;color:var(--teal)">1.624</div><div style="font-size:11px;color:var(--text-muted);margin-top:3px">Viz. do perfil</div></div>
+        <div><div style="font-size:20px;font-weight:800;color:var(--purple)">164.889</div><div style="font-size:11px;color:var(--text-muted);margin-top:3px">Alcance total</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAINEL JULHO -->
+  <div id="resumo-julho" style="display:none;">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);margin-bottom:10px;">Principais Métricas — Julho/2026</div>
+    <div class="kpi-grid" style="margin-bottom:20px">
+      <div class="kpi-card"><div class="kpi-label">Alcance Total</div><div class="kpi-value purple">107.521</div><div class="kpi-sub">julho 2026</div></div>
+      <div class="kpi-card"><div class="kpi-label">Impressões</div><div class="kpi-value purple">204.263</div><div class="kpi-sub">julho 2026</div></div>
+      <div class="kpi-card"><div class="kpi-label">Cliques</div><div class="kpi-value teal">2.873</div><div class="kpi-sub">julho 2026</div></div>
+      <div class="kpi-card"><div class="kpi-label">CTR</div><div class="kpi-value teal">1,41%</div><div class="kpi-sub">julho 2026</div></div>
+      <div class="kpi-card"><div class="kpi-label">CPC</div><div class="kpi-value" style="color:var(--text-primary)">R$ 0,36</div><div class="kpi-sub">julho 2026</div></div>
+    </div>
+    <div class="funil-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px">
+        <div style="font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:14px">📢 Campanhas de Visibilidade</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-secondary)">Impressões</span><span style="font-weight:700;color:var(--purple)">137.851</span></div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-secondary)">Alcance</span><span style="font-weight:700;color:var(--purple)">78.794</span></div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-secondary)">Cliques</span><span style="font-weight:700;color:var(--teal)">1.619</span></div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-secondary)">Novos seguidores</span><span style="font-weight:700;color:var(--teal)">34</span></div>
+        </div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px">
+        <div style="font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:14px">📲 Campanhas de Contatos</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-secondary)">Impressões</span><span style="font-weight:700;color:var(--purple)">66.412</span></div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-secondary)">Alcance</span><span style="font-weight:700;color:var(--purple)">29.231</span></div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-secondary)">Cliques</span><span style="font-weight:700;color:var(--teal)">1.254</span></div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-secondary)">Contatos gerados</span><span style="font-weight:700;color:var(--teal)">57</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px;margin-bottom:8px">
+      <div style="font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:14px">📸 Instagram — Julho/2026</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center">
+        <div><div style="font-size:20px;font-weight:800;color:var(--purple)">34</div><div style="font-size:11px;color:var(--text-muted);margin-top:3px">Novos seguidores</div></div>
+        <div><div style="font-size:20px;font-weight:800;color:var(--teal)">1.953</div><div style="font-size:11px;color:var(--text-muted);margin-top:3px">Viz. do perfil</div></div>
+        <div><div style="font-size:20px;font-weight:800;color:var(--purple)">175.152</div><div style="font-size:11px;color:var(--text-muted);margin-top:3px">Alcance total</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAINEL AGOSTO -->
+  <div id="resumo-agosto" style="display:block;">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);margin-bottom:10px;">Principais Métricas — Agosto/2026 <span style="color:var(--teal);font-size:10px;">(parcial · 2 semanas)</span></div>
+    <div class="kpi-grid" style="margin-bottom:20px">
+      <div class="kpi-card"><div class="kpi-label">Alcance Total</div><div class="kpi-value teal">61.463</div><div class="kpi-sub">ago parcial</div></div>
+      <div class="kpi-card"><div class="kpi-label">Impressões</div><div class="kpi-value teal">86.403</div><div class="kpi-sub">ago parcial</div></div>
+      <div class="kpi-card"><div class="kpi-label">Cliques</div><div class="kpi-value teal">1.334</div><div class="kpi-sub">ago parcial</div></div>
+      <div class="kpi-card"><div class="kpi-label">Contatos</div><div class="kpi-value teal">32</div><div class="kpi-sub">ago parcial</div></div>
+      <div class="kpi-card"><div class="kpi-label">Custo/contato</div><div class="kpi-value" style="color:var(--green)">R$ 15,01</div><div class="kpi-sub">estimado</div></div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 20px;margin-bottom:8px;font-size:12px;color:var(--text-secondary);">
+      📋 Relatório completo disponível ao final do mês. Dados baseados nas semanas 07/08 e 14/08.
+    </div>
+  </div>
+
+  <!-- ══ COMPARATIVO MENSAL ══ -->
+  <div class="section-title" style="margin-top:28px">Comparativo Mensal</div>
+  <div class="comp-grid">
+    <!-- JUNHO -->
+    <div class="comp-card">
+      <div class="comp-head" style="background:#ec4899;">Jun/26</div>
+      <div class="comp-row"><span class="comp-label">Impressões</span><span class="comp-val">204.552</span></div>
+      <div class="comp-row"><span class="comp-label">Alcance</span><span class="comp-val">110.418</span></div>
+      <div class="comp-row"><span class="comp-label">Cliques</span><span class="comp-val">2.620</span></div>
+      <div class="comp-row"><span class="comp-label">Contatos</span><span class="comp-val">46</span></div>
+      <div class="comp-row"><span class="comp-label">CPC</span><span class="comp-val">R$ 0,38</span></div>
+      <div class="comp-row" style="background:#f0fdf9;"><span class="comp-label">Custo/contato</span><span class="comp-val highlight">R$ 21,64</span></div>
+    </div>
+    <!-- JULHO -->
+    <div class="comp-card">
+      <div class="comp-head" style="background:#7c3aed;">Jul/26</div>
+      <div class="comp-row"><span class="comp-label">Impressões</span><span class="comp-val">204.263</span></div>
+      <div class="comp-row"><span class="comp-label">Alcance</span><span class="comp-val">107.521</span></div>
+      <div class="comp-row"><span class="comp-label">Cliques</span><span class="comp-val">2.873</span></div>
+      <div class="comp-row"><span class="comp-label">Contatos</span><span class="comp-val">57</span></div>
+      <div class="comp-row"><span class="comp-label">CPC</span><span class="comp-val">R$ 0,36</span></div>
+      <div class="comp-row" style="background:#f0fdf9;"><span class="comp-label">Custo/contato</span><span class="comp-val highlight">R$ 18,14</span></div>
+    </div>
+    <!-- AGOSTO parcial -->
+    <div class="comp-card">
+      <div class="comp-head" style="background:#0d9488;">Ago/26 <span style="font-size:9px;opacity:.8">parcial</span></div>
+      <div class="comp-row"><span class="comp-label">Impressões</span><span class="comp-val">86.403</span></div>
+      <div class="comp-row"><span class="comp-label">Alcance</span><span class="comp-val">61.463</span></div>
+      <div class="comp-row"><span class="comp-label">Cliques</span><span class="comp-val">1.334</span></div>
+      <div class="comp-row"><span class="comp-label">Contatos</span><span class="comp-val">32</span></div>
+      <div class="comp-row"><span class="comp-label">CPC</span><span class="comp-val">R$ 0,36 *</span></div>
+      <div class="comp-row" style="background:#f0fdf9;"><span class="comp-label">Custo/contato</span><span class="comp-val highlight">R$ 15,01 *</span></div>
+    </div>
+  </div>
+  <div style="font-size:10px;color:var(--text-muted);margin-bottom:24px;">* Agosto parcial — 2 semanas. Custo estimado com CPC de julho.</div>
+
+  <!-- GRÁFICO INTERATIVO -->
+  <div class="section-title">Funil por período</div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px 24px;">
+
+    <!-- Nível 1: Meses -->
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+      <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-right:4px;">Mês:</span>
+      <button class="month-btn active-month" onclick="selectMonth('junho')" id="mbtn-junho">Jun/26</button>
+      <button class="month-btn" onclick="selectMonth('julho')" id="mbtn-julho">Jul/26</button>
+      <button class="month-btn" onclick="selectMonth('agosto')" id="mbtn-agosto">Ago/26</button>
+    </div>
+
+    <!-- Nível 2: Semanas junho -->
+    <div id="weeks-junho" class="week-row" style="display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;padding-left:10px;border-left:3px solid #ec4899;">
+      <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-right:4px;">Semana:</span>
+      <button class="date-btn" onclick="setChart('d1206')" id="btn-d1206">12/06</button>
+      <button class="date-btn" onclick="setChart('d1906')" id="btn-d1906">19/06</button>
+      <button class="date-btn active" onclick="setChart('d2606')" id="btn-d2606">26/06</button>
+    </div>
+
+    <!-- Nível 2: Semanas julho -->
+    <div id="weeks-julho" class="week-row" style="display:none;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;padding-left:10px;border-left:3px solid #7c3aed;">
+      <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-right:4px;">Semana:</span>
+      <button class="date-btn" onclick="setChart('d1007')" id="btn-d1007">10/07</button>
+      <button class="date-btn" onclick="setChart('d1707')" id="btn-d1707">17/07</button>
+      <button class="date-btn" onclick="setChart('d2407')" id="btn-d2407">24/07</button>
+      <button class="date-btn" onclick="setChart('d3107')" id="btn-d3107">31/07</button>
+    </div>
+
+    <!-- Nível 2: Semanas agosto -->
+    <div id="weeks-agosto" class="week-row" style="display:none;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;padding-left:10px;border-left:3px solid #ec4899;">
+      <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-right:4px;">Semana:</span>
+      <button class="date-btn" onclick="setChart('d0708')" id="btn-d0708">07/08</button>
+      <button class="date-btn" onclick="setChart('d1408')" id="btn-d1408">14/08</button>
+      <button class="date-btn" onclick="setChart('d2108')" id="btn-d2108">21/08</button>
+      <button class="date-btn" onclick="setChart('d2808')" id="btn-d2808">28/08</button>
+      <button class="date-btn" onclick="setChart('mesago')" id="btn-mesago" style="opacity:.5;cursor:default;" title="Disponível ao final do mês">Mês completo</button>
+    </div>
+
+    <!-- Título dinâmico -->
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;flex-wrap:wrap;gap:8px;">
+      <div>
+        <div id="chart-title" style="font-size:14px;font-weight:700;color:var(--text-primary);">Semana de 26/06 — Mais recente</div>
+        <div id="chart-conv" style="font-size:12px;color:var(--teal);font-weight:600;margin-top:2px;">Conv. link → contato: 2,80%</div>
+      </div>
+      <div id="chart-badge" style="background:var(--teal-soft);color:var(--teal-text);font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.04em;">Melhor conversão</div>
+    </div>
+
+    <!-- Barras -->
+    <div id="chart-bars" style="display:flex;flex-direction:column;gap:10px;"></div>
+
+    <!-- Legenda de cores -->
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--border);">
+      <span style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-secondary)"><span style="width:10px;height:10px;border-radius:2px;background:#ede9fe;border:1px solid #c4b5fd;display:inline-block"></span>Impressões</span>
+      <span style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-secondary)"><span style="width:10px;height:10px;border-radius:2px;background:#ddd6fe;display:inline-block"></span>Alcance</span>
+      <span style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-secondary)"><span style="width:10px;height:10px;border-radius:2px;background:#a78bfa;display:inline-block"></span>Cliques</span>
+      <span style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-secondary)"><span style="width:10px;height:10px;border-radius:2px;background:#7c3aed;display:inline-block"></span>Cliques no link</span>
+      <span style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-secondary)"><span style="width:10px;height:10px;border-radius:2px;background:#0d9488;display:inline-block"></span>Contatos</span>
+    </div>
+  </div>
+
+
+
+  <!-- ══ TENDÊNCIA DE CONVERSÃO ══ -->
+  <div class="section-title" style="margin-top:24px">Tendência de Conversão — Link → Contato</div>
+  <div class="trend-section">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;overflow:visible;">
+      <!-- grid -->
+      <line x1="50" y1="47"  x2="650" y2="47"  stroke="#e5e5ef" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="50" y1="73"  x2="650" y2="73"  stroke="#e5e5ef" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="50" y1="100" x2="650" y2="100" stroke="#e5e5ef" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="50" y1="127" x2="650" y2="127" stroke="#e5e5ef" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="50" y1="153" x2="650" y2="153" stroke="#e5e5ef" stroke-width="1" stroke-dasharray="4,3"/>
+      <!-- meta 2,5% -->
+      <line x1="50" y1="73" x2="650" y2="73" stroke="#0d9488" stroke-width="1.5" stroke-dasharray="6,4" opacity=".6"/>
+      <text x="654" y="76" font-size="9" fill="#0d9488" font-weight="700">Meta 2,5%</text>
+      <!-- y labels -->
+      <text x="44" y="51"  font-size="9" fill="#9ca3af" text-anchor="end">3,0%</text>
+      <text x="44" y="77"  font-size="9" fill="#9ca3af" text-anchor="end">2,5%</text>
+      <text x="44" y="104" font-size="9" fill="#9ca3af" text-anchor="end">2,0%</text>
+      <text x="44" y="131" font-size="9" fill="#9ca3af" text-anchor="end">1,5%</text>
+      <text x="44" y="157" font-size="9" fill="#9ca3af" text-anchor="end">1,0%</text>
+      <!-- eixo x base -->
+      <line x1="50" y1="180" x2="650" y2="180" stroke="#e5e5ef" stroke-width="1"/>
+      <!-- segmento JUNHO #ec4899 -->
+      <polyline points="50,152 120,80 190,57" fill="none" stroke="#ec4899" stroke-width="2.5" stroke-linejoin="round"/>
+      <!-- segmento JULHO #7c3aed -->
+      <polyline points="190,57 280,73 350,62 420,88 490,71" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linejoin="round"/>
+      <!-- segmento AGOSTO #0d9488 -->
+      <polyline points="490,71 570,79 650,66" fill="none" stroke="#0d9488" stroke-width="2.5" stroke-linejoin="round"/>
+      <!-- área preenchida suave junho -->
+      <polygon points="50,152 120,80 190,57 190,180 50,180" fill="#ec4899" opacity=".06"/>
+      <polygon points="190,57 280,73 350,62 420,88 490,71 490,180 190,180" fill="#7c3aed" opacity=".06"/>
+      <polygon points="490,71 570,79 650,66 650,180 490,180" fill="#0d9488" opacity=".06"/>
+      <!-- pontos e labels JUNHO -->
+      <circle cx="50"  cy="152" r="5" fill="#ec4899" stroke="#fff" stroke-width="2"/>
+      <circle cx="120" cy="80"  r="5" fill="#ec4899" stroke="#fff" stroke-width="2"/>
+      <circle cx="190" cy="57"  r="5" fill="#ec4899" stroke="#fff" stroke-width="2"/>
+      <text x="50"  y="144" font-size="9" fill="#ec4899" text-anchor="middle" font-weight="700">1,03%</text>
+      <text x="120" y="72"  font-size="9" fill="#ec4899" text-anchor="middle" font-weight="700">2,38%</text>
+      <text x="190" y="49"  font-size="9" fill="#ec4899" text-anchor="middle" font-weight="700">2,80%</text>
+      <!-- pontos e labels JULHO -->
+      <circle cx="280" cy="73"  r="5" fill="#7c3aed" stroke="#fff" stroke-width="2"/>
+      <circle cx="350" cy="62"  r="5" fill="#7c3aed" stroke="#fff" stroke-width="2"/>
+      <circle cx="420" cy="88"  r="5" fill="#7c3aed" stroke="#fff" stroke-width="2"/>
+      <circle cx="490" cy="71"  r="5" fill="#7c3aed" stroke="#fff" stroke-width="2"/>
+      <text x="280" y="65"  font-size="9" fill="#7c3aed" text-anchor="middle" font-weight="700">2,51%</text>
+      <text x="350" y="54"  font-size="9" fill="#7c3aed" text-anchor="middle" font-weight="700">2,72%</text>
+      <text x="420" y="80"  font-size="9" fill="#7c3aed" text-anchor="middle" font-weight="700">2,22%</text>
+      <text x="490" y="63"  font-size="9" fill="#7c3aed" text-anchor="middle" font-weight="700">2,54%</text>
+      <!-- pontos e labels AGOSTO -->
+      <circle cx="570" cy="79"  r="5" fill="#0d9488" stroke="#fff" stroke-width="2"/>
+      <circle cx="650" cy="66"  r="6" fill="#0d9488" stroke="#fff" stroke-width="2.5"/>
+      <text x="570" y="71"  font-size="9" fill="#0d9488" text-anchor="middle" font-weight="700">2,39%</text>
+      <text x="650" y="58"  font-size="9" fill="#0d9488" text-anchor="middle" font-weight="700">2,64%</text>
+      <!-- x labels -->
+      <text x="50"  y="194" font-size="9" fill="#9ca3af" text-anchor="middle">12/06</text>
+      <text x="120" y="194" font-size="9" fill="#9ca3af" text-anchor="middle">19/06</text>
+      <text x="190" y="194" font-size="9" fill="#9ca3af" text-anchor="middle">26/06</text>
+      <text x="280" y="194" font-size="9" fill="#9ca3af" text-anchor="middle">10/07</text>
+      <text x="350" y="194" font-size="9" fill="#9ca3af" text-anchor="middle">17/07</text>
+      <text x="420" y="194" font-size="9" fill="#9ca3af" text-anchor="middle">24/07</text>
+      <text x="490" y="194" font-size="9" fill="#9ca3af" text-anchor="middle">31/07</text>
+      <text x="570" y="194" font-size="9" fill="#9ca3af" text-anchor="middle">07/08</text>
+      <text x="650" y="194" font-size="9" fill="#9ca3af" text-anchor="middle">14/08</text>
+    </svg>
+    <div class="trend-legend">
+      <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-secondary)"><span class="trend-dot" style="background:#ec4899"></span>Junho/26</span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-secondary)"><span class="trend-dot" style="background:#7c3aed"></span>Julho/26</span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-secondary)"><span class="trend-dot" style="background:#0d9488"></span>Agosto/26</span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-secondary)"><span style="width:20px;height:2px;background:#0d9488;opacity:.6;display:inline-block;border-top:2px dashed #0d9488;"></span>Meta 2,5%</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ PAINEL LEADS ══════ -->
+<div class="panel" id="panel-leads">
+
+  <div class="section-title">Leads WhatsApp</div>
+
+  <!-- Filtro por mês -->
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+    <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-right:4px;">Mês:</span>
+    <button class="month-btn active-month" onclick="filterLeads('junho')" id="lbtn-junho">Jun/26</button>
+    <button class="month-btn" onclick="filterLeads('julho')" id="lbtn-julho">Jul/26</button>
+    <button class="month-btn" onclick="filterLeads('agosto')" id="lbtn-agosto">Ago/26</button>
+    <button class="month-btn" onclick="filterLeads('todos')" id="lbtn-todos" style="background:#f3f4f6;border-color:#d1d5db;color:#6b7280;">Todos</button>
+  </div>
+
+  <!-- Resumo por produto -->
+  <div id="produto-resumo" class="produto-grid" style="margin-bottom:16px;"></div>
+
+  <div class="leads-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Canal</th>
+          <th>Data</th>
+          <th>Perfil</th>
+          <th>Interesse</th>
+          <th>Status</th>
+          <th>Etapa Comercial</th>
+        </tr>
+      </thead>
+      <tbody id="leads-tbody">
+      </tbody>
+    </table>
+    <div class="leads-footer" id="leads-footer"></div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelector('[onclick="switchTab(\'' + tab + '\')"]').classList.add('active');
+    document.getElementById('panel-' + tab).classList.add('active');
+  }
+
+  function exportPDF() {
+    const panels = document.querySelectorAll('.panel');
+    const tabs = document.querySelector('.tabs-bar');
+    panels.forEach(p => { p.style.display = 'block'; });
+    tabs.style.display = 'none';
+    window.print();
+    setTimeout(() => {
+      tabs.style.display = 'flex';
+      panels.forEach(p => { p.style.display = 'none'; });
+      document.querySelector('.panel.active').style.display = 'block';
+    }, 1500);
+  }
+
+  // ── DADOS DOS FUNIS POR PERÍODO ──
+  const funilData = {
+    d1206: {
+      title: 'Semana de 12/06',
+      sub: 'Snapshot mais antigo',
+      conv: '1,34%',
+      badge: null,
+      rows: [
+        { label: 'Impressões',      val: 51008, pctOfTotal: 100,   color: '#ede9fe', textColor: '#6d28d9', border: '1px solid #c4b5fd' },
+        { label: 'Alcance',         val: 38241, pctOfTotal: 75.0,  color: '#ddd6fe', textColor: '#fff' },
+        { label: 'Total de cliques',val: 706,   pctOfTotal: 1.38,  color: '#a78bfa', textColor: '#fff' },
+        { label: 'Cliques no link', val: 672,   pctOfTotal: 1.32,  color: '#7c3aed', textColor: '#fff' },
+        { label: 'Contatos',        val: 9,     pctOfTotal: 0.018, color: '#6b7280', textColor: '#fff' },
+      ]
+    },
+    d1906: {
+      title: 'Semana de 19/06',
+      sub: 'Semana intermediária',
+      conv: '1,57%',
+      badge: null,
+      rows: [
+        { label: 'Impressões',      val: 46596, pctOfTotal: 100,   color: '#ede9fe', textColor: '#6d28d9', border: '1px solid #c4b5fd' },
+        { label: 'Alcance',         val: 38038, pctOfTotal: 81.6,  color: '#ddd6fe', textColor: '#fff' },
+        { label: 'Total de cliques',val: 607,   pctOfTotal: 1.30,  color: '#a78bfa', textColor: '#fff' },
+        { label: 'Cliques no link', val: 574,   pctOfTotal: 1.23,  color: '#7c3aed', textColor: '#fff' },
+        { label: 'Contatos',        val: 9,     pctOfTotal: 0.019, color: '#6b7280', textColor: '#fff' },
+      ]
+    },
+    d2606: {
+      title: 'Semana de 26/06',
+      sub: 'Mais recente',
+      conv: '2,80%',
+      badge: 'Melhor conversão',
+      rows: [
+        { label: 'Impressões',      val: 44650, pctOfTotal: 100,   color: '#ede9fe', textColor: '#6d28d9', border: '1px solid #c4b5fd' },
+        { label: 'Alcance',         val: 32843, pctOfTotal: 73.6,  color: '#ddd6fe', textColor: '#fff' },
+        { label: 'Total de cliques',val: 581,   pctOfTotal: 1.30,  color: '#a78bfa', textColor: '#fff' },
+        { label: 'Cliques no link', val: 572,   pctOfTotal: 1.28,  color: '#7c3aed', textColor: '#fff' },
+        { label: 'Contatos',        val: 16,    pctOfTotal: 0.036, color: '#0d9488', textColor: '#fff' },
+      ]
+    },
+    total: {
+      title: 'Total consolidado',
+      sub: '12/06 → 26/06 · soma das 3 semanas',
+      conv: '1,87%',
+      badge: 'Visão geral',
+      rows: [
+        { label: 'Impressões',      val: 142254, pctOfTotal: 100,   color: '#ede9fe', textColor: '#6d28d9', border: '1px solid #c4b5fd' },
+        { label: 'Alcance',         val: 109122, pctOfTotal: 76.7,  color: '#ddd6fe', textColor: '#fff' },
+        { label: 'Total de cliques',val: 1894,   pctOfTotal: 1.33,  color: '#a78bfa', textColor: '#fff' },
+        { label: 'Cliques no link', val: 1818,   pctOfTotal: 1.28,  color: '#7c3aed', textColor: '#fff' },
+        { label: 'Contatos',        val: 34,     pctOfTotal: 0.024, color: '#0d9488', textColor: '#fff' },
+      ]
+    },
+    junho: {
+      title: 'Junho/2026 — Relatório Mensal',
+      sub: 'Dados consolidados do mês',
+      conv: '1,28% CTR · CPC R$ 0,38',
+      badge: 'Mês completo',
+      rows: [
+        { label: 'Impressões',      val: 204552, pctOfTotal: 100,   color: '#ede9fe', textColor: '#6d28d9', border: '1px solid #c4b5fd' },
+        { label: 'Alcance',         val: 110418, pctOfTotal: 54.0,  color: '#ddd6fe', textColor: '#fff' },
+        { label: 'Cliques',         val: 2620,   pctOfTotal: 1.28,  color: '#a78bfa', textColor: '#fff' },
+        { label: 'Contatos gerados',val: 46,     pctOfTotal: 0.022, color: '#0d9488', textColor: '#fff' },
+      ]
+    },
+    d1007: {
+      title: 'Semana de 10/07',
+      sub: 'Julho/2026',
+      conv: '2,51%',
+      badge: 'Julho',
+      rows: [
+        { label: 'Impressões',      val: 48114, pctOfTotal: 100,   color: '#ede9fe', textColor: '#6d28d9', border: '1px solid #c4b5fd' },
+        { label: 'Alcance',         val: 37087, pctOfTotal: 77.1,  color: '#ddd6fe', textColor: '#fff' },
+        { label: 'Total de cliques',val: 664,   pctOfTotal: 1.38,  color: '#a78bfa', textColor: '#fff' },
+        { label: 'Cliques no link', val: 637,   pctOfTotal: 1.32,  color: '#7c3aed', textColor: '#fff' },
+        { label: 'Contatos',        val: 16,    pctOfTotal: 0.033, color: '#0d9488', textColor: '#fff' },
+      ]
+    },
+    d1707: {
+      title: 'Semana de 17/07',
+      sub: 'Julho/2026',
+      conv: '2,72%',
+      badge: 'Julho',
+      rows: [
+        { label: 'Impressões',      val: 45429, pctOfTotal: 100,   color: '#ede9fe', textColor: '#6d28d9', border: '1px solid #c4b5fd' },
+        { label: 'Alcance',         val: 37316, pctOfTotal: 82.1,  color: '#ddd6fe', textColor: '#fff' },
+        { label: 'Total de cliques',val: 615,   pctOfTotal: 1.35,  color: '#a78bfa', textColor: '#fff' },
+        { label: 'Cliques no link', val: 587,   pctOfTotal: 1.29,  color: '#7c3aed', textColor: '#fff' },
+        { label: 'Contatos',        val: 16,    pctOfTotal: 0.035, color: '#0d9488', textColor: '#fff' },
+      ]
+    },
+    d2407: {
+      title: 'Semana de 24/07',
+      sub: 'Julho/2026',
+      conv: '2,22%',
+      badge: 'Julho',
+      rows: [
+        { label: 'Impressões',      val: 45531, pctOfTotal: 100,   color: '#ede9fe', textColor: '#6d28d9', border: '1px solid #c4b5fd' },
+        { label: 'Alcance',         val: 34492, pctOfTotal: 75.8,  color: '#ddd6fe', textColor: '#fff' },
+        { label: 'Total de cliques',val: 759,   pctOfTotal: 1.67,  color: '#a78bfa', textColor: '#fff' },
+        { label: 'Cliques no link', val: 721,   pctOfTotal: 1.58,  color: '#7c3aed', textColor: '#fff' },
+        { label: 'Contatos',        val: 16,    pctOfTotal: 0.035, color: '#0d9488', textColor: '#fff' },
+      ]
+    },
+    d3107: {
+      title: 'Semana de 31/07',
+      sub: 'Mais recente · Julho/2026',
+      conv: '2,54%',
+      badge: 'Julho',
+      rows: [
+        { label: 'Impressões',      val: 44345, pctOfTotal: 100,   color: '#ede9fe', textColor: '#6d28d9', border: '1px solid #c4b5fd' },
+        { label: 'Alcance',         val: 32700, pctOfTotal: 73.8,  color: '#ddd6fe', textColor: '#fff' },
+        { label: 'Total de cliques',val: 652,   pctOfTotal: 1.47,  color: '#a78bfa', textColor: '#fff' },
+        { label: 'Cliques no link', val: 630,   pctOfTotal: 1.42,  color: '#7c3aed', textColor: '#fff' },
+        { label: 'Contatos',        val: 16,    pctOfTotal: 0.036, color: '#0d9488', textColor: '#fff' },
+      ]
+    },
+    d0708: {
+      title: 'Semana de 07/08',
+      sub: 'Agosto/2026',
+      conv: '2,39%',
+      badge: 'Agosto',
+      rows: [
+        { label: 'Impressões',      val: 44839, pctOfTotal: 100,   color: '#ede9fe', textColor: '#6d28d9', border: '1px solid #c4b5fd' },
+        { label: 'Alcance',         val: 31405, pctOfTotal: 70.1,  color: '#ddd6fe', textColor: '#fff' },
+        { label: 'Total de cliques',val: 689,   pctOfTotal: 1.54,  color: '#a78bfa', textColor: '#fff' },
+        { label: 'Cliques no link', val: 669,   pctOfTotal: 1.49,  color: '#7c3aed', textColor: '#fff' },
+        { label: 'Contatos',        val: 16,    pctOfTotal: 0.036, color: '#0d9488', textColor: '#fff' },
+      ]
+    },
+    d1408: {
+      title: 'Semana de 14/08',
+      sub: 'Agosto/2026',
+      conv: '2,64%',
+      badge: 'Agosto',
+      rows: [
+        { label: 'Impressões',      val: 41564, pctOfTotal: 100,   color: '#ede9fe', textColor: '#6d28d9', border: '1px solid #c4b5fd' },
+        { label: 'Alcance',         val: 30058, pctOfTotal: 72.3,  color: '#ddd6fe', textColor: '#fff' },
+        { label: 'Total de cliques',val: 645,   pctOfTotal: 1.55,  color: '#a78bfa', textColor: '#fff' },
+        { label: 'Cliques no link', val: 606,   pctOfTotal: 1.46,  color: '#7c3aed', textColor: '#fff' },
+        { label: 'Contatos',        val: 16,    pctOfTotal: 0.038, color: '#0d9488', textColor: '#fff' },
+      ]
+    },
+    d2108: {
+      title: 'Semana de 21/08',
+      sub: 'Agosto/2026',
+      conv: '3,08%',
+      badge: 'Agosto',
+      rows: [
+        { label: 'Impressões',      val: 39262, pctOfTotal: 100,   color: '#ede9fe', textColor: '#6d28d9', border: '1px solid #c4b5fd' },
+        { label: 'Alcance',         val: 31393, pctOfTotal: 79.9,  color: '#ddd6fe', textColor: '#fff' },
+        { label: 'Total de cliques',val: 543,   pctOfTotal: 1.38,  color: '#a78bfa', textColor: '#fff' },
+        { label: 'Cliques no link', val: 519,   pctOfTotal: 1.32,  color: '#7c3aed', textColor: '#fff' },
+        { label: 'Contatos',        val: 16,    pctOfTotal: 0.041, color: '#0d9488', textColor: '#fff' },
+      ]
+    },
+    d2808: {
+      title: 'Semana de 28/08',
+      sub: 'Mais recente · Agosto/2026',
+      conv: '3,11%',
+      badge: 'Agosto',
+      rows: [
+        { label: 'Impressões',      val: 35777, pctOfTotal: 100,   color: '#ede9fe', textColor: '#6d28d9', border: '1px solid #c4b5fd' },
+        { label: 'Alcance',         val: 26773, pctOfTotal: 74.8,  color: '#ddd6fe', textColor: '#fff' },
+        { label: 'Total de cliques',val: 549,   pctOfTotal: 1.53,  color: '#a78bfa', textColor: '#fff' },
+        { label: 'Cliques no link', val: 515,   pctOfTotal: 1.44,  color: '#7c3aed', textColor: '#fff' },
+        { label: 'Contatos',        val: 16,    pctOfTotal: 0.045, color: '#0d9488', textColor: '#fff' },
+      ]
+    },
+    totaljul: {
+      title: 'Total consolidado — Julho/2026',
+      sub: '07/08 → 28/08 · soma das 3 semanas',
+      conv: '2,47%',
+      badge: 'Visão geral Jul',
+      rows: [
+        { label: 'Impressões',      val: 139074, pctOfTotal: 100,   color: '#ede9fe', textColor: '#6d28d9', border: '1px solid #c4b5fd' },
+        { label: 'Alcance',         val: 108895, pctOfTotal: 78.3,  color: '#ddd6fe', textColor: '#fff' },
+        { label: 'Total de cliques',val: 2038,   pctOfTotal: 1.47,  color: '#a78bfa', textColor: '#fff' },
+        { label: 'Cliques no link', val: 1945,   pctOfTotal: 1.40,  color: '#7c3aed', textColor: '#fff' },
+        { label: 'Contatos',        val: 48,     pctOfTotal: 0.035, color: '#0d9488', textColor: '#fff' },
+      ]
+    }
+  };
+
+  function fmt(n) { return n.toLocaleString('pt-BR'); }
+
+  // meses → semanas
+  const monthWeeks = {
+    junho: ['d1206','d1906','d2606'],
+    julho: ['d1007','d1707','d2407','d3107'],
+    agosto: ['d0708','d1408','d2108','d2808']
+  };
+
+  // ── SELETOR DE RESUMO MENSAL ──
+  function selectResumo(mes) {
+    var meses = ['junho','julho','agosto'];
+    var cores = { junho:'#ec4899', julho:'#7c3aed', agosto:'#0d9488' };
+    meses.forEach(function(m) {
+      var btn = document.getElementById('rbtn-' + m);
+      var panel = document.getElementById('resumo-' + m);
+      if (btn) {
+        btn.classList.remove('active-month');
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }
+      if (panel) panel.style.display = 'none';
+    });
+    var activeBtn = document.getElementById('rbtn-' + mes);
+    var activePanel = document.getElementById('resumo-' + mes);
+    if (activeBtn) {
+      activeBtn.classList.add('active-month');
+      activeBtn.style.background = cores[mes];
+      activeBtn.style.borderColor = cores[mes];
+      activeBtn.style.color = '#fff';
+    }
+    if (activePanel) activePanel.style.display = 'block';
+  }
+
+  function selectMonth(month) {
+    // ativa botão do mês
+    document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active-month'));
+    document.getElementById('mbtn-' + month).classList.add('active-month');
+    // esconde todos os week-rows, mostra o do mês
+    document.querySelectorAll('.week-row').forEach(r => r.style.display = 'none');
+    document.getElementById('weeks-' + month).style.display = 'flex';
+    // seleciona automaticamente a primeira semana do mês
+    const firstWeek = monthWeeks[month][0];
+    setChart(firstWeek);
+  }
+
+  function setChart(key) {
+    // botões de semana
+    document.querySelectorAll('.date-btn').forEach(b => b.classList.remove('active'));
+    const activeBtn = document.getElementById('btn-' + key);
+    if (activeBtn) activeBtn.classList.add('active');
+
+    const d = funilData[key];
+
+    document.getElementById('chart-title').textContent = d.title + (d.sub ? ' — ' + d.sub : '');
+    document.getElementById('chart-conv').textContent = 'Conv. link → contato: ' + d.conv;
+
+    const badgeEl = document.getElementById('chart-badge');
+    if (d.badge) {
+      badgeEl.style.display = 'inline-block';
+      badgeEl.textContent = d.badge;
+    } else {
+      badgeEl.style.display = 'none';
+    }
+
+    const maxVal = d.rows[0].val; // impressões sempre maior
+    const barsHtml = d.rows.map(r => {
+      const widthPct = Math.max((r.val / maxVal) * 100, 2); // mínimo 2% pra aparecer
+      return `
+        <div class="bar-row">
+          <div class="bar-row-top">
+            <span class="bar-row-label">${r.label}</span>
+            <span class="bar-row-val">${fmt(r.val)} <small>(${r.pctOfTotal < 1 ? r.pctOfTotal.toFixed(3) : r.pctOfTotal.toFixed(1)}%)</small></span>
+          </div>
+          <div class="bar-track-lg">
+            <div class="bar-fill-lg" style="width:${widthPct}%;background:${r.color};${r.border ? 'border:'+r.border+';' : ''}"></div>
+          </div>
+        </div>`;
+    }).join('');
+
+    document.getElementById('chart-bars').innerHTML = barsHtml;
+  }
+
+  // inicializa com 26/06
+  // ── DADOS DOS LEADS ──
+  const leadsData = [
+    { id:1, mes:'junho', canal:'WhatsApp', data:'22/06', perfil:'Desconhecido',       interesse:'—',           status:'sem-resposta', highlight:false, etapa:'perdido' },
+    { id:2, mes:'junho', canal:'WhatsApp', data:'22/06', perfil:'Outro distribuidor', interesse:'Distribuição', status:'fora-perfil',  highlight:false, etapa:'perdido' },
+    { id:3, mes:'junho', canal:'WhatsApp', data:'24/06', perfil:'Cliente potencial',  interesse:'Motor NSK ⭐', status:'qualificado',  highlight:true,  etapa:'proposta'   },
+    { id:4, mes:'junho', canal:'WhatsApp', data:'27/06', perfil:'Cliente potencial',  interesse:'Blue\u2019m ⭐', status:'qualificado', highlight:true,  etapa:'proposta'   },
+    { id:5, mes:'junho', canal:'WhatsApp', data:'29/06', perfil:'Desconhecido',       interesse:'—',           status:'sem-resposta', highlight:false, etapa:'perdido' },
+    { id:6, mes:'julho', canal:'WhatsApp', data:'03/07', perfil:'Desconhecido',       interesse:'—',           status:'fora-perfil',  highlight:false, etapa:'perdido' },
+    { id:7, mes:'julho', canal:'WhatsApp', data:'09/07', perfil:'Cliente potencial',  interesse:'Componentes ⭐', status:'qualificado',  highlight:true,  etapa:'proposta'   },
+    { id:8, mes:'julho', canal:'WhatsApp', data:'16/07', perfil:'Cliente potencial',  interesse:'Instrumentais ⭐', status:'qualificado', highlight:true,  etapa:'proposta'   },
+    { id:9, mes:'julho', canal:'WhatsApp', data:'17/07', perfil:'Desconhecido',       interesse:'—',            status:'sem-resposta', highlight:false, etapa:'perdido' },
+    { id:10, mes:'julho', canal:'WhatsApp', data:'19/07', perfil:'Desconhecido',      interesse:'—',            status:'sem-resposta', highlight:false, etapa:'perdido' },
+    { id:11, mes:'julho', canal:'WhatsApp', data:'27/07', perfil:'Cliente potencial', interesse:'Componentes ⭐', status:'qualificado',  highlight:true,  etapa:'ganho'      },
+    { id:12, mes:'julho', canal:'WhatsApp', data:'30/07', perfil:'Cliente potencial', interesse:'Scanner ⭐',     status:'qualificado',  highlight:true,  etapa:'proposta'   },
+    { id:13, mes:'agosto', canal:'WhatsApp', data:'03/08', perfil:'Cliente potencial', interesse:'Kits ⭐',        status:'qualificado',  highlight:true,  etapa:'proposta'   },
+    { id:14, mes:'agosto', canal:'WhatsApp', data:'10/08', perfil:'Desconhecido',       interesse:'—',             status:'sem-resposta', highlight:false, etapa:'perdido' },
+    { id:15, mes:'agosto', canal:'WhatsApp', data:'10/08', perfil:'Desconhecido',       interesse:'—',             status:'sem-resposta', highlight:false, etapa:'perdido' },
+    { id:16, mes:'agosto', canal:'WhatsApp', data:'11/08', perfil:'Desconhecido',       interesse:'—',             status:'sem-resposta', highlight:false, etapa:'perdido' },
+    { id:17, mes:'agosto', canal:'WhatsApp', data:'13/08', perfil:'Cliente potencial',  interesse:'Motor ⭐',       status:'qualificado',   highlight:true,  etapa:'proposta'   },
+    { id:18, mes:'agosto', canal:'WhatsApp', data:'17/08', perfil:'Desconhecido',       interesse:'—',             status:'golpe',        highlight:false, etapa:'golpe'    },
+    { id:19, mes:'agosto', canal:'WhatsApp', data:'18/08', perfil:'Cliente potencial',  interesse:'Componentes ⭐',  status:'qualificado',  highlight:true,  etapa:'proposta' },
+    { id:20, mes:'agosto', canal:'WhatsApp', data:'19/08', perfil:'Cliente potencial',  interesse:'Biomaterial ⭐',  status:'qualificado',  highlight:true,  etapa:'ganho'    },
+    { id:21, mes:'agosto', canal:'WhatsApp', data:'20/08', perfil:'Desconhecido',       interesse:'Motor',           status:'golpe',        highlight:false, etapa:'golpe'    },
+    { id:22, mes:'agosto', canal:'WhatsApp', data:'21/08', perfil:'Cliente potencial',  interesse:'Componentes ⭐',  status:'qualificado',  highlight:true,  etapa:'proposta' },
+    { id:23, mes:'agosto', canal:'WhatsApp', data:'26/08', perfil:'Desconhecido',       interesse:'Radiografia',     status:'n-atendemos',  highlight:false, etapa:'n-atendemos' },
+    { id:24, mes:'agosto', canal:'WhatsApp', data:'26/08', perfil:'Cliente potencial',  interesse:'Kit Acadêmico ⭐', status:'qualificado',  highlight:true,  etapa:'proposta'  },
+    { id:25, mes:'agosto', canal:'WhatsApp', data:'31/08', perfil:'Desconhecido',       interesse:'—',               status:'sem-resposta',  highlight:false, etapa:'perdido'   },
+  ];
+
+  const statusConfig = {
+    'qualificado':    { label:'Qualificado',    cls:'badge-green', footerColor:'var(--green)' },
+    'fora-perfil':    { label:'Fora do perfil', cls:'badge-amber', footerColor:'var(--amber)' },
+    'sem-resposta':   { label:'Sem resposta',   cls:'badge-red',   footerColor:'var(--red)'   },
+    'desqualificado': { label:'Desqualificado', cls:'badge-gray',  footerColor:'#6b7280'      },
+    'golpe':          { label:'Golpe',          cls:'badge-golpe', footerColor:'#c2410c'      },
+    'n-atendemos':    { label:'Não atendemos',  cls:'badge-gray',  footerColor:'#6b7280'      },
+  };
+
+  // ── RESUMO POR PRODUTO ──
+  function renderProdutos(mes) {
+    var filtered = mes === 'todos' ? leadsData : leadsData.filter(function(l){ return l.mes === mes; });
+    var map = {};
+    filtered.forEach(function(l) {
+      if (l.interesse === '—') return;
+      var nome = l.interesse.replace(' ⭐','').trim();
+      if (!map[nome]) map[nome] = { total:0, qualificados:0 };
+      map[nome].total++;
+      if (l.status === 'qualificado') map[nome].qualificados++;
+    });
+    var el = document.getElementById('produto-resumo');
+    if (!el) return;
+    var keys = Object.keys(map);
+    if (!keys.length) { el.innerHTML = ''; return; }
+    el.innerHTML = keys.map(function(k) {
+      var d = map[k];
+      return '<div class="produto-chip">'
+        + '<div>'
+        + '<div class="produto-count">' + d.total + '</div>'
+        + '<div class="produto-lbl">leads</div>'
+        + '</div>'
+        + '<div>'
+        + '<div class="produto-nome">' + k + ' ⭐</div>'
+        + '<div style="font-size:10px;color:var(--teal);font-weight:600;">' + d.qualificados + ' qualificado' + (d.qualificados!==1?'s':'') + '</div>'
+        + '</div>'
+        + '</div>';
+    }).join('');
+  }
+
+  function filterLeads(mes) {
+    document.querySelectorAll('[id^="lbtn-"]').forEach(function(b) {
+      b.classList.remove('active-month');
+      if (b.id === 'lbtn-todos') { b.style.background='#f3f4f6'; b.style.borderColor='#d1d5db'; b.style.color='#6b7280'; }
+      else { b.style.background=''; b.style.borderColor=''; b.style.color=''; }
+    });
+    var activeBtn = document.getElementById('lbtn-' + mes);
+    if (activeBtn) {
+      activeBtn.classList.add('active-month');
+      if (mes === 'todos') { activeBtn.style.background='#6b7280'; activeBtn.style.borderColor='#6b7280'; activeBtn.style.color='#fff'; }
+    }
+
+    var filtered = mes === 'todos' ? leadsData : leadsData.filter(function(l){ return l.mes === mes; });
+    var tbody = document.getElementById('leads-tbody');
+    var num = 1;
+    tbody.innerHTML = filtered.map(function(l) {
+      var sc = statusConfig[l.status];
+      var interesseStyle = l.status === 'qualificado'
+        ? 'font-weight:700;color:var(--teal)'
+        : (l.interesse === '—' ? 'color:var(--text-muted)' : 'color:var(--text-secondary)');
+      var trClass = l.highlight ? ' class="highlight"' : (l.status === 'golpe' ? ' style="background:#fff7ed;"' : (l.status === 'n-atendemos' ? ' style="background:#f9fafb;"' : ''));
+      var etapaConfig = {
+        'contato':    { label:'Contato feito',    cls:'badge-etapa-contato'    },
+        'proposta':   { label:'Proposta enviada', cls:'badge-etapa-proposta'   },
+        'negociando': { label:'Negociando',       cls:'badge-etapa-negociando' },
+        'ganho':      { label:'Ganho ✓',          cls:'badge-etapa-ganho'      },
+        'perdido':      { label:'Perdido',          cls:'badge-etapa-perdido'    },
+        'golpe':        { label:'Golpe ⚠',         cls:'badge-golpe'            },
+        'n-atendemos':  { label:'Não atendemos',   cls:'badge-n-atendemos'      },
+        'ganho-prop':   { label:'Proposta enviada', cls:'badge-etapa-proposta'  },
+      };
+      var etapaHtml = '—';
+      if (l.etapa && etapaConfig[l.etapa]) {
+        var ec = etapaConfig[l.etapa];
+        etapaHtml = '<span class="badge ' + ec.cls + '">' + ec.label + '</span>';
+      }
+      return '<tr' + trClass + '>'
+        + '<td style="color:var(--text-muted);font-weight:700">' + num++ + '</td>'
+        + '<td>' + l.canal + '</td>'
+        + '<td style="color:var(--text-muted)">' + l.data + '</td>'
+        + '<td style="color:var(--text-secondary)">' + l.perfil + '</td>'
+        + '<td style="' + interesseStyle + '">' + l.interesse + '</td>'
+        + '<td><span class="badge ' + sc.cls + '">' + sc.label + '</span></td>'
+        + '<td>' + etapaHtml + '</td>'
+        + '</tr>';
+    }).join('');
+
+    var total = filtered.length;
+    var counts = {};
+    filtered.forEach(function(l){ counts[l.status] = (counts[l.status]||0)+1; });
+    var footer = document.getElementById('leads-footer');
+    var footerHtml = '<span>Total: <b>' + total + ' leads</b></span>';
+    Object.keys(counts).forEach(function(s) {
+      var c = counts[s];
+      var sc = statusConfig[s];
+      footerHtml += '<span>' + sc.label + ': <b style="color:' + sc.footerColor + '">' + c + ' (' + Math.round(c/total*100) + '%)</b></span>';
+    });
+    footer.innerHTML = footerHtml;
+    renderProdutos(mes);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    selectMonth('junho');
+    filterLeads('junho');
+    renderProdutos('junho');
+  });
+</script>
+</body>
+</html>

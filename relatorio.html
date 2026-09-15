@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatorio ARP 2025 vs 2026 [20260722_202646]</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+:root{
+  --purple:#9C27B0;--pl:#CE93D8;--pd:#6A1B9A;
+  --cyan:#00BCD4;--cl:#80DEEA;--cd:#00838F;
+  --bg:#F7F4FB;--surface:#fff;--surface2:#F0EBF8;
+  --text:#1A0A2E;--text-muted:#6B5B82;
+  --green:#2ECC71;--red:#E74C3C;--amber:#F39C12;
+  --border:#E0D6ED;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:13px;}
+
+/* HEADER */
+.hdr{background:linear-gradient(135deg,var(--pd),var(--purple));padding:16px 20px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;box-shadow:0 4px 16px rgba(106,27,154,.3);}
+.hdr h1{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:#fff;}
+.hdr p{color:var(--pl);font-size:11px;margin-top:3px;}
+.ctrls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.sel{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff;padding:6px 28px 6px 10px;border-radius:7px;font-size:12px;font-family:'Inter',sans-serif;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='white'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;cursor:pointer;}
+.sel option{background:#7B1FA2;}
+.btn-pdf{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.4);color:#fff;padding:6px 14px;border-radius:7px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;transition:background .2s;}
+.btn-pdf:hover{background:rgba(255,255,255,.3);}
+
+/* TOGGLE YTD */
+.toggle-wrap{display:flex;align-items:center;gap:6px;margin:0 4px;}
+.toggle-wrap span{font-size:11px;color:rgba(255,255,255,.8);}
+.toggle{position:relative;width:36px;height:20px;cursor:pointer;}
+.toggle input{opacity:0;width:0;height:0;}
+.slider{position:absolute;inset:0;background:rgba(255,255,255,.3);border-radius:20px;transition:.3s;}
+.slider:before{content:"";position:absolute;width:14px;height:14px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;}
+.toggle input:checked + .slider{background:var(--cyan);}
+.toggle input:checked + .slider:before{transform:translateX(16px);}
+
+/* MAIN */
+.main{padding:14px 20px 28px;display:flex;flex-direction:column;gap:14px;}
+
+/* KPI ROW */
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+.kpi-card{background:var(--surface);border-radius:10px;padding:12px 14px;border:1px solid var(--border);position:relative;overflow:hidden;}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--purple),var(--cyan));}
+.kpi-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-bottom:5px;}
+.kpi-val{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--pd);line-height:1;}
+.kpi-sub{font-size:10px;margin-top:4px;}
+
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+/* CARD */
+.card{background:var(--surface);border-radius:10px;border:1px solid var(--border);overflow:hidden;}
+.ch{padding:10px 16px;display:flex;justify-content:space-between;align-items:center;}
+.ch-p{background:linear-gradient(90deg,var(--pd),var(--purple));}
+.ch-c{background:linear-gradient(90deg,var(--cd),var(--cyan));}
+.ch h3{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;color:#fff;}
+.ch .bdg{background:rgba(255,255,255,.2);color:#fff;font-size:10px;padding:2px 8px;border-radius:10px;}
+.cb{padding:13px 15px;}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;}
+.tbl th{font-size:10px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px;padding:6px 7px;text-align:right;border-bottom:1px solid var(--border);}
+.tbl th:first-child{text-align:left;}
+.tbl td{padding:6px 7px;font-size:11px;text-align:right;border-bottom:1px solid #F5F0FA;}
+.tbl td:first-child{text-align:left;font-weight:600;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:#FAF7FE;}
+.tbl tr.alert-row td{background:#FFF3F3 !important;}
+.tbl tr.alert-row td:first-child{color:var(--red);}
+
+/* COLORS */
+.up{color:var(--green);font-weight:600;}
+.dn{color:var(--red);font-weight:600;}
+.nt{color:var(--text-muted);}
+
+/* PILLS */
+.pill{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;}
+.ph{background:#E8F8EE;color:#1D7A45;}
+.pm{background:#FFF3CD;color:#856404;}
+.pl{background:#FDECEA;color:#B02A37;}
+.pc{background:#E1F5FE;color:#0277BD;}
+.pa{background:#FDECEA;color:#B02A37;border:1px solid #F5C6C6;}
+
+/* SECTION TITLE */
+.sec{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--pd);display:flex;align-items:center;gap:6px;}
+.sec::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* BARS */
+.bw{margin-bottom:10px;}
+.bn{font-size:11px;font-weight:600;color:var(--pd);margin-bottom:4px;}
+.bn.alert{color:var(--red);}
+.br{display:flex;align-items:center;gap:6px;margin-bottom:3px;}
+.by{font-size:10px;font-weight:700;width:26px;flex-shrink:0;}
+.bt{flex:1;height:18px;background:var(--surface2);border-radius:4px;overflow:hidden;}
+.bf-p{height:100%;background:linear-gradient(90deg,var(--pl),var(--purple));border-radius:4px;}
+.bf-c{height:100%;background:linear-gradient(90deg,var(--cl),var(--cyan));border-radius:4px;}
+.bv{font-size:10px;color:var(--text-muted);width:62px;text-align:right;flex-shrink:0;}
+
+/* ASSESSOR CARD */
+.acard{background:var(--surface);border-radius:10px;border:1px solid var(--border);overflow:hidden;}
+.acard.alert-card{border-color:var(--red);border-width:2px;}
+.acard-hdr{padding:10px 16px;display:flex;justify-content:space-between;align-items:center;}
+.acard-hdr.purple{background:linear-gradient(90deg,var(--pd),var(--purple));}
+.acard-hdr.red{background:linear-gradient(90deg,#B71C1C,var(--red));}
+.acard-hdr h3{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#fff;}
+.acard-hdr .alert-badge{background:rgba(255,255,255,.25);color:#fff;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;}
+.asub{background:var(--surface2);padding:7px 15px;font-size:10px;font-weight:700;color:var(--pd);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);}
+.asub.cyan{color:var(--cd);}
+.asub.ytd{color:#5E35B1;background:#EDE7F6;}
+
+/* SPARKLINE */
+.spark-wrap{display:flex;align-items:flex-end;gap:2px;height:32px;padding:2px 0;}
+.spark-bar{flex:1;border-radius:2px 2px 0 0;min-width:4px;transition:height .3s;}
+
+/* MINI KPIS */
+.mkpis{display:flex;flex-wrap:wrap;gap:8px;padding:10px 15px;background:#FAFAFA;border-top:1px solid var(--border);}
+.mk{background:var(--surface2);border-radius:7px;padding:8px 12px;min-width:90px;}
+.mkl{font-size:9px;color:var(--text-muted);font-weight:700;text-transform:uppercase;margin-bottom:3px;}
+.mkv{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--pd);}
+.mks{font-size:10px;margin-top:2px;}
+
+/* GAUGES */
+.ggrid{display:flex;flex-wrap:wrap;gap:10px;}
+.gi{text-align:center;padding:10px 8px;border-radius:8px;background:var(--surface2);flex:1;min-width:90px;}
+.gn{font-size:10px;font-weight:600;color:var(--text-muted);margin-bottom:5px;}
+.gv{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;}
+
+.note-tag{display:inline-block;background:#FFF3CD;color:#856404;border:1px solid #FFE082;border-radius:4px;font-size:9px;padding:1px 5px;margin-left:3px;vertical-align:middle;}
+.ytd-tag{display:inline-block;background:#EDE7F6;color:#5E35B1;border-radius:4px;font-size:9px;padding:1px 5px;margin-left:3px;vertical-align:middle;}
+
+.footer{text-align:right;padding:6px 20px 16px;font-size:10px;color:var(--text-muted);}
+
+/* ALERT THRESHOLD */
+.threshold-wrap{display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(255,255,255,.85);}
+.threshold-wrap input[type=range]{width:80px;accent-color:#fff;}
+.threshold-wrap span{font-weight:700;min-width:30px;}
+
+/* MOBILE */
+@media(max-width:640px){
+  .kpi-row{grid-template-columns:repeat(2,1fr);}
+  .g2{grid-template-columns:1fr;}
+  .hdr{flex-direction:column;}
+  .ctrls{width:100%;}
+  .sel,.btn-pdf{flex:1;}
+  .threshold-wrap{display:none;}
+}
+
+/* PRINT / PDF */
+@media print{
+  .hdr .ctrls,.btn-pdf,.threshold-wrap,.toggle-wrap{display:none!important;}
+  .card,.acard{break-inside:avoid;}
+  body{background:#fff;}
+  .hdr{box-shadow:none;}
+}
+</style>
+</head>
+<body>
+
+
+<div class="hdr">
+  <div>
+    <h1>Relat&oacute;rio Comparativo &mdash; Pr&oacute;dentis / ARP</h1>
+    <p>2025 completo vs 2026 Jan&ndash;Jul &middot; Atualizado 06/08/2026</p>
+  </div>
+  <div class="ctrls">
+    <select class="sel" id="sv">
+      <option value="todos">Todos Assessores</option>
+      <option value="Bruna">Bruna</option>
+      <option value="Diego">Diego</option>
+      <option value="Francely">Francely</option>
+      <option value="Jarlene">Jarlene</option>
+      <option value="Luana">Luana</option>
+      <option value="Made">Made</option>
+    </select>
+    <select class="sel" id="sa">
+      <option value="todos">2025 vs 2026</option>
+      <option value="2025">Apenas 2025</option>
+      <option value="2026">Apenas 2026</option>
+    </select>
+    <select class="sel" id="sm">
+      <option value="0">Todos os Meses</option>
+      <option value="1">Janeiro</option>
+      <option value="2">Fevereiro</option>
+      <option value="3">Mar&ccedil;o</option>
+      <option value="4">Abril</option>
+      <option value="5">Maio</option>
+      <option value="6">Junho</option>
+      <option value="7">Julho</option>
+      <option value="8" selected>Agosto</option>
+      <option value="9">Setembro</option>
+      <option value="10">Outubro</option>
+      <option value="11">Novembro</option>
+      <option value="12">Dezembro</option>
+    </select>
+    <div class="toggle-wrap">
+      <span>YTD</span>
+      <label class="toggle">
+        <input type="checkbox" id="ytd-toggle" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="threshold-wrap">
+      <span>Alerta:</span>
+      <input type="range" id="thresh" min="5" max="50" value="20" step="5">
+      <span id="thresh-val">20%</span>
+    </div>
+    <button class="btn-pdf" onclick="doPrint()">&#128438; PDF</button>
+
+  </div>
+</div>
+<div class="main" id="app"><p style="padding:20px;color:#999">Carregando...</p></div>
+<div class="footer">Desenvolvido por Pierri Perim</div>
+<script>
+var 
+  // _lojaOvr defined early for use throughout
+  RAW=[{"v": "Ana", "a": 2026, "m": 1, "mes": "Janeiro", "fat": 0, "pct": 0, "impl": 0, "cli": 0, "rank": 0, "ticket": null, "rent": null, "mc_pct": null, "cmv_pct": null, "fat_fab": 60094.4, "ticket_fab": 12018.88, "cli_fab": 5, "sirios": 0, "equip_qty": 0}, {"v": "Ana", "a": 2026, "m": 2, "mes": "Fevereiro", "fat": 0, "pct": 0, "impl": 0, "cli": 0, "rank": 0, "ticket": null, "rent": null, "mc_pct": null, "cmv_pct": null, "fat_fab": 38529.87, "ticket_fab": 12843.29, "cli_fab": 3, "sirios": 0, "equip_qty": 0}, {"v": "Bruna", "a": 2025, "m": 1, "mes": "Janeiro", "fat": 490085.56, "pct": 1.944784, "impl": 1345, "cli": 97, "rank": 1, "ticket": 3661.99, "rent": 35.8, "mc_pct": 0.322619, "cmv_pct": 0.677381, "fat_fab": 231336.46, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 1}, {"v": "Bruna", "a": 2025, "m": 2, "mes": "Fevereiro", "fat": 262566.32, "pct": 1.193483, "impl": 405, "cli": 90, "rank": 1, "ticket": 1782.77, "rent": 41.5, "mc_pct": 0.420497, "cmv_pct": 0.579503, "fat_fab": 102116.73, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 1}, {"v": "Bruna", "a": 2025, "m": 3, "mes": "Março", "fat": 282818.64, "pct": 1.235016, "impl": 895, "cli": 70, "rank": 2, "ticket": 3476.83, "rent": 34.2, "mc_pct": 0.348985, "cmv_pct": 0.651015, "fat_fab": 39440.85, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 1}, {"v": "Bruna", "a": 2025, "m": 4, "mes": "Abril", "fat": 267186.49, "pct": 0.884723, "impl": 804, "cli": 89, "rank": 2, "ticket": 3661.99, "rent": 35.59, "mc_pct": 0.355859, "cmv_pct": 0.644141, "fat_fab": 54937.51, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Bruna", "a": 2025, "m": 5, "mes": "Maio", "fat": 282049.0, "pct": 1.109951, "impl": 927, "cli": 98, "rank": 2, "ticket": 2801.37, "rent": 42.3, "mc_pct": 0.294174, "cmv_pct": 0.705826, "fat_fab": 7514.6, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Bruna", "a": 2025, "m": 6, "mes": "Junho", "fat": 197370.19, "pct": 0.669051, "impl": 730, "cli": 85, "rank": 2, "ticket": 2322.0, "rent": 0.2693, "mc_pct": 0.269329, "cmv_pct": 0.730671, "fat_fab": 42101.72, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Bruna", "a": 2025, "m": 7, "mes": "Julho", "fat": 245365.23, "pct": 0.846087, "impl": 812, "cli": 97, "rank": 1, "ticket": 2529.54, "rent": 0.3401, "mc_pct": 0.340099, "cmv_pct": 0.659901, "fat_fab": 66540.04, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Bruna", "a": 2025, "m": 8, "mes": "Agosto", "fat": 319842.67, "pct": 1.015374, "impl": 1426, "cli": 104, "rank": 1, "ticket": 3075.41, "rent": 0.2299, "mc_pct": 0.229949, "cmv_pct": 0.770051, "fat_fab": 36118.9, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Bruna", "a": 2025, "m": 9, "mes": "Setembro", "fat": 209788.82, "pct": 0.6724, "impl": 643, "cli": 94, "rank": 3, "ticket": 2231.8, "rent": 0.3874, "mc_pct": 0.387388, "cmv_pct": 0.612612, "fat_fab": 47243.64, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Bruna", "a": 2025, "m": 10, "mes": "Outubro", "fat": 311590.57, "pct": 0.903161, "impl": 934, "cli": 107, "rank": 2, "ticket": 2912.06, "rent": 0.3702, "mc_pct": 0.370205, "cmv_pct": 0.629795, "fat_fab": 8946.1, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 2}, {"v": "Bruna", "a": 2025, "m": 11, "mes": "Novembro", "fat": 235232.17, "pct": 0.758813, "impl": 908, "cli": 99, "rank": 4, "ticket": 2376.08, "rent": 0.2789, "mc_pct": 0.27891, "cmv_pct": 0.72109, "fat_fab": 14321.84, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Bruna", "a": 2025, "m": 12, "mes": "Dezembro", "fat": 125186.47, "pct": 0.57425, "impl": 260, "cli": 76, "rank": 6, "ticket": 1647.19, "rent": 0.4717, "mc_pct": 0.47173, "cmv_pct": 0.52827, "fat_fab": 23627.5, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Bruna", "a": 2026, "m": 1, "mes": "Janeiro", "fat": 408312.15, "pct": 1.23731, "impl": 1106, "cli": 106, "rank": 1, "ticket": 3161.29, "rent": 34.1, "mc_pct": 0.339244, "cmv_pct": 0.660756, "fat_fab": 73235.46, "ticket_fab": 4577.22, "cli_fab": 16, "sirios": 1, "equip_qty": 1}, {"v": "Bruna", "a": 2026, "m": 2, "mes": "Fevereiro", "fat": 391167.19, "pct": 1.448767, "impl": 417, "cli": 98, "rank": 1, "ticket": 1900.61, "rent": 45.9, "mc_pct": 0.460391, "cmv_pct": 0.539609, "fat_fab": 34807.9, "ticket_fab": 18627.99, "cli_fab": 11, "sirios": 1, "equip_qty": 2}, {"v": "Bruna", "a": 2026, "m": 3, "mes": "Março", "fat": 359202.36, "pct": 1.072246, "impl": 942, "cli": 112, "rank": 1, "ticket": 3158.3, "rent": 40.1, "mc_pct": 0.398638, "cmv_pct": 0.601362, "fat_fab": 5721.0, "ticket_fab": 1430.25, "cli_fab": 4, "sirios": 2, "equip_qty": 2}, {"v": "Bruna", "a": 2026, "m": 4, "mes": "Abril", "fat": 265005.83, "pct": 1.019253, "impl": 987, "cli": 91, "rank": 1, "ticket": 2912.15, "rent": 35.0, "mc_pct": 0.350004, "cmv_pct": 0.649996, "fat_fab": 73466.0, "ticket_fab": 8368.56, "cli_fab": 9, "sirios": 1, "equip_qty": 1}, {"v": "Bruna", "a": 2026, "m": 5, "mes": "Maio", "fat": 299686.87, "pct": 1.109951, "impl": 601, "cli": 105, "rank": 2, "ticket": 2646.71, "rent": 42.3, "mc_pct": 0.419306, "cmv_pct": 0.580694, "fat_fab": 21782.51, "ticket_fab": 3111.79, "cli_fab": 7, "sirios": 1, "equip_qty": 1}, {"v": "Bruna", "a": 2026, "m": 6, "mes": "Junho", "fat": 310885.45, "pct": 1.322917, "impl": 1010, "cli": 98, "rank": 1, "ticket": 3172.3, "rent": 0.3962, "mc_pct": null, "cmv_pct": null, "fat_fab": 20966.06, "ticket_fab": 5241.52, "cli_fab": 4, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2025, "m": 1, "mes": "Janeiro", "fat": 434548.33, "pct": 1.337072, "impl": 1110, "cli": 78, "rank": 2, "ticket": 3931.72, "rent": 24.71, "mc_pct": 0.247069, "cmv_pct": 0.752931, "fat_fab": 127874.4, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2025, "m": 2, "mes": "Fevereiro", "fat": 183441.21, "pct": 0.564434, "impl": 307, "cli": 85, "rank": 2, "ticket": 1665.21, "rent": 38.52, "mc_pct": 0.385218, "cmv_pct": 0.614782, "fat_fab": 41898.5, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2025, "m": 3, "mes": "Março", "fat": 412803.45, "pct": 1.232249, "impl": 1215, "cli": 73, "rank": 1, "ticket": 3769.44, "rent": 15.14, "mc_pct": 0.151409, "cmv_pct": 0.848591, "fat_fab": 137634.09, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2025, "m": 4, "mes": "Abril", "fat": 364749.4, "pct": 0.999313, "impl": 1609, "cli": 80, "rank": 1, "ticket": 4018.1, "rent": 15.19, "mc_pct": 0.15191, "cmv_pct": 0.84809, "fat_fab": 43301.5, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2025, "m": 5, "mes": "Maio", "fat": 283462.82, "pct": 0.708657, "impl": 1220, "cli": 65, "rank": 1, "ticket": 4013.59, "rent": -0.1, "mc_pct": 0.154559, "cmv_pct": 0.845441, "fat_fab": 22579.25, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2025, "m": 6, "mes": "Junho", "fat": 112446.95, "pct": 0.321277, "impl": 379, "cli": 58, "rank": 5, "ticket": 1938.74, "rent": 0.2527, "mc_pct": 0.252748, "cmv_pct": 0.747252, "fat_fab": 57424.46, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2025, "m": 7, "mes": "Julho", "fat": 146349.15, "pct": 0.403166, "impl": 600, "cli": 62, "rank": 3, "ticket": 2360.47, "rent": 0.2034, "mc_pct": 0.203415, "cmv_pct": 0.796585, "fat_fab": 45774.02, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2025, "m": 8, "mes": "Agosto", "fat": 262824.98, "pct": 0.699003, "impl": 805, "cli": 77, "rank": 2, "ticket": 3413.31, "rent": 0.2506, "mc_pct": 0.250597, "cmv_pct": 0.749403, "fat_fab": 137607.55, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2025, "m": 9, "mes": "Setembro", "fat": 340985.64, "pct": 0.852464, "impl": 1396, "cli": 81, "rank": 1, "ticket": 4209.7, "rent": 0.2038, "mc_pct": 0.203791, "cmv_pct": 0.796209, "fat_fab": 27555.06, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2025, "m": 10, "mes": "Outubro", "fat": 252639.7, "pct": 0.526333, "impl": 969, "cli": 68, "rank": 4, "ticket": 3715.29, "rent": 0.2124, "mc_pct": 0.212432, "cmv_pct": 0.787568, "fat_fab": 25690.65, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2025, "m": 11, "mes": "Novembro", "fat": 251166.69, "pct": 0.652381, "impl": 889, "cli": 68, "rank": 3, "ticket": 3693.63, "rent": 0.1981, "mc_pct": 0.198104, "cmv_pct": 0.801896, "fat_fab": 69959.11, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2025, "m": 12, "mes": "Dezembro", "fat": 98153.38, "pct": 0.363531, "impl": 148, "cli": 39, "rank": 10, "ticket": 2516.75, "rent": 0.3121, "mc_pct": 0.312148, "cmv_pct": 0.687852, "fat_fab": 111141.79, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2026, "m": 1, "mes": "Janeiro", "fat": 392890.95, "pct": 1.047709, "impl": 1408, "cli": 89, "rank": 2, "ticket": 5796.87, "rent": 20.92, "mc_pct": 0.20918, "cmv_pct": 0.79082, "fat_fab": 50875.74, "ticket_fab": 12718.93, "cli_fab": 4, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2026, "m": 2, "mes": "Fevereiro", "fat": 293573.67, "pct": 1.012323, "impl": 1174, "cli": 49, "rank": 2, "ticket": 5165.84, "rent": 20.38, "mc_pct": 0.203775, "cmv_pct": 0.796225, "fat_fab": 40447.29, "ticket_fab": 10111.82, "cli_fab": 4, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2026, "m": 3, "mes": "Março", "fat": 242300.76, "pct": 0.656642, "impl": 735, "cli": 50, "rank": 4, "ticket": 4309.91, "rent": 28.76, "mc_pct": 0.287584, "cmv_pct": 0.712416, "fat_fab": 26964.74, "ticket_fab": 13402.87, "cli_fab": 2, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2026, "m": 4, "mes": "Abril", "fat": 217815.23, "pct": 0.660046, "impl": 588, "cli": 53, "rank": 2, "ticket": 4109.72, "rent": 28.54, "mc_pct": 0.285402, "cmv_pct": 0.714598, "fat_fab": 18379.2, "ticket_fab": 4594.8, "cli_fab": 4, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2026, "m": 5, "mes": "Maio", "fat": 513713.8, "pct": 1.556708, "impl": 2553, "cli": 53, "rank": 1, "ticket": 7555.94, "rent": -0.1, "mc_pct": -0.000106, "cmv_pct": 1.000106, "fat_fab": 113248.8, "ticket_fab": 22649.76, "cli_fab": 5, "sirios": 1, "equip_qty": 1}, {"v": "Diego", "a": 2026, "m": 6, "mes": "Junho", "fat": 87194.5, "pct": 0.267468, "impl": 94, "cli": 49, "rank": 5, "ticket": 1779.48, "rent": 0.3922, "mc_pct": null, "cmv_pct": null, "fat_fab": 78246.84, "ticket_fab": 13041.14, "cli_fab": 6, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2025, "m": 1, "mes": "Janeiro", "fat": 197932.57, "pct": 0.933644, "impl": 604, "cli": 101, "rank": 5, "ticket": 1671.02, "rent": 29.8, "mc_pct": 0.300967, "cmv_pct": 0.699033, "fat_fab": 29159.5, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2025, "m": 2, "mes": "Fevereiro", "fat": 100356.64, "pct": 0.557537, "impl": 154, "cli": 89, "rank": 5, "ticket": 1127.6, "rent": 46.5, "mc_pct": 0.461054, "cmv_pct": 0.538946, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2025, "m": 3, "mes": "Março", "fat": 267674.22, "pct": 1.372688, "impl": 218, "cli": 107, "rank": 3, "ticket": 2291.07, "rent": 13.1, "mc_pct": 0.153248, "cmv_pct": 0.846752, "fat_fab": 22529.7, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2025, "m": 4, "mes": "Abril", "fat": 168419.62, "pct": 0.776127, "impl": 310, "cli": 106, "rank": 4, "ticket": 1588.86, "rent": 40.18, "mc_pct": 0.401798, "cmv_pct": 0.598202, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2025, "m": 5, "mes": "Maio", "fat": 201352.67, "pct": 1.022969, "impl": 624, "cli": 107, "rank": 3, "ticket": 1853.0, "rent": 18.3, "mc_pct": 0.3376, "cmv_pct": 0.6624, "fat_fab": 3381.72, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2025, "m": 6, "mes": "Junho", "fat": 241970.39, "pct": 1.070665, "impl": 1249, "cli": 116, "rank": 1, "ticket": 2085.95, "rent": 0.1358, "mc_pct": 0.135764, "cmv_pct": 0.864236, "fat_fab": 1350.0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2025, "m": 7, "mes": "Julho", "fat": 181042.6, "pct": 2.413901, "impl": 484, "cli": 124, "rank": 2, "ticket": 1460.02, "rent": 0.382, "mc_pct": 0.381954, "cmv_pct": 0.618046, "fat_fab": 11749.66, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2025, "m": 8, "mes": "Agosto", "fat": 142159.61, "pct": 0.526517, "impl": 318, "cli": 114, "rank": 5, "ticket": 1247.01, "rent": 0.4193, "mc_pct": 0.419251, "cmv_pct": 0.580749, "fat_fab": 11095.84, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2025, "m": 9, "mes": "Setembro", "fat": 216968.58, "pct": 0.834495, "impl": 650, "cli": 135, "rank": 2, "ticket": 1607.17, "rent": 0.3257, "mc_pct": 0.325675, "cmv_pct": 0.674325, "fat_fab": 1608.75, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2025, "m": 10, "mes": "Outubro", "fat": 276565.81, "pct": 1.024318, "impl": 1109, "cli": 122, "rank": 3, "ticket": 2266.93, "rent": 0.2849, "mc_pct": 0.284925, "cmv_pct": 0.715075, "fat_fab": 1540.4, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2025, "m": 11, "mes": "Novembro", "fat": 253044.38, "pct": 1.012178, "impl": 864, "cli": 122, "rank": 1, "ticket": 2074.13, "rent": 0.3267, "mc_pct": 0.326689, "cmv_pct": 0.673311, "fat_fab": 731.25, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 1}, {"v": "Francely", "a": 2025, "m": 12, "mes": "Dezembro", "fat": 105386.4, "pct": 0.569656, "impl": 225, "cli": 92, "rank": 8, "ticket": 1145.5, "rent": 0.4097, "mc_pct": 0.409726, "cmv_pct": 0.590274, "fat_fab": 184914.0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 1}, {"v": "Francely", "a": 2026, "m": 1, "mes": "Janeiro", "fat": 263762.76, "pct": 0.976899, "impl": 1316, "cli": 115, "rank": 3, "ticket": 2287.23, "rent": 13.8, "mc_pct": 0.159571, "cmv_pct": 0.840429, "fat_fab": 731.25, "ticket_fab": 731.25, "cli_fab": 1, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2026, "m": 2, "mes": "Fevereiro", "fat": 133486.83, "pct": 0.809011, "impl": 209, "cli": 99, "rank": 4, "ticket": 1348.35, "rent": 42.1, "mc_pct": 0.423908, "cmv_pct": 0.576092, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2026, "m": 3, "mes": "Março", "fat": 258190.04, "pct": 0.902762, "impl": 860, "cli": 129, "rank": 2, "ticket": 2000.24, "rent": 35.5, "mc_pct": 0.359477, "cmv_pct": 0.640523, "fat_fab": 159, "ticket_fab": 159, "cli_fab": 1, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2026, "m": 4, "mes": "Abril", "fat": 200932.28, "pct": 0.855031, "impl": 384, "cli": 106, "rank": 3, "ticket": 1895.59, "rent": 40.26, "mc_pct": 0.402616, "cmv_pct": 0.597384, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2026, "m": 5, "mes": "Maio", "fat": 260856.99, "pct": 1.022969, "impl": 1290, "cli": 128, "rank": 3, "ticket": 2037.95, "rent": 18.3, "mc_pct": 0.195995, "cmv_pct": 0.804005, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2026, "m": 6, "mes": "Junho", "fat": 113104.92, "pct": 1.242256, "impl": 510, "cli": 74, "rank": 4, "ticket": 1528.44, "rent": 0.2475, "mc_pct": null, "cmv_pct": null, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Jarlene", "a": 2025, "m": 1, "mes": "Janeiro", "fat": 160931.69, "pct": 1.166172, "impl": 299, "cli": 70, "rank": 6, "ticket": 1713.65, "rent": 32.3, "mc_pct": 0.346866, "cmv_pct": 0.653134, "fat_fab": 33200.2, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Jarlene", "a": 2025, "m": 2, "mes": "Fevereiro", "fat": 125093.77, "pct": 0.758144, "impl": 48, "cli": 64, "rank": 3, "ticket": 1142.56, "rent": 43.1, "mc_pct": 0.434861, "cmv_pct": 0.565139, "fat_fab": 51970.25, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Jarlene", "a": 2025, "m": 3, "mes": "Março", "fat": 132228.55, "pct": 0.773266, "impl": 283, "cli": 75, "rank": 6, "ticket": 1560.33, "rent": 33.1, "mc_pct": 0.333133, "cmv_pct": 0.666867, "fat_fab": 15204.16, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Jarlene", "a": 2025, "m": 4, "mes": "Abril", "fat": 160005.5, "pct": 0.914317, "impl": 421, "cli": 78, "rank": 5, "ticket": 1884.73, "rent": 35.42, "mc_pct": 0.354237, "cmv_pct": 0.645763, "fat_fab": 12326.2, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Jarlene", "a": 2025, "m": 5, "mes": "Maio", "fat": 166633.82, "pct": 1.075057, "impl": 350, "cli": 88, "rank": 4, "ticket": 1636.21, "rent": 38.4, "mc_pct": 0.373166, "cmv_pct": 0.626834, "fat_fab": 22647.06, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Jarlene", "a": 2025, "m": 6, "mes": "Junho", "fat": 84516.15, "pct": 0.480205, "impl": 115, "cli": 68, "rank": 6, "ticket": 1242.88, "rent": 0.4425, "mc_pct": 0.442477, "cmv_pct": 0.557523, "fat_fab": 125978.6, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 1}, {"v": "Jarlene", "a": 2025, "m": 7, "mes": "Julho", "fat": 77364.1, "pct": 0.318371, "impl": 307, "cli": 35, "rank": 5, "ticket": 2210.4, "rent": 0.3281, "mc_pct": 0.328142, "cmv_pct": 0.671858, "fat_fab": 16521.5, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Jarlene", "a": 2025, "m": 8, "mes": "Agosto", "fat": 191782.78, "pct": 0.782787, "impl": 615, "cli": 83, "rank": 3, "ticket": 2310.64, "rent": 0.3348, "mc_pct": 0.334754, "cmv_pct": 0.665246, "fat_fab": 35669.67, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Jarlene", "a": 2025, "m": 9, "mes": "Setembro", "fat": 130984.75, "pct": 0.557382, "impl": 276, "cli": 88, "rank": 4, "ticket": 1488.46, "rent": 0.4019, "mc_pct": 0.401938, "cmv_pct": 0.598062, "fat_fab": 206242.05, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 1}, {"v": "Jarlene", "a": 2025, "m": 10, "mes": "Outubro", "fat": 189635.4, "pct": 0.774022, "impl": 469, "cli": 91, "rank": 5, "ticket": 2083.91, "rent": 0.343, "mc_pct": 0.342998, "cmv_pct": 0.657002, "fat_fab": 49054.08, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Jarlene", "a": 2025, "m": 11, "mes": "Novembro", "fat": 141343.02, "pct": 0.60403, "impl": 335, "cli": 83, "rank": 5, "ticket": 1702.93, "rent": 0.3511, "mc_pct": 0.35112, "cmv_pct": 0.64888, "fat_fab": 33701.43, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Jarlene", "a": 2025, "m": 12, "mes": "Dezembro", "fat": 68055.02, "pct": 0.412455, "impl": 74, "cli": 78, "rank": 12, "ticket": 872.5, "rent": 0.4289, "mc_pct": 0.428935, "cmv_pct": 0.571065, "fat_fab": 69845.96, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Jarlene", "a": 2026, "m": 1, "mes": "Janeiro", "fat": 163220.1, "pct": 0.666204, "impl": 459, "cli": 70, "rank": 5, "ticket": 1857.7, "rent": 28.8, "mc_pct": 0.29191, "cmv_pct": 0.70809, "fat_fab": 33181.0, "ticket_fab": 8295.25, "cli_fab": 4, "sirios": 1, "equip_qty": 1}, {"v": "Jarlene", "a": 2026, "m": 2, "mes": "Fevereiro", "fat": 139768.41, "pct": 0.681797, "impl": 368, "cli": 83, "rank": 3, "ticket": 1702.55, "rent": 36.1, "mc_pct": 0.362361, "cmv_pct": 0.637639, "fat_fab": 700.8, "ticket_fab": 350.4, "cli_fab": 2, "sirios": 1, "equip_qty": 1}, {"v": "Jarlene", "a": 2026, "m": 3, "mes": "Março", "fat": 251008.32, "pct": 1.045868, "impl": 551, "cli": 102, "rank": 3, "ticket": 2094.96, "rent": 31.4, "mc_pct": 0.328476, "cmv_pct": 0.671524, "fat_fab": 37322.14, "ticket_fab": 7464.43, "cli_fab": 5, "sirios": 0, "equip_qty": 1}, {"v": "Jarlene", "a": 2026, "m": 4, "mes": "Abril", "fat": 127501.28, "pct": 0.510005, "impl": 299, "cli": 96, "rank": 5, "ticket": 1328.14, "rent": 43.18, "mc_pct": 0.431824, "cmv_pct": 0.568176, "fat_fab": 28173.3, "ticket_fab": 5634.66, "cli_fab": 5, "sirios": 0, "equip_qty": 0}, {"v": "Jarlene", "a": 2026, "m": 5, "mes": "Maio", "fat": 177087.46, "pct": 0.625751, "impl": 376, "cli": 109, "rank": 5, "ticket": 1500.15, "rent": 38.4, "mc_pct": 0.38926, "cmv_pct": 0.61074, "fat_fab": 13571.47, "ticket_fab": 6785.73, "cli_fab": 2, "sirios": 0, "equip_qty": 0}, {"v": "Jarlene", "a": 2026, "m": 6, "mes": "Junho", "fat": 170308.4, "pct": 0.756926, "impl": 336, "cli": 115, "rank": 2, "ticket": 1480.94, "rent": 0.4341, "mc_pct": null, "cmv_pct": null, "fat_fab": 56511.41, "ticket_fab": 9418.57, "cli_fab": 6, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2025, "m": 1, "mes": "Janeiro", "fat": 227315.0, "pct": 1.136575, "impl": 812, "cli": 100, "rank": 3, "ticket": 2273.15, "rent": 33.3, "mc_pct": 0.309011, "cmv_pct": 0.690989, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2025, "m": 2, "mes": "Fevereiro", "fat": 113731.51, "pct": 0.653629, "impl": 178, "cli": 98, "rank": 4, "ticket": 1160.53, "rent": 47.9, "mc_pct": 0.480458, "cmv_pct": 0.519542, "fat_fab": 0.0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 1}, {"v": "Luana", "a": 2025, "m": 3, "mes": "Março", "fat": 235486.27, "pct": 1.252587, "impl": 0, "cli": 118, "rank": 4, "ticket": 1892.62, "rent": 28.2, "mc_pct": 0.284529, "cmv_pct": 0.715471, "fat_fab": 12157.5, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2025, "m": 4, "mes": "Abril", "fat": 255799.29, "pct": 1.46171, "impl": 658, "cli": 110, "rank": 3, "ticket": 2219.78, "rent": 37.53, "mc_pct": 0.36816, "cmv_pct": 0.63184, "fat_fab": 11623.0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2025, "m": 5, "mes": "Maio", "fat": 139216.29, "pct": 1.02418, "impl": 502, "cli": 98, "rank": 6, "ticket": 1420.57, "rent": 34.2, "mc_pct": 0.25271, "cmv_pct": 0.74729, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2025, "m": 6, "mes": "Junho", "fat": 117280.06, "pct": 0.572098, "impl": 208, "cli": 108, "rank": 4, "ticket": 1085.93, "rent": 0.464, "mc_pct": 0.464038, "cmv_pct": 0.535962, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2025, "m": 7, "mes": "Julho", "fat": 73228.41, "pct": 0.33135, "impl": 111, "cli": 96, "rank": 6, "ticket": 762.8, "rent": 0.4849, "mc_pct": 0.484934, "cmv_pct": 0.515066, "fat_fab": 12837.36, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 1}, {"v": "Luana", "a": 2025, "m": 8, "mes": "Agosto", "fat": 183521.1, "pct": 0.822965, "impl": 687, "cli": 114, "rank": 4, "ticket": 1609.83, "rent": 0.2796, "mc_pct": 0.279594, "cmv_pct": 0.720406, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2025, "m": 9, "mes": "Setembro", "fat": 113599.68, "pct": 0.528371, "impl": 188, "cli": 120, "rank": 5, "ticket": 946.66, "rent": 0.4285, "mc_pct": 0.428461, "cmv_pct": 0.571539, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2025, "m": 10, "mes": "Outubro", "fat": 319716.03, "pct": 1.42096, "impl": 1167, "cli": 130, "rank": 1, "ticket": 2459.35, "rent": 0.3056, "mc_pct": 0.305641, "cmv_pct": 0.694359, "fat_fab": 12588.68, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2025, "m": 11, "mes": "Novembro", "fat": 93384.69, "pct": 0.434347, "impl": 96, "cli": 110, "rank": 6, "ticket": 848.95, "rent": 0.4535, "mc_pct": 0.453529, "cmv_pct": 0.546471, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2025, "m": 12, "mes": "Dezembro", "fat": 102424.79, "pct": 0.696767, "impl": 260, "cli": 101, "rank": 9, "ticket": 1014.11, "rent": 0.3757, "mc_pct": 0.375714, "cmv_pct": 0.624286, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2026, "m": 1, "mes": "Janeiro", "fat": 137345.04, "pct": 0.597152, "impl": 256, "cli": 93, "rank": 6, "ticket": 1476.83, "rent": 36.2, "mc_pct": 0.362921, "cmv_pct": 0.637079, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2026, "m": 2, "mes": "Fevereiro", "fat": 78844.05, "pct": 0.492775, "impl": 98, "cli": 101, "rank": 5, "ticket": 763.07, "rent": 50.6, "mc_pct": 0.507181, "cmv_pct": 0.492819, "fat_fab": 1744.0, "ticket_fab": 1744, "cli_fab": 1, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2026, "m": 3, "mes": "Março", "fat": 156298.59, "pct": 0.679559, "impl": 318, "cli": 112, "rank": 5, "ticket": 1395.52, "rent": 44.6, "mc_pct": 0.445868, "cmv_pct": 0.554132, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2026, "m": 4, "mes": "Abril", "fat": 130312.9, "pct": 0.611798, "impl": 222, "cli": 102, "rank": 4, "ticket": 1277.58, "rent": 37.53, "mc_pct": 0.375328, "cmv_pct": 0.624672, "fat_fab": 519.0, "ticket_fab": 519, "cli_fab": 1, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2026, "m": 5, "mes": "Maio", "fat": 199715.19, "pct": 1.02418, "impl": 606, "cli": 107, "rank": 4, "ticket": 1863.64, "rent": 34.2, "mc_pct": 0.342204, "cmv_pct": 0.657796, "fat_fab": 342.0, "ticket_fab": 342, "cli_fab": 1, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2026, "m": 6, "mes": "Junho", "fat": 138785.86, "pct": 0.795334, "impl": 246, "cli": 107, "rank": 3, "ticket": 1297.06, "rent": 0.5013, "mc_pct": null, "cmv_pct": null, "fat_fab": 7306.21, "ticket_fab": 3653.11, "cli_fab": 2, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2025, "m": 1, "mes": "Janeiro", "fat": 224423.66, "pct": 1.168873, "impl": 291, "cli": 55, "rank": 4, "ticket": 1608.44, "rent": 29.2, "mc_pct": 0.287895, "cmv_pct": 0.712105, "fat_fab": 135959.28, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2025, "m": 2, "mes": "Fevereiro", "fat": 56867.82, "pct": 0.300888, "impl": 67, "cli": 70, "rank": 6, "ticket": 792.82, "rent": 40.0, "mc_pct": 0.392029, "cmv_pct": 0.607971, "fat_fab": 492.1, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2025, "m": 3, "mes": "Março", "fat": 174713.16, "pct": 0.852259, "impl": 195, "cli": 64, "rank": 5, "ticket": 1250.19, "rent": 43.2, "mc_pct": 0.432174, "cmv_pct": 0.567826, "fat_fab": 94701.25, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 1}, {"v": "Made", "a": 2025, "m": 4, "mes": "Abril", "fat": 123385.21, "pct": 0.685473, "impl": 263, "cli": 59, "rank": 6, "ticket": 1464.7, "rent": 33.67, "mc_pct": 0.336731, "cmv_pct": 0.663269, "fat_fab": 36967.75, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2025, "m": 5, "mes": "Maio", "fat": 158711.43, "pct": 0.622769, "impl": 383, "cli": 63, "rank": 5, "ticket": 2147.16, "rent": 37.9, "mc_pct": 0.271552, "cmv_pct": 0.728448, "fat_fab": 23440.22, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2025, "m": 6, "mes": "Junho", "fat": 118814.72, "pct": 0.792098, "impl": 603, "cli": 66, "rank": 3, "ticket": 1800.22, "rent": 0.1502, "mc_pct": 0.150166, "cmv_pct": 0.849834, "fat_fab": 40845.76, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 1}, {"v": "Made", "a": 2025, "m": 7, "mes": "Julho", "fat": 85884.19, "pct": 0.636179, "impl": 192, "cli": 71, "rank": 4, "ticket": 1209.64, "rent": 0.333, "mc_pct": 0.33297, "cmv_pct": 0.66703, "fat_fab": 15002.68, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2025, "m": 8, "mes": "Agosto", "fat": 83502.08, "pct": 0.618534, "impl": 190, "cli": 65, "rank": 6, "ticket": 1284.65, "rent": 0.3551, "mc_pct": 0.355116, "cmv_pct": 0.644884, "fat_fab": 9132.2, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2025, "m": 9, "mes": "Setembro", "fat": 108894.34, "pct": 0.907453, "impl": 178, "cli": 69, "rank": 6, "ticket": 1578.18, "rent": 0.3307, "mc_pct": 0.330658, "cmv_pct": 0.669342, "fat_fab": 25658.04, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2025, "m": 10, "mes": "Outubro", "fat": 76598.34, "pct": 0.528264, "impl": 153, "cli": 62, "rank": 6, "ticket": 1235.46, "rent": 0.3777, "mc_pct": 0.377714, "cmv_pct": 0.622286, "fat_fab": 24429.0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2025, "m": 11, "mes": "Novembro", "fat": 251222.96, "pct": 2.51223, "impl": 1191, "cli": 57, "rank": 2, "ticket": 4407.42, "rent": 0.0928, "mc_pct": 0.092785, "cmv_pct": 0.907215, "fat_fab": 14425.6, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2025, "m": 12, "mes": "Dezembro", "fat": 71935.48, "pct": 0.8463, "impl": 187, "cli": 56, "rank": 11, "ticket": 1284.56, "rent": 0.2969, "mc_pct": 0.296857, "cmv_pct": 0.703143, "fat_fab": 13795.57, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2026, "m": 1, "mes": "Janeiro", "fat": 191254.99, "pct": 1.275033, "impl": 49, "cli": 56, "rank": 4, "ticket": 2775.01, "rent": 28.2, "mc_pct": 0.281102, "cmv_pct": 0.718898, "fat_fab": 35854.26, "ticket_fab": 5975.71, "cli_fab": 6, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2026, "m": 2, "mes": "Fevereiro", "fat": 75297.28, "pct": 0.57921, "impl": 131, "cli": 61, "rank": 6, "ticket": 1221.97, "rent": 42.5, "mc_pct": 0.425521, "cmv_pct": 0.574479, "fat_fab": 757.3, "ticket_fab": 252.43, "cli_fab": 3, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2026, "m": 3, "mes": "Março", "fat": 70537.05, "pct": 0.306683, "impl": 49, "cli": 79, "rank": 6, "ticket": 738.39, "rent": 42.9, "mc_pct": 0.429884, "cmv_pct": 0.570116, "fat_fab": 12204.2, "ticket_fab": 12204.2, "cli_fab": 1, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2026, "m": 4, "mes": "Abril", "fat": 114547.41, "pct": 0.558768, "impl": 189, "cli": 83, "rank": 6, "ticket": 1380.09, "rent": 43.0, "mc_pct": 0.429981, "cmv_pct": 0.570019, "fat_fab": 152576.62, "ticket_fab": 11736.66, "cli_fab": 13, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2026, "m": 5, "mes": "Maio", "fat": 121439.89, "pct": 0.622769, "impl": 112, "cli": 75, "rank": 6, "ticket": 1183.64, "rent": 37.9, "mc_pct": 0.379423, "cmv_pct": 0.620577, "fat_fab": 32666.86, "ticket_fab": 6533.37, "cli_fab": 5, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2026, "m": 6, "mes": "Junho", "fat": 62054.4, "pct": 0.386632, "impl": 151, "cli": 62, "rank": 6, "ticket": 1000.88, "rent": 0.3322, "mc_pct": null, "cmv_pct": null, "fat_fab": 126839.8, "ticket_fab": 18118.97, "cli_fab": 7, "sirios": 0, "equip_qty": 0}, {"v": "Bruna", "a": 2026, "m": 7, "mes": "Julho", "fat": 241421.97, "pct": 0.928546, "impl": 703, "cli": 99, "rank": 2, "ticket": 2438.6057575757577, "rent": 0.38024451544323, "mc_pct": 0.38024451544323, "cmv_pct": 0.61975548455677, "fat_fab": 64250.05, "ticket_fab": 9178.578571428572, "cli_fab": 7, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2026, "m": 7, "mes": "Julho", "fat": 166710.62, "pct": 0.92617, "impl": 568, "cli": 103, "rank": 4, "ticket": 1618.549708737864, "rent": 0.24410340505002015, "mc_pct": 0.24410340505002015, "cmv_pct": 0.7558965949499798, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2026, "m": 7, "mes": "Julho", "fat": 52612.06, "pct": 0.292289, "impl": 70, "cli": 68, "rank": 6, "ticket": 773.7067647058823, "rent": 0.44805240471481256, "mc_pct": 0.44805240471481256, "cmv_pct": 0.5519475952851874, "fat_fab": 91741.43, "ticket_fab": 11467.67875, "cli_fab": 8, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2026, "m": 7, "mes": "Julho", "fat": 208005.16, "pct": 0.770389, "impl": 520, "cli": 125, "rank": 3, "ticket": 1664.04128, "rent": 0.4159243934140865, "mc_pct": 0.4159243934140865, "cmv_pct": 0.5840756065859135, "fat_fab": 0, "ticket_fab": null, "cli_fab": 0, "sirios": 0, "equip_qty": 0}, {"v": "Jarlene", "a": 2026, "m": 7, "mes": "Julho", "fat": 118589.9, "pct": 1.67028, "impl": 427, "cli": 77, "rank": 5, "ticket": 1540.1285714285714, "rent": 0.320234016556216, "mc_pct": 0.320234016556216, "cmv_pct": 0.679765983443784, "fat_fab": 4978.4, "ticket_fab": 2489.2, "cli_fab": 2, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2026, "m": 7, "mes": "Julho", "fat": 326642.12, "pct": 0.866425, "impl": 1238, "cli": 56, "rank": 1, "ticket": 5832.895000000001, "rent": 0.32596442246946, "mc_pct": 0.32596442246946, "cmv_pct": 0.67403557753054, "fat_fab": 70875.21, "ticket_fab": 11812.535000000002, "cli_fab": 6, "sirios": 0, "equip_qty": 0}, {"v": "Bruna", "a": 2026, "m": 8, "mes": "Agosto", "fat": 299774.51, "pct": 0.951665, "impl": 684, "cli": 98, "rank": 1, "ticket": 3058.9235714285714, "rent": 0.4404718733424, "mc_pct": 0.4404718733424, "cmv_pct": 0.5595281266576, "fat_fab": 25692.66, "ticket_fab": 4282.11, "cli_fab": 6, "sirios": 0, "equip_qty": 0}, {"v": "Luana", "a": 2026, "m": 8, "mes": "Agosto", "fat": 112103.39, "pct": 1.126398, "impl": 256, "cli": 72, "rank": 6, "ticket": 1556.9915277777777, "rent": 0.4033008279232234, "mc_pct": 0.4033008279232234, "cmv_pct": 0.5966991720767766, "fat_fab": 931.0, "ticket_fab": 931.0, "cli_fab": 1, "sirios": 0, "equip_qty": 0}, {"v": "Made", "a": 2026, "m": 8, "mes": "Agosto", "fat": 118934.06, "pct": 0.528596, "impl": 77, "cli": 96, "rank": 5, "ticket": 1238.8964583333332, "rent": 0.4184635587148037, "mc_pct": 0.4184635587148037, "cmv_pct": 0.5815364412851963, "fat_fab": 129093.61, "ticket_fab": 11735.782727272728, "cli_fab": 11, "sirios": 0, "equip_qty": 0}, {"v": "Francely", "a": 2026, "m": 8, "mes": "Agosto", "fat": 198585.6, "pct": 0.874826, "impl": 451, "cli": 115, "rank": 3, "ticket": 1726.8313043478258, "rent": 0.4374006977343775, "mc_pct": 0.4374006977343775, "cmv_pct": 0.5625993022656225, "fat_fab": 62824.2, "ticket_fab": 31412.1, "cli_fab": 2, "sirios": 0, "equip_qty": 0}, {"v": "Jarlene", "a": 2026, "m": 8, "mes": "Agosto", "fat": 141678.4, "pct": 0.665157, "impl": 259, "cli": 96, "rank": 4, "ticket": 1475.8166666666666, "rent": 0.47744786784718063, "mc_pct": 0.47744786784718063, "cmv_pct": 0.5225521321528194, "fat_fab": 110045.73, "ticket_fab": 11004.573, "cli_fab": 10, "sirios": 0, "equip_qty": 0}, {"v": "Diego", "a": 2026, "m": 8, "mes": "Agosto", "fat": 298175.79, "pct": 0.795135, "impl": 1244, "cli": 61, "rank": 2, "ticket": 4888.1277049180335, "rent": 0.19080036645496956, "mc_pct": 0.19080036645496956, "cmv_pct": 0.8091996335450304, "fat_fab": 51514.74, "ticket_fab": 12878.685, "cli_fab": 4, "sirios": 0, "equip_qty": 0}];
+var UNITS=[{"a": 2025, "m": 1, "u": "ITZ", "fat": 320084.12}, {"a": 2025, "m": 1, "u": "PMW", "fat": 651072.59}, {"a": 2025, "m": 1, "u": "SLZ", "fat": 334671.47}, {"a": 2025, "m": 2, "u": "ITZ", "fat": 145348.65}, {"a": 2025, "m": 2, "u": "PMW", "fat": 331519.33}, {"a": 2025, "m": 2, "u": "SLZ", "fat": 252609.81}, {"a": 2025, "m": 3, "u": "ITZ", "fat": 248016.82}, {"a": 2025, "m": 3, "u": "PMW", "fat": 546536.93}, {"a": 2025, "m": 3, "u": "SLZ", "fat": 424831.83}, {"a": 2025, "m": 4, "u": "ITZ", "fat": 321145.61}, {"a": 2025, "m": 4, "u": "PMW", "fat": 566841.16}, {"a": 2025, "m": 4, "u": "SLZ", "fat": 340897.7}, {"a": 2025, "m": 5, "u": "ITZ", "fat": 255964.03}, {"a": 2025, "m": 5, "u": "PMW", "fat": 537119.93}, {"a": 2025, "m": 5, "u": "SLZ", "fat": 391003.24}, {"a": 2025, "m": 6, "u": "ITZ", "fat": 172800.67}, {"a": 2025, "m": 6, "u": "PMW", "fat": 429544.63}, {"a": 2025, "m": 6, "u": "SLZ", "fat": 308419.24}, {"a": 2025, "m": 7, "u": "ITZ", "fat": 167475.32}, {"a": 2025, "m": 7, "u": "PMW", "fat": 416472.62}, {"a": 2025, "m": 7, "u": "SLZ", "fat": 296517.2}, {"a": 2025, "m": 8, "u": "ITZ", "fat": 299399.31}, {"a": 2025, "m": 8, "u": "PMW", "fat": 603490.73}, {"a": 2025, "m": 8, "u": "SLZ", "fat": 325362.09}, {"a": 2025, "m": 9, "u": "ITZ", "fat": 260687.39}, {"a": 2025, "m": 9, "u": "PMW", "fat": 444909.12}, {"a": 2025, "m": 9, "u": "SLZ", "fat": 459552.27}, {"a": 2025, "m": 10, "u": "ITZ", "fat": 307151.21}, {"a": 2025, "m": 10, "u": "PMW", "fat": 711432.13}, {"a": 2025, "m": 10, "u": "SLZ", "fat": 466534.72}, {"a": 2025, "m": 11, "u": "ITZ", "fat": 281433.2}, {"a": 2025, "m": 11, "u": "PMW", "fat": 622332.02}, {"a": 2025, "m": 11, "u": "SLZ", "fat": 123657.82}, {"a": 2025, "m": 12, "u": "ITZ", "fat": 107246.68}, {"a": 2025, "m": 12, "u": "PMW", "fat": 292299.79}, {"a": 2025, "m": 12, "u": "SLZ", "fat": 187144.84}, {"a": 2026, "m": 1, "u": "ITZ", "fat": 327702.58}, {"a": 2026, "m": 1, "u": "PMW", "fat": 609032.8}, {"a": 2026, "m": 1, "u": "SLZ", "fat": 477065.94}, {"a": 2026, "m": 2, "u": "ITZ", "fat": 207633.35}, {"a": 2026, "m": 2, "u": "PMW", "fat": 335286.82}, {"a": 2026, "m": 2, "u": "SLZ", "fat": 362641.44}, {"a": 2026, "m": 3, "u": "ITZ", "fat": 298327.04}, {"a": 2026, "m": 3, "u": "PMW", "fat": 549447.9}, {"a": 2026, "m": 3, "u": "SLZ", "fat": 433618.95}, {"a": 2026, "m": 4, "u": "ITZ", "fat": 235940.79}, {"a": 2026, "m": 4, "u": "PMW", "fat": 503176.68}, {"a": 2026, "m": 4, "u": "SLZ", "fat": 335009.17}, {"a": 2026, "m": 5, "u": "ITZ", "fat": 352378.66}, {"a": 2026, "m": 5, "u": "PMW", "fat": 551360.21}, {"a": 2026, "m": 5, "u": "SLZ", "fat": 501360.41}, {"a": 2026, "m": 6, "u": "ITZ", "fat": 226446.65}, {"a": 2026, "m": 6, "u": "PMW", "fat": 499253.8}, {"a": 2026, "m": 6, "u": "SLZ", "fat": 239215.81}, {"a": 2026, "m": 7, "u": "PMW", "fat": 454061.5}, {"a": 2026, "m": 7, "u": "SLZ", "fat": 494490.48}, {"a": 2026, "m": 7, "u": "ITZ", "fat": 289835.87}, {"a": 2026, "m": 8, "u": "PMW", "fat": 507897.81}, {"a": 2026, "m": 8, "u": "SLZ", "fat": 447947.29}, {"a": 2026, "m": 8, "u": "ITZ", "fat": 255647.7}];
+var EQUIP=[{"v": "Bruna", "a": 2025, "m": 1, "equip": "S\u00edrios", "cliente": "Dr. Frederico Freitas", "valor": 91900}, {"v": "Bruna", "a": 2025, "m": 2, "equip": "S\u00edrios", "cliente": "Dr. Bruno Simi\u00e3o", "valor": 88900}, {"v": "Luana", "a": 2025, "m": 2, "equip": "S\u00edrios", "cliente": "Dr. \u00c2ngelo Gomenares", "valor": 96900}, {"v": "Ana", "a": 2025, "m": 2, "equip": "S\u00edrios", "cliente": "Dr. Maur\u00edcio Nunes", "valor": 93692}, {"v": "Bruna", "a": 2025, "m": 3, "equip": "S\u00edrios", "cliente": "ODONTOVISION LTDA", "valor": 97902}, {"v": "Made", "a": 2025, "m": 3, "equip": "S\u00edrios", "cliente": "Dr. C\u00e9lio Guedes", "valor": 115333.4}, {"v": "Jarlene", "a": 2025, "m": 6, "equip": "S\u00edrios", "cliente": "RONALDO MACHADO DE F. JUNIOR", "valor": 78900}, {"v": "Made", "a": 2025, "m": 6, "equip": "S\u00edrios", "cliente": "ORAL SACARDO", "valor": 87900}, {"v": "Luana", "a": 2025, "m": 7, "equip": "S\u00edrios", "cliente": "Emanuel Nery", "valor": 88900}, {"v": "Jarlene", "a": 2025, "m": 9, "equip": "S\u00edrios", "cliente": "Dr. Noredin Nunes", "valor": 83900}, {"v": "Bruna", "a": 2025, "m": 10, "equip": "S\u00edrios", "cliente": "Dr. Bruno Teixeira", "valor": 11676}, {"v": "Bruna", "a": 2025, "m": 10, "equip": "S\u00edrios", "cliente": "Dr. Bruno Teixeira", "valor": 85223}, {"v": "Francely", "a": 2025, "m": 11, "equip": "S\u00edrios", "cliente": "Dr. Luciano Andre", "valor": 75900}, {"v": "Ana", "a": 2025, "m": 12, "equip": "S\u00edrios", "cliente": "Dra. Michelle Andrade", "valor": 87900}, {"v": "Ana", "a": 2025, "m": 12, "equip": "S\u00edrios", "cliente": "Dra. Thalita Mascarenhas", "valor": 87901}, {"v": "Ana", "a": 2025, "m": 12, "equip": "S\u00edrios", "cliente": "Dr. Eduardo Mendes", "valor": 87900}, {"v": "Francely", "a": 2025, "m": 12, "equip": "S\u00edrios", "cliente": "ORRANNA RODRIGUES CAVALCANTE", "valor": 87900}, {"v": "Bruna", "a": 2026, "m": 1, "equip": "S\u00edrios", "cliente": "Dr. Hugo Eduardo", "valor": 99900}, {"v": "Jarlene", "a": 2026, "m": 1, "equip": "S\u00edrios", "cliente": "K. C. S. ARAUJO ODONTOLGIA", "valor": 82900}, {"v": "Bruna", "a": 2026, "m": 2, "equip": "S\u00edrios", "cliente": "Dr. Hugo Eduardo", "valor": 170100}, {"v": "Bruna", "a": 2026, "m": 2, "equip": "Notebook", "cliente": "Dra. Carlissya Alves", "valor": 22740}, {"v": "Jarlene", "a": 2026, "m": 2, "equip": "S\u00edrios", "cliente": "Dra. Alexandra Rocha", "valor": 82900}, {"v": "Bruna", "a": 2026, "m": 3, "equip": "S\u00edrios", "cliente": "Dr. Andr\u00e9 Luiz Lombardi", "valor": 100900}, {"v": "Bruna", "a": 2026, "m": 3, "equip": "S\u00edrios", "cliente": "Dr. Alex Canales", "valor": 100900}, {"v": "Jarlene", "a": 2026, "m": 3, "equip": "S\u00edrios", "cliente": "M.A.R COELHO", "valor": 78800}, {"v": "Bruna", "a": 2026, "m": 4, "equip": "S\u00edrios", "cliente": "Dra. \u00c1lida Almeira", "valor": 82740}, {"v": "Bruna", "a": 2026, "m": 5, "equip": "S\u00edrios", "cliente": "Dr. Durval Palmeira", "valor": 82740}, {"v": "Diego", "a": 2026, "m": 5, "equip": "S\u00edrios", "cliente": "Rodrigo Neves do Rego Freitas", "valor": 99800}];
+
+var MN=['','Janeiro','Fevereiro','Marco','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+var MA=['','JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
+
+function sum(a,f){var t=0;for(var i=0;i<a.length;i++)t+=f(a[i]);return t;}
+function avg(a,f){return a.length?sum(a,f)/a.length:0;}
+function flt(a,f){var r=[];for(var i=0;i<a.length;i++)if(f(a[i]))r.push(a[i]);return r;}
+function fnd(a,f){for(var i=0;i<a.length;i++)if(f(a[i]))return a[i];return null;}
+function idx(a,v){for(var i=0;i<a.length;i++)if(a[i]===v)return i;return -1;}
+function fk(n){if(!n)return 'R$ 0';if(n>=1000000)return 'R$ '+(n/1000000).toFixed(1)+'M';if(n>=1000)return 'R$ '+(n/1000).toFixed(0)+'K';return 'R$ '+Math.round(n);}
+function fr(n){return n?'R$ '+n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}):'&mdash;';}
+function fi(n){return (n||0).toLocaleString('pt-BR');}
+function pc(v){return v>=1?'ph':v>=0.8?'pm':'pl';}
+function dt(v6,v5,thresh){
+  if(!v5||v5===0)return '<span class="nt">&mdash;</span>';
+  var d=(v6-v5)/Math.abs(v5)*100;
+  var warn=(thresh&&d<=-thresh)?true:false;
+  var cls=d>=0?'up':'dn';
+  return '<span class="'+cls+(warn?' alert-val':'')+'">'+(d>=0?'&#9650;':'&#9660;')+' '+Math.abs(d).toFixed(1)+'%</span>';
+}
+function rb(r){
+  var bg=r===1?'#FFD700':r===2?'#C0C0C0':r===3?'#CD7F32':'#F0EBF8';
+  var co=r<=2?'#333':'#fff';
+  return '<span style="display:inline-flex;width:20px;height:20px;border-radius:50%;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:'+bg+';color:'+co+'">'+r+'</span>';
+}
+
+function barpair(lbl,v5,v6,mx,fmt,isAlert){
+  var w5=mx>0?Math.round(v5/mx*100):0;
+  var w6=mx>0?Math.round(v6/mx*100):0;
+  var d=v5?((v6-v5)/v5*100):null;
+  var ds=d!==null?'<span class="'+(d>=0?'up':'dn')+'">'+(d>=0?'&#9650;':'&#9660;')+' '+Math.abs(d).toFixed(0)+'%</span>':'';
+  var h='<div class="bw">';
+  var bnCls='bn'+(isAlert?' alert':'');
+  h+='<div class="'+bnCls+'">'+(isAlert?'&#9888; ':'')+lbl+' '+ds+'</div>';
+  if(v5>0){h+='<div class="br"><span class="by" style="color:var(--purple)">2025</span><div class="bt"><div class="bf-p" style="width:'+w5+'%"></div></div><span class="bv">'+fmt(v5)+'</span></div>';}
+  if(v6>0){h+='<div class="br"><span class="by" style="color:var(--cd)">2026</span><div class="bt"><div class="bf-c" style="width:'+w6+'%"></div></div><span class="bv">'+fmt(v6)+'</span></div>';}
+  h+='</div>';
+  return h;
+}
+function kpi(lbl,val,sub){
+  return '<div class="kpi-card"><div class="kpi-label">'+lbl+'</div><div class="kpi-val">'+val+'</div><div class="kpi-sub">'+sub+'</div></div>';
+}
+function mk(lbl,val,sub){
+  return '<div class="mk"><div class="mkl">'+lbl+'</div><div class="mkv">'+val+'</div><div class="mks">'+sub+'</div></div>';
+}
+
+function sparkline(vals25,vals26){
+  var all=vals25.concat(vals26);
+  var mx=Math.max.apply(null,all)||1;
+  var h='<div class="spark-wrap">';
+  for(var i=0;i<vals25.length;i++){
+    var pct=Math.round(vals25[i]/mx*100);
+    h+='<div class="spark-bar" style="height:'+pct+'%;background:rgba(156,39,176,0.5)" title="2025 '+MA[i+1]+': '+fk(vals25[i])+'"></div>';
+  }
+  for(var i=0;i<vals26.length;i++){
+    var pct=Math.round(vals26[i]/mx*100);
+    h+='<div class="spark-bar" style="height:'+pct+'%;background:var(--cyan)" title="2026 '+MA[i+1]+': '+fk(vals26[i])+'"></div>';
+  }
+  h+='</div>';
+  return h;
+}
+
+function getThresh(){
+  var el=document.getElementById('thresh');
+  return el?parseInt(el.value,10):20;
+}
+function getYtd(){
+  var el=document.getElementById('ytd-toggle');
+  return el?el.checked:false;
+}
+
+function go(){
+  try{
+    var sv=document.getElementById('sv').value;
+    var sm=parseInt(document.getElementById('sm').value,10);
+    var sa=document.getElementById('sa').value;
+    var ytd=getYtd();
+    var thresh=getThresh();
+
+    // Quando YTD está ativo, compara só até o último mês que já existe em 2026
+    // (dinâmico — antes era fixo em 6/Junho e "sumia" com meses novos como Agosto)
+    var meses2026Disponiveis=flt(RAW,function(r){return r.a===2026&&(sv==='todos'||r.v===sv);}).map(function(r){return r.m;});
+    var ultimoMes2026=meses2026Disponiveis.length?Math.max.apply(null,meses2026Disponiveis):6;
+    var MAX_MONTH_2025 = ytd ? ultimoMes2026 : 12;
+
+    var data=flt(RAW,function(r){
+      return (sv==='todos'||r.v===sv)
+          && (sm===0||r.m===sm)
+          && (sa==='todos'||r.a==sa)
+          && (r.a===2026 || r.m <= MAX_MONTH_2025);
+    });
+
+    var d5=flt(data,function(r){return r.a===2025;});
+    var d6=flt(data,function(r){return r.a===2026;});
+    var VA=['Bruna','Diego','Francely','Jarlene','Luana','Made'];
+
+    var t5=sum(d5,function(r){return r.fat;}),t6=sum(d6,function(r){return r.fat;});
+    var i5=sum(d5,function(r){return r.impl;}),i6=sum(d6,function(r){return r.impl;});
+    var c5=sum(d5,function(r){return r.cli;}),c6=sum(d6,function(r){return r.cli;});
+    // For comparison: only use 2025 months that also exist in 2026
+    var months26=d6.map(function(r){return r.m;}).filter(function(m,i,a){return a.indexOf(m)===i;});
+    var d5cmp=flt(d5,function(r){return months26.indexOf(r.m)!==-1;});
+    var t5cmp=sum(d5cmp,function(r){return r.fat;});
+    var i5cmp=sum(d5cmp,function(r){return r.impl;});
+    var c5cmp=sum(d5cmp,function(r){return r.cli;});
+    var td5cmp=flt(d5cmp,function(r){return r.ticket;});
+    var md5cmp=flt(d5cmp,function(r){return r.mc_pct;});
+    var td5=flt(d5,function(r){return r.ticket;}),td6=flt(d6,function(r){return r.ticket;});
+    var tk5=td5.length?avg(td5,function(r){return r.ticket;}):0;
+    var tk6=td6.length?avg(td6,function(r){return r.ticket;}):0;
+    var md5=flt(d5,function(r){return r.mc_pct;}),md6=flt(d6,function(r){return r.mc_pct;});
+    var mc5=md5.length?avg(md5,function(r){return r.mc_pct;}):0;
+    var mc6=md6.length?avg(md6,function(r){return r.mc_pct;}):0;
+
+    var anoLabel=sa==='2025'?'2025':sa==='2026'?'2026':'2026';
+    var MN_YTD=['','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    var maxMonth26=months26.length?Math.max.apply(null,months26):6;
+    var ytdLabel='Jan-'+MN_YTD[maxMonth26];
+    var notaTag=sa==='todos'?(ytd?'<span class="ytd-tag">'+ytdLabel+' (YTD)</span>':'<span class="note-tag">'+ytdLabel+' 2026</span>'):'';
+    var showCmp=sa==='todos';
+
+    var kpiTot =sa==='2025'?t5:t6,  kpiRef    =sa==='2025'?t6:t5cmp;
+    var kpiImpl=sa==='2025'?i5:i6,  kpiImplRef=sa==='2025'?i6:i5cmp;
+    var kpiCli =sa==='2025'?c5:c6,  kpiCliRef =sa==='2025'?c6:c5cmp;
+    var kpiTkt =sa==='2025'?tk5:tk6, kpiTktRef=sa==='2025'?tk6:(td5cmp.length?avg(td5cmp,function(r){return r.ticket;}):0);
+    var kpiMc  =sa==='2025'?mc5:mc6, kpiMcRef =sa==='2025'?mc6:(md5cmp.length?avg(md5cmp,function(r){return r.mc_pct;}):0);
+
+    function ksub(v,r){if(!showCmp)return '&mdash;';return dt(v,r)+' <span class="nt">vs '+(sa==='2025'?'2026':'2025')+' (mesmo per\u00EDodo)</span>';}
+
+    var h='';
+
+    // KPIs
+    var cnt5=d5.length>0?new Set(d5.map(function(r){return r.m;})).size:0;
+    var cnt6=d6.length>0?new Set(d6.map(function(r){return r.m;})).size:0;
+    h+='<div class="kpi-row">';
+    h+=kpi('Faturamento '+anoLabel+notaTag,fk(kpiTot),ksub(kpiTot,kpiRef));
+    h+=kpi('Implantes '+anoLabel+notaTag,fi(kpiImpl),ksub(kpiImpl,kpiImplRef));
+    h+=kpi('Clientes '+anoLabel+notaTag,fi(kpiCli),ksub(kpiCli,kpiCliRef));
+    h+=kpi('Ticket M&eacute;dio '+anoLabel+notaTag,kpiTkt?'R$ '+Math.round(kpiTkt).toLocaleString('pt-BR'):'&mdash;',ksub(kpiTkt,kpiTktRef));
+    h+=kpi('Margem '+anoLabel+notaTag,kpiMc?(kpiMc*100).toFixed(1)+'%':'&mdash;',ksub(kpiMc,kpiMcRef));
+    h+='</div>';
+    // // KPI comparison now uses only matching months
+
+    // YTD info box
+    if(ytd && sm===0 && sa==='todos'){
+      h+='<div style="background:#EDE7F6;border:1px solid #B39DDB;border-radius:8px;padding:8px 14px;font-size:11px;color:#4A148C">';
+      h+='<strong>&#128203; Modo YTD ativo</strong> &mdash; Comparando Jan&ndash;'+MN_YTD[maxMonth26]+' 2025 vs Jan&ndash;'+MN_YTD[maxMonth26]+' 2026 (per&iacute;odo id&ecirc;ntico)';
+      h+='</div>';
+    }
+
+    // Dashboard por Assessor
+    h+='<div class="sec">Dashboard por Assessor &mdash; ARP &amp; F&aacute;brica</div>';
+
+    var va2=flt(VA,function(v){return fnd(d6,function(r){return r.v===v;})!==null;});
+
+    // Card TOTAL GERAL quando "Todos Assessores" selecionado
+    if(sv==='todos'){
+      var allM6=[];
+      for(var ai=0;ai<d6.length;ai++){if(allM6.indexOf(d6[ai].m)===-1)allM6.push(d6[ai].m);}
+      allM6.sort(function(a,b){return a-b;});
+      var lastM6=allM6.length?allM6[allM6.length-1]:6;
+
+      var gtF5=sum(flt(RAW,function(r){return r.a===2025&&r.m<=lastM6;}),function(r){return r.fat;});
+      var gtF6=sum(d6,function(r){return r.fat;});
+      var gtI5=sum(flt(RAW,function(r){return r.a===2025&&r.m<=lastM6;}),function(r){return r.impl;});
+      var gtI6=sum(d6,function(r){return r.impl;});
+      var gtFab5=sum(flt(RAW,function(r){return r.a===2025&&r.m<=lastM6;}),function(r){return r.fat_fab||0;});
+      var gtFab6=sum(d6,function(r){return r.fat_fab||0;});
+
+      h+='<div class="acard" style="border:2px solid var(--purple);margin-bottom:16px">';
+      h+='<div class="acard-hdr purple" style="background:linear-gradient(90deg,#4A148C,var(--pd))">';
+      h+='<h3>&#127942; TOTAL GERAL &mdash; Todos Assessores</h3>';
+      h+='<span class="alert-badge">Jan&ndash;'+MA[lastM6]+' (mesmo per&iacute;odo)</span></div>';
+
+      h+='<div class="asub ytd">&#128203; Acumulado Jan&ndash;'+MA[lastM6]+' &mdash; ARP: '+fk(gtF5)+' (2025) vs '+fk(gtF6)+' (2026) '+dt(gtF6,gtF5,thresh)+' &nbsp;|&nbsp; Impl.: '+fi(gtI5)+' vs '+fi(gtI6)+' '+dt(gtI6,gtI5)+'</div>';
+
+      // Tabela mensal total
+      h+='<div class="asub">Net Sales ARP &mdash; Total Geral por M&ecirc;s</div>';
+      h+='<div style="overflow-x:auto"><table class="tbl" style="min-width:500px">';
+      h+='<thead><tr><th>M&ecirc;s</th><th>ARP 2025</th><th>ARP 2026</th><th>Cres. ARP</th><th>Impl. 2025</th><th>Impl. 2026</th><th>Cres. Impl.</th></tr></thead><tbody>';
+
+      var allMT=[];
+      for(var ai=0;ai<RAW.length;ai++){if((RAW[ai].a===2025||RAW[ai].a===2026)&&allMT.indexOf(RAW[ai].m)===-1)allMT.push(RAW[ai].m);}
+      if(sm!==0)allMT=allMT.filter(function(mm){return mm===sm;});
+      allMT.sort(function(a,b){return a-b;});
+
+      var gttF5=0,gttF6=0,gttI5=0,gttI6=0;
+      for(var ami=0;ami<allMT.length;ami++){
+        var amn=allMT[ami];
+        var has26=flt(d6,function(r){return r.m===amn;}).length>0;
+        var mf5=sum(flt(RAW,function(r){return r.a===2025&&r.m===amn;}),function(r){return r.fat;});
+        var mf6=sum(flt(RAW,function(r){return r.a===2026&&r.m===amn;}),function(r){return r.fat;});
+        var mi5t=sum(flt(RAW,function(r){return r.a===2025&&r.m===amn;}),function(r){return r.impl;});
+        var mi6t=sum(flt(RAW,function(r){return r.a===2026&&r.m===amn;}),function(r){return r.impl;});
+        gttF5+=mf5; gttF6+=mf6; gttI5+=mi5t; gttI6+=mi6t;
+        h+='<tr'+(has26?'':' style="opacity:0.55"')+'>';
+        h+='<td>'+MA[amn]+(has26?'':' <span style="font-size:9px;color:var(--text-muted)">(s/26)</span>')+'</td>';
+        h+='<td>'+(mf5?fr(mf5):'&mdash;')+'</td>';
+        h+='<td>'+(has26?fr(mf6):'&mdash;')+'</td>';
+        h+='<td>'+(has26&&mf5?dt(mf6,mf5,thresh):'&mdash;')+'</td>';
+        h+='<td>'+(mi5t?fi(mi5t):'&mdash;')+'</td>';
+        h+='<td>'+(has26?fi(mi6t):'&mdash;')+'</td>';
+        h+='<td>'+(has26&&mi5t?dt(mi6t,mi5t):'&mdash;')+'</td></tr>';
+      }
+      h+='<tr style="font-weight:700;background:#F5F0FA"><td>TOTAL</td><td>'+fr(gttF5)+'</td><td>'+fr(gttF6)+'</td><td>'+dt(gttF6,gttF5,thresh)+'</td><td>'+fi(gttI5)+'</td><td>'+fi(gttI6)+'</td><td>'+dt(gttI6,gttI5)+'</td></tr>';
+      h+='</tbody></table></div>';
+
+      h+='<div class="mkpis">';
+      h+=mk('ARP 2026 (Jan-'+MA[lastM6]+')',fk(gtF6),dt(gtF6,gtF5)+' vs 2025');
+      h+=mk('Implantes 2026',fi(gtI6),dt(gtI6,gtI5)+' vs 2025');
+      if(gtFab6>0)h+=mk('F\u00E1brica 2026',fk(gtFab6),dt(gtFab6,gtFab5)+' vs 2025');
+      h+='</div></div>';
+
+      h+='<div class="sec" style="margin-top:16px">Por Assessor &mdash; Detalhe Individual</div>';
+    }
+
+    for(var vi=0;vi<va2.length;vi++){
+      var v=va2[vi];
+      var meses6=[];
+      for(var j=0;j<d6.length;j++){if(d6[j].v===v&&idx(meses6,d6[j].m)===-1)meses6.push(d6[j].m);}
+      meses6.sort(function(a,b){return a-b;});
+      if(!meses6.length)continue;
+
+      // Check alert: fat 2026 < fat 2025 by thresh%
+      var af5v=sum(flt(RAW,function(r){return r.v===v&&r.a===2025&&r.m<=5;}),function(r){return r.fat;});
+      var af6v=sum(flt(RAW,function(r){return r.v===v&&r.a===2026;}),function(r){return r.fat;});
+      var isAlert=af5v>0&&((af6v-af5v)/af5v*100)<=-thresh;
+
+      h+='<div class="acard'+(isAlert?' alert-card':'')+'">';
+      h+='<div class="acard-hdr '+(isAlert?'red':'purple')+'">';
+      h+='<h3>'+(isAlert?'&#9888; ':'')+v+'</h3>';
+
+      // Sparkline in header
+      var spark25=[],spark26=[];
+      for(var mi=1;mi<=5;mi++){
+        var rs5=fnd(RAW,function(r){return r.v===v&&r.a===2025&&r.m===mi;});
+        var rs6=fnd(RAW,function(r){return r.v===v&&r.a===2026&&r.m===mi;});
+        spark25.push(rs5?rs5.fat:0);
+        spark26.push(rs6?rs6.fat:0);
+      }
+      h+=sparkline(spark25,spark26);
+      if(isAlert)h+='<span class="alert-badge">&#9660; Queda &gt;'+thresh+'%</span>';
+      h+='</div>';
+
+      // YTD acumulado
+      var ytdF5=sum(flt(RAW,function(r){return r.v===v&&r.a===2025&&r.m<=meses6.length;}),function(r){return r.fat;});
+      var ytdF6=sum(flt(RAW,function(r){return r.v===v&&r.a===2026;}),function(r){return r.fat;});
+      var ytdI5=sum(flt(RAW,function(r){return r.v===v&&r.a===2025&&r.m<=meses6.length;}),function(r){return r.impl;});
+      var ytdI6=sum(flt(RAW,function(r){return r.v===v&&r.a===2026;}),function(r){return r.impl;});
+
+      h+='<div class="asub ytd">&#128203; Acumulado Jan&ndash;'+MA[meses6[meses6.length-1]]+' (mesmo per&iacute;odo) &mdash; ';
+      h+='ARP: '+fk(ytdF5)+' (2025) vs '+fk(ytdF6)+' (2026) '+dt(ytdF6,ytdF5,thresh);
+      h+=' &nbsp;|&nbsp; Impl.: '+fi(ytdI5)+' vs '+fi(ytdI6)+' '+dt(ytdI6,ytdI5);
+      h+='</div>';
+
+      // Tabela ARP comparativa
+      h+='<div class="asub">Net Sales ARP &mdash; 2025 vs 2026</div>';
+      h+='<div style="overflow-x:auto"><table class="tbl" style="min-width:500px">';
+      h+='<thead><tr><th>M&ecirc;s</th><th>ARP 2025</th><th>ARP 2026</th><th>Cres. ARP</th><th>Impl. 2025</th><th>Impl. 2026</th><th>Cres. Impl.</th></tr></thead><tbody>';
+      var totalF5=0,totalF6=0,totalI5=0,totalI6=0;
+      // Collect all months from both years
+        var allMonths=[];
+        for(var ami=0;ami<RAW.length;ami++){var amr=RAW[ami];if(amr.v===v&&(amr.a===2025||amr.a===2026)&&allMonths.indexOf(amr.m)===-1)allMonths.push(amr.m);}
+        if(sm!==0)allMonths=allMonths.filter(function(mm){return mm===sm;});
+        allMonths.sort(function(a,b){return a-b;});
+        for(var mi=0;mi<allMonths.length;mi++){
+        var mn=allMonths[mi];
+        var r6=fnd(RAW,function(r){return r.v===v&&r.a===2026&&r.m===mn;});
+        var r5=fnd(RAW,function(r){return r.v===v&&r.a===2025&&r.m===mn;});
+        var hasBoth=r5&&r6;
+        var f5=r5?r5.fat:0,f6=r6?r6.fat:0;
+        var ii5=r5?r5.impl:0,ii6=r6?r6.impl:0;
+        totalF5+=f5; totalF6+=f6; totalI5+=ii5; totalI6+=ii6;
+        var rowAlert=hasBoth&&f5>0&&((f6-f5)/f5*100)<=-thresh;
+        h+='<tr'+(rowAlert?' class="alert-row"':'')+'>';
+        h+='<td>'+MA[mn]+(r6?'':' <span style=\"font-size:9px;color:var(--text-muted)\">(s/26)</span>')+'</td>';
+        h+='<td>'+(f5?fr(f5):'&mdash;')+'</td>';
+        h+='<td>'+(r6?fr(f6):'&mdash;')+'</td>';
+        h+='<td>'+(hasBoth?dt(f6,f5,thresh):'&mdash;')+'</td>';
+        h+='<td>'+(ii5?fi(ii5):'&mdash;')+'</td>';
+        h+='<td>'+(r6?fi(ii6):'&mdash;')+'</td>';
+        h+='<td>'+(hasBoth?dt(ii6,ii5):'&mdash;')+'</td></tr>';
+      }
+      // Total row
+      h+='<tr style="font-weight:700;background:#F5F0FA"><td>TOTAL</td><td>'+fr(totalF5)+'</td><td>'+fr(totalF6)+'</td><td>'+dt(totalF6,totalF5,thresh)+'</td>';
+      h+='<td>'+fi(totalI5)+'</td><td>'+fi(totalI6)+'</td><td>'+dt(totalI6,totalI5)+'</td></tr>';
+      h+='</tbody></table></div>';
+
+      // Tabela Fabrica
+      var temFab=fnd(d6,function(r){return r.v===v&&r.fat_fab>0;})!==null;
+      if(temFab){
+        h+='<div class="asub cyan">Faturamento F&aacute;brica &mdash; 2025 vs 2026</div>';
+        h+='<div style="overflow-x:auto"><table class="tbl" style="min-width:560px">';
+        h+='<thead><tr><th>M&ecirc;s</th><th>F&aacute;b. 2025</th><th>F&aacute;b. 2026</th><th>Cres.</th><th>Ticket 26</th><th>Cli. 26</th><th>Equip.</th><th>% ARP 26</th></tr></thead><tbody>';
+        var fabTotal=0;
+        for(var mi=0;mi<meses6.length;mi++){
+          var mn=meses6[mi];
+          var r6=fnd(RAW,function(r){return r.v===v&&r.a===2026&&r.m===mn;});
+          if(!r6||!r6.fat_fab||r6.fat_fab===0)continue;
+          fabTotal+=r6.fat_fab;
+          var r5fab=fnd(RAW,function(r){return r.v===v&&r.a===2025&&r.m===mn;});
+          var ff5=r5fab?( r5fab.fat_fab||0):0;
+          var ff6=r6.fat_fab||0;
+          var pct=r6.fat>0?(ff6/r6.fat*100).toFixed(1):'0';
+          var equip=r6.equip_qty||0;
+          h+='<tr><td>'+MA[mn]+'</td>';
+          h+='<td>'+(ff5>0?fr(ff5):'&mdash;')+'</td>';
+          h+='<td>'+(ff6>0?fr(ff6):'&mdash;')+'</td>';
+          h+='<td>'+dt(ff6,ff5)+'</td>';
+          h+='<td>'+(r6.ticket_fab?'R$ '+Math.round(r6.ticket_fab).toLocaleString('pt-BR'):'&mdash;')+'</td>';
+          h+='<td>'+r6.cli_fab+'</td>';
+          // Build equip names for this cell
+          var equipNames=[];
+          for(var ei=0;ei<EQUIP.length;ei++){
+            if(EQUIP[ei].v===v&&EQUIP[ei].a===2026&&EQUIP[ei].m===mn){
+              equipNames.push(EQUIP[ei].equip);
+            }
+          }
+          h+='<td>'+(equipNames.length>0?'<span class="pill pm" title="'+equipNames.join(', ')+'">'+equipNames.join('<br>')+'</span>':'&mdash;')+'</td>';
+          h+='<td><span class="pill pc">'+pct+'%</span></td></tr>';
+        }
+        // calc 2025 fab total for same months
+        var fabTotal5=0;
+        for(var fmi=0;fmi<meses6.length;fmi++){
+          var fmn2=meses6[fmi];
+          var r5ft=fnd(RAW,function(r){return r.v===v&&r.a===2025&&r.m===fmn2;});
+          fabTotal5+=r5ft?(r5ft.fat_fab||0):0;
+        }
+        if(fabTotal>0||fabTotal5>0){
+          h+='<tr style="font-weight:700;background:#F5F0FA"><td>TOTAL</td>';
+          h+='<td>'+(fabTotal5>0?fr(fabTotal5):'&mdash;')+'</td>';
+          h+='<td>'+fr(fabTotal)+'</td>';
+          h+='<td>'+dt(fabTotal,fabTotal5)+'</td>';
+          h+='<td colspan="4" style="text-align:left;padding-left:8px;font-weight:400;color:var(--text-muted)">'+((fabTotal/totalF6)*100).toFixed(1)+'% do ARP total</td></tr>';
+        }
+        h+='</tbody></table></div>';
+      }
+
+      // Mini KPIs
+      var ar5=flt(RAW,function(r){return r.v===v&&r.a===2025;});
+      var ar6=flt(RAW,function(r){return r.v===v&&r.a===2026;});
+      var af5=sum(ar5,function(r){return r.fat;}),af6=sum(ar6,function(r){return r.fat;});
+      var ai5=sum(ar5,function(r){return r.impl;}),ai6=sum(ar6,function(r){return r.impl;});
+      var am5=flt(ar5,function(r){return r.mc_pct;}),am6=flt(ar6,function(r){return r.mc_pct;});
+      var mc5v=am5.length?avg(am5,function(r){return r.mc_pct;}):0;
+      var mc6v=am6.length?avg(am6,function(r){return r.mc_pct;}):0;
+      var fab6=sum(ar6,function(r){return r.fat_fab||0;});
+      h+='<div class="mkpis">';
+      h+=mk('ARP 2026 (acum.)',fk(af6),dt(af6,af5)+' vs 2025 (12m)');
+      h+=mk('Implantes 2026',fi(ai6),dt(ai6,ai5)+' vs 2025');
+      h+=mk('%MC 2026',(mc6v*100).toFixed(1)+'%',dt(mc6v,mc5v)+' vs 2025');
+      if(fab6>0)h+=mk('F&aacute;brica 2026',fk(fab6),'<span class="nt">'+((fab6/af6)*100).toFixed(1)+'% do ARP</span>');
+      h+='</div></div>';
+    }
+
+    // Comparativo Geral
+    h+='<div class="sec">Comparativo Geral &mdash; Todos Assessores</div>';
+    var va=[];
+    for(var i=0;i<data.length;i++){if(idx(va,data[i].v)===-1)va.push(data[i].v);}
+    var fbv=[],ibv=[],cbv=[],mxF=0,mxI=0,mxC=0;
+    for(var i=0;i<va.length;i++){
+      var v=va[i];
+      var f5=sum(flt(d5,function(r){return r.v===v;}),function(r){return r.fat;});
+      var f6=sum(flt(d6,function(r){return r.v===v;}),function(r){return r.fat;});
+      var ii5=sum(flt(d5,function(r){return r.v===v;}),function(r){return r.impl;});
+      var ii6=sum(flt(d6,function(r){return r.v===v;}),function(r){return r.impl;});
+      var cc5=sum(flt(d5,function(r){return r.v===v;}),function(r){return r.cli;});
+      var cc6=sum(flt(d6,function(r){return r.v===v;}),function(r){return r.cli;});
+      var alertV=f5>0&&((f6-f5)/f5*100)<=-thresh;
+      fbv.push({v:v,t5:f5,t6:f6,a:alertV});
+      ibv.push({v:v,i5:ii5,i6:ii6,a:alertV});
+      cbv.push({v:v,c5:cc5,c6:cc6,a:alertV});
+      if(Math.max(f5,f6)>mxF)mxF=Math.max(f5,f6);
+      if(Math.max(ii5,ii6)>mxI)mxI=Math.max(ii5,ii6);
+      if(Math.max(cc5,cc6)>mxC)mxC=Math.max(cc5,cc6);
+    }
+
+    h+='<div class="g2">';
+    h+='<div class="card"><div class="ch ch-p"><h3>Faturamento por Assessor</h3></div><div class="cb">';
+    for(var i=0;i<fbv.length;i++)h+=barpair(fbv[i].v,fbv[i].t5,fbv[i].t6,mxF,fk,fbv[i].a);
+    h+='</div></div>';
+    h+='<div class="card"><div class="ch ch-p"><h3>Implantes por Assessor</h3></div><div class="cb">';
+    for(var i=0;i<ibv.length;i++)h+=barpair(ibv[i].v,ibv[i].i5,ibv[i].i6,mxI,fi,ibv[i].a);
+    h+='</div></div></div>';
+
+    h+='<div class="g2">';
+    h+='<div class="card"><div class="ch ch-p"><h3>Clientes Atendidos</h3></div><div class="cb">';
+    for(var i=0;i<cbv.length;i++)h+=barpair(cbv[i].v,cbv[i].c5,cbv[i].c6,mxC,fi,cbv[i].a);
+    h+='</div></div>';
+
+    // MC tabela
+    var mcByV=[];
+    for(var i=0;i<va.length;i++){
+      var v=va[i];
+      var m5=flt(d5,function(r){return r.v===v&&r.mc_pct;});
+      var m6=flt(d6,function(r){return r.v===v&&r.mc_pct;});
+      mcByV.push({v:v,mc5:m5.length?avg(m5,function(r){return r.mc_pct;}):null,mc6:m6.length?avg(m6,function(r){return r.mc_pct;}):null});
+    }
+    h+='<div class="card"><div class="ch ch-p"><h3>Margem de Contribui&ccedil;&atilde;o</h3></div><div class="cb">';
+    h+='<table class="tbl"><thead><tr><th>Assessor</th><th>2025</th><th>2026</th><th>Varia&ccedil;&atilde;o</th></tr></thead><tbody>';
+    for(var i=0;i<mcByV.length;i++){
+      var x=mcByV[i];
+      h+='<tr><td>'+x.v+'</td>';
+      h+='<td>'+(x.mc5!==null?'<span class="pill '+pc(x.mc5)+'">'+( x.mc5*100).toFixed(1)+'%</span>':'&mdash;')+'</td>';
+      h+='<td>'+(x.mc6!==null?'<span class="pill '+pc(x.mc6)+'">'+( x.mc6*100).toFixed(1)+'%</span>':'&mdash;')+'</td>';
+      h+='<td>'+dt(x.mc6,x.mc5)+'</td></tr>';
+    }
+    h+='</tbody></table></div></div></div>';
+
+    // Fabrica resumo
+    var fabByV=[];
+    for(var i=0;i<VA.length;i++){
+      var v=VA[i];
+      var rows6=flt(d6,function(r){return r.v===v;});
+      var ff=sum(rows6,function(r){return r.fat_fab||0;});
+      if(ff>0)fabByV.push({v:v,ff:ff,cf:sum(rows6,function(r){return r.cli_fab||0;}),sf:sum(rows6,function(r){return r.sirios||0;}),fa:sum(rows6,function(r){return r.fat;})});
+    }
+    if(fabByV.length){
+      h+='<div class="sec">F&aacute;brica 2026 &mdash; Resumo</div>';
+      var mxFab=0;for(var i=0;i<fabByV.length;i++)if(fabByV[i].ff>mxFab)mxFab=fabByV[i].ff;
+      h+='<div class="g2">';
+      h+='<div class="card"><div class="ch ch-c"><h3>Fat. F&aacute;brica por Assessor</h3></div><div class="cb">';
+      for(var i=0;i<fabByV.length;i++){
+        var x=fabByV[i];
+        var w=Math.round(x.ff/mxFab*100);
+        var pct=x.fa>0?((x.ff/x.fa)*100).toFixed(1):'0';
+        var ff5b=0;
+        for(var fi3=0;fi3<d5.length;fi3++){if(d5[fi3].v===x.v)ff5b+=d5[fi3].fat_fab||0;}
+        var mxFabA=Math.max(mxFab,ff5b)||1;
+        var wb5=Math.round(ff5b/mxFabA*100);
+        var wb6=Math.round(x.ff/mxFabA*100);
+        var ddf=ff5b>0?((x.ff-ff5b)/ff5b*100):null;
+        var dsf=ddf!==null?(' <span class="'+(ddf>=0?'up':'dn')+'">'+(ddf>=0?'&#9650;':'&#9660;')+' '+Math.abs(ddf).toFixed(0)+'%</span>'):'';
+        h+='<div class="bw"><div class="bn">'+x.v+' <span style="color:var(--cd);font-size:10px">'+pct+'% do ARP</span>'+dsf+'</div>';
+        if(ff5b>0){h+='<div class="br"><span class="by" style="color:var(--purple)">2025</span><div class="bt"><div class="bf-p" style="width:'+wb5+'%"></div></div><span class="bv">'+fk(ff5b)+'</span></div>';}
+        h+='<div class="br"><span class="by" style="color:var(--cd)">2026</span><div class="bt"><div class="bf-c" style="width:'+wb6+'%"></div></div><span class="bv">'+fk(x.ff)+'</span></div></div>';
+      }
+      h+='</div></div>';
+
+      // Ranking
+      var rankD=[];
+      for(var i=0;i<VA.length;i++){
+        var v=VA[i];
+        var rows6=flt(d6,function(r){return r.v===v;});
+        var fat=sum(rows6,function(r){return r.fat;});
+        if(!fat)continue;
+        var fab=sum(rows6,function(r){return r.fat_fab||0;});
+        var mc6v=flt(rows6,function(r){return r.mc_pct;});
+        rankD.push({v:v,fat:fat,fab:fab,mc:mc6v.length?avg(mc6v,function(r){return r.mc_pct;}):0});
+      }
+      rankD.sort(function(a,b){return b.fat-a.fat;});
+      h+='<div class="card"><div class="ch ch-c"><h3>Ranking 2026 &mdash; ARP + F&aacute;brica</h3><span class="bdg">Jan&ndash;'+MN_YTD[maxMonth26]+'</span></div><div class="cb">';
+      h+='<table class="tbl"><thead><tr><th>#</th><th>Assessor</th><th>ARP</th><th>F&aacute;brica</th><th>Total</th><th>%MC</th></tr></thead><tbody>';
+      for(var i=0;i<rankD.length;i++){
+        var x=rankD[i];
+        h+='<tr><td>'+rb(i+1)+'</td><td>'+x.v+'</td><td>'+fk(x.fat)+'</td><td>'+fk(x.fab)+'</td>';
+        h+='<td style="font-weight:700">'+fk(x.fat+x.fab)+'</td>';
+        h+='<td><span class="pill '+pc(x.mc)+'">'+( x.mc*100).toFixed(1)+'%</span></td></tr>';
+      }
+      h+='</tbody></table></div></div></div>';
+    }
+
+    // Indicadores de Qualidade
+    // \u2500\u2500 FATURAMENTO GLOBAL POR LOJA \u2500\u2500
+    h+='<div class="sec">Faturamento Global &mdash; Lojas ARP</div>';
+
+    // \u2500\u2500 SE\u00C7\u00C3O EQUIPAMENTOS
+    h+='<div class="sec">Equipamentos Vendidos &mdash; F\u00E1brica</div>';
+
+    // Filter equip data
+    var eqFiltered=flt(EQUIP,function(r){
+      return (sv==='todos'||r.v===sv)&&(sa==='todos'||r.a==sa)&&(sm===0||r.m===sm);
+    });
+
+    if(eqFiltered.length>0){
+      // Summary by type
+      var eqByType={};
+      var eqTotal=0;
+      for(var ei=0;ei<eqFiltered.length;ei++){
+        var eq=eqFiltered[ei];
+        if(!eqByType[eq.equip])eqByType[eq.equip]={qty:0,valor:0};
+        eqByType[eq.equip].qty++;
+        eqByType[eq.equip].valor+=eq.valor;
+        eqTotal+=eq.valor;
+      }
+
+      // Pill summary
+      var eqPills='';
+      for(var t in eqByType){
+        eqPills+='<span class="pill pm" style="margin:2px 4px 2px 0">'+t+' &times;'+eqByType[t].qty+'</span>';
+      }
+
+      // Detail table
+      var eqRows='';
+      for(var ei=0;ei<eqFiltered.length;ei++){
+        var eq=eqFiltered[ei];
+        eqRows+='<tr><td>'+MA[eq.m]+'/'+eq.a+'</td><td>'+eq.v+'</td>';
+        eqRows+='<td><span class="pill pm">'+eq.equip+'</span></td>';
+        eqRows+='<td>'+eq.cliente+'</td>';
+        eqRows+='<td>R$ '+eq.valor.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'</td></tr>';
+      }
+
+      h+='<div class="card"><div class="ch ch-p"><h3>Equipamentos &mdash; Detalhe por Assessor</h3><span class="bdg">'+eqFiltered.length+' vendas &middot; Total: '+fk(eqTotal)+'</span></div>';
+      h+='<div class="cb">';
+      h+='<div style="margin-bottom:10px">'+eqPills+'</div>';
+      h+='<div style="overflow-x:auto"><table class="tbl" style="min-width:500px">';
+      h+='<thead><tr><th style="text-align:left">M\u00EAs</th><th style="text-align:left">Assessor</th><th style="text-align:left">Equipamento</th><th style="text-align:left">Cliente</th><th>Valor</th></tr></thead>';
+      h+='<tbody>'+eqRows+'</tbody>';
+      h+='<tfoot><tr style="font-weight:700;background:#F5F0FA"><td colspan="4">TOTAL</td><td style="text-align:right">R$ '+eqTotal.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'</td></tr></tfoot>';
+      h+='</table></div></div></div>';
+    } else {
+      h+='<p style="color:var(--text-muted);font-size:11px;padding:8px 0">Nenhum equipamento no per\u00EDodo selecionado.</p>';
+    }
+
+    // Build unit comparison table
+    var uMeses=sm===0?[1,2,3,4,5,6,7,8,9,10,11,12]:[sm];
+    var uUnits=['PMW','SLZ','ITZ'];
+    var uColors={'PMW':'var(--purple)','SLZ':'var(--cyan)','ITZ':'var(--amber)'};
+
+    // Per month table
+    var uRows='';
+    var uTot5={'PMW':0,'SLZ':0,'ITZ':0,'TOTAL':0};
+    var uTot6={'PMW':0,'SLZ':0,'ITZ':0,'TOTAL':0};
+    var hasU5=false,hasU6=false;
+
+    for(var mi=0;mi<uMeses.length;mi++){
+      var mn=uMeses[mi];
+      var row5={'PMW':0,'SLZ':0,'ITZ':0};
+      var row6={'PMW':0,'SLZ':0,'ITZ':0};
+      for(var ui=0;ui<UNITS.length;ui++){
+        var ud=UNITS[ui];
+        if(ud.m===mn&&(sa==='todos'||ud.a==sa)){
+          if(ud.a===2025&&(sa==='todos'||sa==='2025'))row5[ud.u]+=ud.fat;
+          if(ud.a===2026&&(sa==='todos'||sa==='2026'))row6[ud.u]+=ud.fat;
+        }
+      }
+      var tot5=row5.PMW+row5.SLZ+row5.ITZ;
+      var tot6=row6.PMW+row6.SLZ+row6.ITZ;
+      if(!tot5&&!tot6)continue;
+      hasU5=hasU5||tot5>0; hasU6=hasU6||tot6>0;
+      for(var u in uTot5){uTot5[u]+=(u==='TOTAL'?tot5:row5[u]);}
+      for(var u in uTot6){uTot6[u]+=(u==='TOTAL'?tot6:row6[u]);}
+
+      uRows+='<tr>';
+      uRows+='<td>'+MA[mn]+'</td>';
+      if(sa==='todos'||sa==='2025'){
+        uRows+='<td>'+fk(row5.PMW)+'</td><td>'+fk(row5.SLZ)+'</td><td>'+fk(row5.ITZ)+'</td><td style="font-weight:700">'+fk(tot5)+'</td>';
+      }
+      if(sa==='todos'||sa==='2026'){
+        uRows+='<td>'+fk(row6.PMW)+'</td><td>'+fk(row6.SLZ)+'</td><td>'+fk(row6.ITZ)+'</td><td style="font-weight:700">'+fk(tot6)+'</td>';
+      }
+      if(sa==='todos')uRows+='<td>'+dt(tot6,tot5)+'</td>';
+      uRows+='</tr>';
+    }
+
+    // Total row
+    uRows+='<tr style="font-weight:700;background:#F5F0FA">';
+    uRows+='<td>TOTAL</td>';
+    if(sa==='todos'||sa==='2025'){
+      uRows+='<td>'+fk(uTot5.PMW)+'</td><td>'+fk(uTot5.SLZ)+'</td><td>'+fk(uTot5.ITZ)+'</td><td>'+fk(uTot5.TOTAL)+'</td>';
+    }
+    if(sa==='todos'||sa==='2026'){
+      uRows+='<td>'+fk(uTot6.PMW)+'</td><td>'+fk(uTot6.SLZ)+'</td><td>'+fk(uTot6.ITZ)+'</td><td>'+fk(uTot6.TOTAL)+'</td>';
+    }
+    if(sa==='todos')uRows+='<td>'+dt(uTot6.TOTAL,uTot5.TOTAL)+'</td>';
+    uRows+='</tr>';
+
+    // Build header
+    var uHead='<tr><th>M&ecirc;s</th>';
+    if(sa==='todos'||sa==='2025'){uHead+='<th style="color:var(--pl)">PMW 25</th><th style="color:var(--pl)">SLZ 25</th><th style="color:var(--pl)">ITZ 25</th><th style="color:var(--pl)">Total 25</th>';}
+    if(sa==='todos'||sa==='2026'){uHead+='<th style="color:var(--cd)">PMW 26</th><th style="color:var(--cd)">SLZ 26</th><th style="color:var(--cd)">ITZ 26</th><th style="color:var(--cd)">Total 26</th>';}
+    if(sa==='todos')uHead+='<th>Cres.</th>';
+    uHead+='</tr>';
+
+    // Mini KPIs por loja 2026
+    var uKpis='';
+    for(var ui=0;ui<uUnits.length;ui++){
+      var u=uUnits[ui];
+      var v5=0,v6=0,cnt=0;
+      for(var ki=0;ki<UNITS.length;ki++){
+        var ud=UNITS[ki];
+        if(ud.u===u&&(sm===0||ud.m===sm)){
+          if(ud.a===2025)v5+=ud.fat;
+          if(ud.a===2026){v6+=ud.fat;cnt++;}
+        }
+      }
+      uKpis+=mk(u+' 2026',fk(v6),dt(v6,v5)+' vs 2025');
+    }
+
+    h+='<div class="card"><div class="ch ch-p"><h3>Faturamento por Loja &mdash; PMW / SLZ / ITZ</h3></div>';
+    h+='<div class="mkpis">'+uKpis+'</div>';
+    h+='<div style="overflow-x:auto"><table class="tbl" style="min-width:500px"><thead>'+uHead+'</thead><tbody>'+uRows+'</tbody></table></div></div>';
+
+    // \u2500\u2500 FIM FATURAMENTO GLOBAL \u2500\u2500
+    h+='<div class="sec">Indicadores de Qualidade</div>';
+    var meses=sm===0?[1,2,3,4,5,6,7,8,9,10,11,12]:[sm];
+    var tickRows='';
+    for(var mi=0;mi<meses.length;mi++){
+      var mn=meses[mi];
+      var r5m=flt(RAW,function(r){return r.a===2025&&r.m===mn&&(sv==='todos'||r.v===sv)&&r.ticket;});
+      var r6m=flt(RAW,function(r){return r.a===2026&&r.m===mn&&(sv==='todos'||r.v===sv)&&r.ticket;});
+      var t5m=r5m.length?avg(r5m,function(r){return r.ticket;}):null;
+      var t6m=r6m.length?avg(r6m,function(r){return r.ticket;}):null;
+      if(!t5m&&!t6m)continue;
+      tickRows+='<tr><td>'+MN[mn]+'</td>';
+      tickRows+='<td>'+(t5m?'R$ '+t5m.toLocaleString('pt-BR',{maximumFractionDigits:2}):'&mdash;')+'</td>';
+      tickRows+='<td>'+(t6m?'R$ '+t6m.toLocaleString('pt-BR',{maximumFractionDigits:2}):'&mdash;')+'</td>';
+      tickRows+='<td>'+dt(t6m,t5m)+'</td></tr>';
+    }
+
+    // MC Gauges
+    var gauges='';
+    for(var i=0;i<mcByV.length;i++){
+      var x=mcByV[i];
+      var d=x.mc5&&x.mc6?((x.mc6-x.mc5)*100):null;
+      var colorFn=function(v){return v>=0.35?'var(--green)':v>=0.25?'var(--amber)':'var(--red)';};
+      gauges+='<div class="gi"><div class="gn">'+x.v+'</div>';
+      gauges+='<div style="display:flex;justify-content:center;gap:10px;align-items:flex-end;margin:4px 0 2px">';
+      if(x.mc5!==null)gauges+='<div style="text-align:center"><div style="font-size:9px;color:var(--text-muted);margin-bottom:2px">2025</div><div style="font-size:14px;font-weight:700;color:var(--text-muted)">'+( x.mc5*100).toFixed(1)+'%</div></div>';
+      if(x.mc6!==null)gauges+='<div style="text-align:center"><div style="font-size:9px;color:var(--purple);font-weight:700;margin-bottom:2px">2026</div><div class="gv" style="color:'+colorFn(x.mc6)+'">'+( x.mc6*100).toFixed(1)+'%</div></div>';
+      gauges+='</div><div style="font-size:9px;color:var(--text-muted)">'+(d!==null?'<span class="'+(d>=0?'up':'dn')+'">'+(d>=0?'&#9650;':'&#9660;')+' '+Math.abs(d).toFixed(1)+'pp</span>':'&mdash;')+'</div></div>';
+    }
+
+    h+='<div class="g2">';
+    h+='<div class="card"><div class="ch ch-p"><h3>Ticket M&eacute;dio por M&ecirc;s</h3></div><div class="cb">';
+    h+='<table class="tbl"><thead><tr><th>M&ecirc;s</th><th>2025</th><th>2026</th><th>Varia&ccedil;&atilde;o</th></tr></thead><tbody>';
+    h+=tickRows||'<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:14px">Sem dados</td></tr>';
+    h+='</tbody></table></div></div>';
+    h+='<div class="card"><div class="ch ch-p"><h3>Margem de Contribui&ccedil;&atilde;o &mdash; 2025 vs 2026</h3></div><div class="cb"><div class="ggrid">'+gauges+'</div></div></div>';
+    h+='</div>';
+
+    document.getElementById('app').innerHTML=h;
+    document.getElementById('thresh-val').textContent=thresh+'%';
+
+  }catch(e){
+    document.getElementById('app').innerHTML='<div style="background:#FDECEA;color:#B02A37;padding:16px;margin:14px;border-radius:8px">Erro: '+e.message+'</div>';
+  }
+}
+
+function doPrint(){
+  window.print();
+}
+
+
+window.addEventListener('load',function(){
+  document.getElementById('sv').addEventListener('change',go);
+  document.getElementById('sm').addEventListener('change',go);
+  document.getElementById('sa').addEventListener('change',go);
+  document.getElementById('thresh').addEventListener('input',go);
+  document.getElementById('ytd-toggle').addEventListener('change',go);
+  var selMes=document.getElementById('sm');
+  var curMes=new Date().getMonth()+1;
+  var meses=[].map.call(selMes.options,function(o){return o.value;});
+  if(meses.indexOf(String(curMes))!==-1) selMes.value=curMes;
+  go();
+});
+</script>
+</body>
+</html>

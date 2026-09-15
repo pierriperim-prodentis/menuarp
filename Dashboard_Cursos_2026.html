@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Cursos — Pródentis</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --pk:    #9b59b6; --pkm: #c39bd3; --pks: #e8d5f0; --pkp: #f5eefa;
+    --tl:    #1abc9c; --tls: #a3e4d7;
+    --pur:   #8e44ad; --txt: #2c3e50; --txs: #6b7a8d;
+    --wh:    #ffffff; --bg:  #f8f4fc; --brd: #e0d0ec; --rd: #e74c3c;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Segoe UI',Arial,sans-serif; background:var(--bg); color:var(--txt); font-size:13px; }
+
+  .header { background:var(--pk); color:#fff; padding:11px 20px; display:flex; align-items:center; justify-content:space-between; }
+  .header h1 { font-size:15px; font-weight:700; }
+  .header .sub { font-size:11px; opacity:.8; margin-top:2px; }
+  .header .brand { font-size:11px; opacity:.7; }
+
+  .filters { background:#fff; border-bottom:1px solid var(--brd); padding:8px 20px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .fl { font-size:11px; color:var(--txs); margin-right:4px; }
+  select.fs {
+    padding:5px 10px; border-radius:20px; border:1px solid var(--pkm);
+    background:var(--pkp); color:var(--pur); font-size:12px; cursor:pointer; outline:none;
+  }
+  select.fs:hover { background:var(--pks); }
+
+  .main { padding:14px 20px; display:flex; flex-direction:column; gap:14px; }
+
+  .kpi-row { display:flex; gap:12px; flex-wrap:wrap; }
+  .kpi { background:#fff; border-radius:10px; padding:12px 18px; flex:1; min-width:150px;
+         box-shadow:0 1px 4px rgba(155,89,182,.1); border:1px solid var(--brd); }
+  .kpi .lbl { font-size:11px; color:var(--pk); font-weight:600; text-transform:uppercase; letter-spacing:.4px; }
+  .kpi .val { font-size:22px; font-weight:800; color:var(--pk); margin-top:4px; }
+  .kpi .sub { font-size:11px; color:var(--txs); margin-top:2px; }
+  .kpi.tl .lbl, .kpi.tl .val { color:#148f77; }
+
+  .g3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+  .g4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:14px; }
+  .g2 { display:grid; grid-template-columns:1.6fr 1fr; gap:14px; }
+
+  .card { background:#fff; border-radius:10px; padding:14px; box-shadow:0 1px 4px rgba(155,89,182,.1); border:1px solid var(--brd); }
+  .card h3 { font-size:11px; font-weight:700; color:var(--pk); margin-bottom:12px; text-transform:uppercase; letter-spacing:.4px; }
+
+  table.t { width:100%; border-collapse:collapse; }
+  table.t th { font-size:10px; text-transform:uppercase; color:var(--txs); padding:4px 6px; border-bottom:2px solid var(--brd); }
+  table.t th:first-child, table.t td:first-child { text-align:left; }
+  table.t td { padding:5px 6px; border-bottom:1px solid #f0e8f8; font-size:11px; text-align:center; }
+  table.t td:first-child { font-weight:600; }
+  table.t tr:hover td { background:var(--pkp); }
+  .rv { text-align:right; font-weight:700; color:var(--pk); }
+  .rn { color:var(--txs); font-weight:600; width:22px; }
+  .pv { font-weight:700; color:var(--pur); }
+  .pe { color:#ccc; }
+
+
+  .evol-row { display:flex; gap:10px; flex-wrap:wrap; }
+  .evol-card { background:#fff; border-radius:10px; padding:10px 16px; flex:1; min-width:140px;
+               box-shadow:0 1px 4px rgba(155,89,182,.1); border:1px solid var(--brd); }
+  .evol-card .ec-curso { font-size:11px; font-weight:700; color:var(--txt); }
+  .evol-card .ec-pct  { font-size:20px; font-weight:800; margin-top:2px; }
+  .evol-card .ec-vals { font-size:10px; color:var(--txs); margin-top:2px; }
+  .up   { color:#27ae60; } .down { color:#e74c3c; } .flat { color:var(--txs); }
+  .rank-badge { display:flex; align-items:center; gap:10px; background:var(--pkp);
+                border:1px solid var(--brd); border-radius:8px; padding:8px 14px;
+                min-width:160px; flex:1; position:relative; overflow:hidden; }
+  .rank-bar   { position:absolute; left:0; top:0; bottom:0; background:var(--pks); z-index:0; border-radius:8px; }
+  .rank-content { position:relative; z-index:1; }
+  .pdf-btn { background:var(--pk); color:#fff; border:none; border-radius:8px; padding:7px 18px;
+             font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:6px; }
+  .pdf-btn:hover { background:var(--pur); }
+  .loja-compare { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  .lc-card { background:#fff; border-radius:10px; padding:12px; border:1px solid var(--brd);
+             box-shadow:0 1px 4px rgba(155,89,182,.08); }
+  .lc-card h4 { font-size:11px; font-weight:700; color:var(--pk); text-transform:uppercase;
+                letter-spacing:.4px; margin-bottom:8px; text-align:center; }
+  .lc-row { display:flex; justify-content:space-between; font-size:11px; padding:3px 0;
+            border-bottom:1px solid #f0e8f8; }
+  .lc-row:last-child { border-bottom:none; }
+  .lc-curso { color:var(--txt); font-weight:600; }
+  .lc-val   { color:var(--pk); font-weight:700; }
+
+  .combo-section { background:#fff; border-radius:10px; padding:16px; box-shadow:0 1px 4px rgba(155,89,182,.1); border:1px solid var(--brd); }
+  .combo-section h3 { font-size:11px; font-weight:700; color:var(--pk); margin-bottom:14px; text-transform:uppercase; letter-spacing:.4px; }
+  .combo-tabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
+  .combo-tab { padding:5px 14px; border-radius:20px; border:1px solid var(--pkm); background:var(--pkp);
+               color:var(--pur); font-size:11px; font-weight:600; cursor:pointer; transition:all .15s; }
+  .combo-tab.active { background:var(--pk); color:#fff; border-color:var(--pk); }
+  .combo-tab:hover:not(.active) { background:var(--pks); }
+  .combo-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:10px; }
+  .combo-card { background:var(--pkp); border:1px solid var(--brd); border-radius:10px; padding:12px 14px; text-align:center; }
+  .combo-card .cc-name { font-size:11px; font-weight:700; color:var(--txt); margin-bottom:6px; }
+  .combo-card .cc-num  { font-size:28px; font-weight:800; color:var(--pk); line-height:1; }
+  .combo-card .cc-label{ font-size:10px; color:var(--txs); margin-top:4px; }
+  .combo-card.zero .cc-num { color:var(--brd); }
+  .combo-empty { font-size:12px; color:var(--txs); text-align:center; padding:20px; }
+  .combo-ano-tabs { display:flex; gap:6px; margin-bottom:10px; }
+  .combo-ano-tab { padding:4px 12px; border-radius:20px; border:1px solid var(--pkm); background:var(--pkp);
+                   color:var(--pur); font-size:11px; cursor:pointer; }
+  .combo-ano-tab.active { background:var(--pur); color:#fff; border-color:var(--pur); }
+  canvas { max-height:220px; }
+  body { padding-bottom:0 !important; margin-bottom:0 !important; }
+  .footer { margin-bottom:0 !important; padding-bottom:8px !important; }
+  .footer { text-align:right; font-size:10px; color:var(--txs); padding:8px 20px 14px; }
+  .footer span { background:var(--pk); color:#fff; padding:3px 10px; border-radius:4px; }
+</style>
+
+<style media="print">
+  @page { size: A4 landscape; margin: 10mm; }
+  .filters, .pdf-btn { display:none !important; }
+  .card { break-inside: avoid; }
+  body { font-size: 11px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>📊 Dashboard — Consumo de Cursos</h1>
+    <div class="sub">Especialização em Implantodontia · ITZ · SLZ · TO</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;"><button class="pdf-btn" onclick="exportPDF()">⬇️ Exportar PDF</button><div class="brand">Pródentis</div></div>
+</div>
+
+<div class="filters">
+  <span class="fl">Filtros:</span>
+  <select class="fs" id="fAno" onchange="applyFilters()">
+    <option value="all">📆 Ano — Todos</option>
+    <option value="2026">📆 Ano: 2026</option>
+    <option value="2025">📆 Ano: 2025</option>
+    <option value="2024">📆 Ano: 2024</option>
+  </select>
+  <select class="fs" id="fLoja" onchange="applyFilters()">
+    <option value="all">🏪 Loja — Todas</option>
+    <option value="ITZ">Imperatriz (ITZ)</option>
+    <option value="SLZ">São Luís (SLZ)</option>
+    <option value="TO">Palmas (TO)</option>
+  </select>
+  <select class="fs" id="fCurso" onchange="applyFilters()">
+    <option value="all">📚 Curso — Todos</option>
+  </select>
+  <select class="fs" id="fCategoria" onchange="applyFilters()">
+    <option value="all">👤 Categoria — Todas</option>
+    <option value="Aluno">Aluno</option>
+    <option value="Professor">Professor</option>
+    <option value="Coordenador">Coordenador</option>
+    <option value="Instituição">Instituição</option>
+  </select>
+  <select class="fs" id="fMes" onchange="applyFilters()">
+    <option value="all">📅 Mês — Todos</option>
+    <option value="1">Janeiro</option><option value="2">Fevereiro</option>
+    <option value="3">Março</option><option value="4">Abril</option>
+    <option value="5">Maio</option><option value="6">Junho</option>
+    <option value="7">Julho</option><option value="8">Agosto</option>
+    <option value="9">Setembro</option><option value="10">Outubro</option>
+    <option value="11">Novembro</option><option value="12">Dezembro</option>
+  </select>
+</div>
+
+<div class="main">
+  <div class="kpi-row">
+    <div class="kpi"><div class="lbl">Valor Total</div><div class="val" id="kpiValor">—</div><div class="sub" id="kpiSub">todos os cursos</div></div>
+    <div class="kpi tl"><div class="lbl">Média Mensal</div><div class="val" id="kpiMedia">—</div><div class="sub">meses com consumo</div></div>
+    <div class="kpi"><div class="lbl">Cursos Ativos</div><div class="val" id="kpiCursos">—</div><div class="sub" id="kpiCursosSub">entre as lojas</div></div>
+    <div class="kpi tl"><div class="lbl">Total de Alunos</div><div class="val" id="kpiAlunos">—</div><div class="sub">com kit de adesão</div></div>
+  </div>
+
+
+  <!-- EVOLUÇÃO ANO A ANO -->
+  <div class="card">
+    <h3>Evolução Ano a Ano</h3>
+    <div class="evol-row" id="evolRow"></div>
+  </div>
+
+  <!-- COMPARATIVO DE LOJAS -->
+  <div class="card">
+    <h3>Comparativo de Lojas</h3>
+    <div class="loja-compare" id="lojaCompare"></div>
+  </div>
+
+  <div class="g3">
+    <div class="card"><h3 id="triTitle">1º Trimestre — Comparativo</h3><canvas id="cTri"></canvas></div>
+    <div class="card"><h3 id="semTitle">1º Semestre — Comparativo</h3><canvas id="cSem"></canvas></div>
+    <div class="card"><h3>Categoria</h3><canvas id="cCat"></canvas></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:10px;">Ranking por Curso</h3>
+    <div id="tbRank" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+  </div>
+
+  <div class="card"><h3>Comparativo Anual — Consumo Mensal por Curso</h3><canvas id="cAnual" style="max-height:200px;"></canvas></div>
+
+  <div class="g2">
+    <div class="card"><h3>Volume de Vendas por Equipamento</h3><canvas id="cEquip"></canvas></div>
+    <div class="card"><h3>% Equipamento por Curso</h3>
+      <div style="overflow-x:auto;">
+        <table class="t" id="tPerc">
+          <thead><tr><th>Curso</th><th>%Motor</th><th>%Cont.Âng.</th><th>%Kit Cirúrg.</th><th>%Kit Sel.</th><th>%Kit Prot.</th></tr></thead>
+          <tbody id="tbPerc"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card"><h3>Faturamento e Taxa de Adesão por Curso</h3><canvas id="cFat" style="max-height:220px;"></canvas></div>
+    <div class="card"><h3>Checklist Geral de Adesão</h3>
+      <div style="overflow-x:auto;">
+        <table class="t">
+          <thead><tr><th>Curso</th><th>Motor▼</th><th>C.Âng.</th><th>K.Cirúrg.</th><th>K.Curetas</th><th>K.E.Anc</th><th>K.Enx.</th><th>K.Osteo.</th><th>K.Prot.</th><th>K.Sel.</th></tr></thead>
+          <tbody id="tbAdes"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- COMBO ALUNO -->
+  <div class="combo-section">
+    <h3>🎯 Combo Aluno por Assessor</h3>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+      <span style="font-size:11px;color:var(--txs);">Ano:</span>
+      <div class="combo-ano-tabs" id="comboAnoTabs"></div>
+    </div>
+    <div class="combo-tabs" id="comboMesTabs"></div>
+    <div class="combo-grid" id="comboGrid"></div>
+    <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--brd);display:flex;align-items:center;gap:8px;">
+      <span style="font-size:11px;color:var(--txs);">📦 Combo = Motor + Kit Cirúrgico + Kit Protético + Implantes + Biomaterial</span>
+    </div>
+  </div>
+
+<div class="footer"><span>Desenvolvido por: Pierri Perim</span></div>
+
+<script>
+// ============================================================
+// DATA — extraído das planilhas reais
+// ============================================================
+const DB = {"2024":{"TO":{"ABO":{"total":382176.75,"by_role":{"Instituição":53167.35,"Coordenador":3893.0,"Professor":180773.13,"Aluno":144343.27},"monthly":[65679,15079,74606,33988,29031,20450,27588,26085,12955,42905,27275,7385],"n_students":39,"equip":{}},"IOA":{"total":291530.48,"by_role":{"Instituição":64500.8,"Coordenador":2112.25,"Professor":24869.53,"Aluno":200047.9},"monthly":[43340,39806,20242,17939,21535,24584,40064,27194,32618,9118,962,3465],"n_students":61,"equip":{"Motor":12,"Kit_cirurgico":14,"Kit_protetico":14,"Kit_selecao":2}},"Facit":{"total":182272.07,"by_role":{"Instituição":103227.9,"Coordenador":0,"Professor":22957.98,"Aluno":56086.19},"monthly":[15128,11574,20996,20616,3503,7370,13252,10347,29740,12385,46394,0],"n_students":52,"equip":{"Motor":41,"Kit_cirurgico":44,"Kit_protetico":44,"Kit_enxerto":1,"Kit_curetas":2,"Kit_enx_anc":1,"Kit_osteotos":2}},"Abrange":{"total":540252.74,"by_role":{"Instituição":0,"Coordenador":192167.86,"Professor":34688.45,"Aluno":313396.43},"monthly":[85600,74636,45696,81010,61696,94686,70897,48990,94256,72683,0,0],"n_students":31,"equip":{}},"IOH":{"total":98921.19,"by_role":{"Instituição":0,"Coordenador":42668.73,"Professor":10986.5,"Aluno":45265.96},"monthly":[3071,20831,3975,9197,49884,26040,1852,-256,18700,8295,0,0],"n_students":19,"equip":{}}},"ITZ":{"IOA":{"total":276896.52,"by_role":{"Instituição":127853.3,"Coordenador":30586.3,"Professor":39238.45,"Aluno":79218.47},"monthly":[28610,18503,35016,39918,23220,17903,30675,26934,25437,14365,14248,2068],"n_students":42,"equip":{"Motor":26,"Kit_cirurgico":26,"Kit_protetico":26}}}},"2025":{"TO":{"ABO":{"total":324899.65,"by_role":{"Instituição":12416.0,"Coordenador":5389.35,"Professor":209936.28,"Aluno":97158.02},"monthly":[81386,33616,69594,48197,64989,52726,48709,55875,32948,85081,34020,30244],"n_students":42,"equip":{"Motor":27,"Kit_cirurgico":28,"Kit_protetico":28,"Kit_selecao":5}},"IOA":{"total":246842.14,"by_role":{"Instituição":67398.55,"Coordenador":19661.75,"Professor":6381.8,"Aluno":153400.04},"monthly":[3930,4041,31547,-1817,35023,29302,22089,35752,25064,16693,128486,8054],"n_students":66,"equip":{"Motor":21,"Kit_cirurgico":22,"Kit_protetico":22,"Kit_selecao":1}},"Facit":{"total":150324.07,"by_role":{"Instituição":87089.81,"Coordenador":0,"Professor":12937.25,"Aluno":50297.01},"monthly":[12971,11432,24552,5599,18393,27261,17734,12386,27998,13989,17266,23251],"n_students":26,"equip":{"Motor":16,"Kit_cirurgico":18,"Kit_protetico":18}},"Abrange":{"total":103769.81,"by_role":{"Instituição":0,"Coordenador":6172.7,"Professor":8475.86,"Aluno":89121.25},"monthly":[23155,3044,48214,4074,25507,-602,25426,636,6338,26304,14959,15836],"n_students":21,"equip":{"Motor":4,"Kit_cirurgico":4,"Kit_protetico":4}},"IOH":{"total":80470.05,"by_role":{"Instituição":0,"Coordenador":58475.25,"Professor":430.0,"Aluno":21564.8},"monthly":[42292,4005,4058,7363,16095,-3397,5354,3755,11989,482,2902,6102],"n_students":22,"equip":{"Motor":5,"Kit_cirurgico":8,"Kit_protetico":8}}},"SLZ":{"IOA":{"total":110997.55,"by_role":{"Instituição":59178.1,"Coordenador":21074.3,"Professor":0,"Aluno":30745.15},"monthly":[7938,23135,36650,10224,23753,3780,6641,13642,10233,2586,3166,-7],"n_students":42,"equip":{}},"ABO":{"total":167013.45,"by_role":{"Instituição":4368.36,"Coordenador":96923.02,"Professor":61377.12,"Aluno":4344.95},"monthly":[9281,11590,22896,15151,20570,8624,8458,7483,7531,7637,46347,5790],"n_students":34,"equip":{}},"Mont Alverne":{"total":69879.6,"by_role":{"Instituição":44472.35,"Coordenador":17958.25,"Professor":3012.0,"Aluno":4437.0},"monthly":[6043,9276,8211,6856,2258,2288,5651,9732,11681,7208,3380,4744],"n_students":19,"equip":{}}},"ITZ":{"IOA":{"total":326623.17,"by_role":{"Instituição":155408.6,"Coordenador":29822.62,"Professor":41982.35,"Aluno":99409.6},"monthly":[26450,18049,32331,33014,55209,22417,42734,22992,40001,40372,38493,11900],"n_students":72,"equip":{"Motor":42,"Kit_cirurgico":42,"Kit_protetico":42,"Contra_angulo":24}},"ABO":{"total":184123.9,"by_role":{"Instituição":0,"Coordenador":91780.35,"Professor":13366.0,"Aluno":78977.55},"monthly":[29708,2478,8903,30088,14601,4967,5920,6830,11928,83558,35293,28826],"n_students":50,"equip":{}}}},"2026":{"TO":{"ABO":{"total":161745.45,"by_role":{"Instituição":9090.0,"Coordenador":1502.0,"Professor":111049.52,"Aluno":40103.93},"monthly":[8479.19,8945.45,18878.27,30319.57,37356.89,0.0,3432.82,54333.26,0.0,0.0,0.0,0.0],"n_students":25,"equip":{"Motor":18,"Kit_cirurgico":18,"Kit_protetico":18,"Kit_selecao":4}},"IOA":{"total":110194.11,"by_role":{"Instituição":48363.19,"Coordenador":25621.96,"Professor":0,"Aluno":36208.96},"monthly":[11717.01,9453.08,6266.55,50337.16,24208.1,2341.35,5870.85,0.0,0.0,0.0,0.0,0.0],"n_students":63,"equip":{"Motor":23,"Kit_cirurgico":24,"Kit_protetico":24,"Kit_selecao":1}},"Facit":{"total":129355.94,"by_role":{"Instituição":54039.99,"Coordenador":0,"Professor":49568.15,"Aluno":25747.8},"monthly":[57525.61,11348.88,16384.39,0.0,6642.93,23859.54,5595.19,7999.4,0.0,0.0,0.0,0.0],"n_students":39,"equip":{"Motor":24,"Kit_cirurgico":27,"Kit_protetico":27}},"Abrange":{"total":105407.25,"by_role":{"Instituição":0,"Coordenador":13719.2,"Professor":22411.4,"Aluno":69276.65},"monthly":[340.83,695.5,3110.71,20315.61,2471.74,65330.63,1812.92,11329.32,0.0,0.0,0.0,0.0],"n_students":34,"equip":{"Motor":10,"Kit_cirurgico":11,"Kit_protetico":10}},"IOH":{"total":74563.71,"by_role":{"Instituição":0,"Coordenador":1819.31,"Professor":41859.45,"Aluno":30884.95},"monthly":[235.39,3445.73,9755.34,26547.98,16477.89,13755.14,4346.24,0.0,0.0,0.0,0.0,0.0],"n_students":12,"equip":{"Kit_cirurgico":5,"Kit_protetico":5,"Motor":2}},"Radio Odonto":{"total":54376.91,"by_role":{"Instituição":0,"Coordenador":54019.21,"Professor":0,"Aluno":357.7},"monthly":[0.0,0.0,0.0,0.0,15954.98,0.0,0.0,38421.93,0.0,0.0,0.0,0.0],"n_students":10,"equip":{"Motor":5,"Kit_cirurgico":5,"Kit_protetico":5}}},"SLZ":{"IOA":{"total":47983.25,"by_role":{"Instituição":22581.7,"Coordenador":6670.35,"Professor":2277.8,"Aluno":16453.4},"monthly":[1767.29,3833.2,354.62,4077.0,12266.01,0.0,24464.94,1220.18,0.0,0.0,0.0,0.0],"n_students":43,"equip":{"Motor":4,"Kit_cirurgico":4,"Kit_protetico":4}},"ABO":{"total":75745.95,"by_role":{"Instituição":0,"Coordenador":46609.5,"Professor":15088.65,"Aluno":14047.8},"monthly":[457.24,55618.64,0.0,0.0,6817.93,2325.58,0.0,10526.56,0.0,0.0,0.0,0.0],"n_students":34,"equip":{}},"Mont Alverne":{"total":55309.63,"by_role":{"Instituição":50748.58,"Coordenador":1312.5,"Professor":1404.65,"Aluno":1843.9},"monthly":[0.0,0.0,9868.68,0.0,0.0,13621.18,7469.0,24350.76,0.0,0.0,0.0,0.0],"n_students":19,"equip":{"Motor":1,"Kit_cirurgico":1,"Kit_protetico":1}},"Graal":{"total":29420.0,"by_role":{"Instituição":13663.0,"Coordenador":4807.0,"Professor":10950.0,"Aluno":0},"monthly":[0,0,0,0,0,0,0,0,0,0,0,0],"n_students":24,"equip":{}},"Sindicato":{"total":33450.15,"by_role":{"Instituição":20991.5,"Coordenador":0,"Professor":4242.4,"Aluno":8216.25},"monthly":[2631.64,4833.35,14288.55,3708.88,3550.1,889.15,3548.47,0.0,0.0,0.0,0.0,0.0],"n_students":12,"equip":{}}},"ITZ":{"IOA":{"total":258102.66,"by_role":{"Instituição":86495.75,"Coordenador":10621.56,"Professor":7010.4,"Aluno":153974.95},"monthly":[98621.45,19685.4,12209.02,8256.7,47351.45,26793.93,32009.04,13175.67,0.0,0.0,0.0,0.0],"n_students":73,"equip":{"Motor":58,"Kit_cirurgico":58,"Kit_protetico":58,"Contra_angulo":43}},"ABO":{"total":105826.58,"by_role":{"Instituição":0,"Coordenador":87840.0,"Professor":2837.5,"Aluno":15149.08},"monthly":[753.46,13241.33,62280.17,10833.75,0.0,0.0,2372.0,16345.86,0.0,0.0,0.0,0.0],"n_students":51,"equip":{"Motor":12,"Kit_cirurgico":12,"Kit_protetico":12,"Contra_angulo":12}}}}};
+
+const MONTHS = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const CK = {'ABO':'#9b59b6','IOA':'#1abc9c','Facit':'#5dade2','Abrange':'#c39bd3','IOH':'#f39c12','Mont Alverne':'#e74c3c','Graal':'#2ecc71','Sindicato':'#8e44ad','Radio Odonto':'#f1948a'};
+const PAL = Object.values(CK);
+
+// ============================================================
+// HELPERS
+// ============================================================
+function ff(n) {
+  if(!n) return 'R$ 0';
+  if(n>=1e6) return 'R$ '+(n/1e6).toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.')+' mi';
+  if(n>=1e3) return 'R$ '+(n/1e3).toFixed(1).replace('.',',')+'k';
+  return 'R$ '+n.toFixed(0);
+}
+function ffull(n) { return 'R$ '+(n||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+function getF() {
+  return {
+    ano:  document.getElementById('fAno').value,
+    loja: document.getElementById('fLoja').value,
+    curso:document.getElementById('fCurso').value,
+    cat:  document.getElementById('fCategoria').value,
+    mes:  document.getElementById('fMes').value,
+  };
+}
+
+function getFiltered() {
+  const f = getF();
+  const years = f.ano === 'all' ? ['2024','2025','2026'] : [f.ano];
+  const lojas = f.loja === 'all' ? ['TO','SLZ','ITZ'] : [f.loja];
+
+  const merged = {};
+  years.forEach(y => {
+    lojas.forEach(l => {
+      const ldata = (DB[y]||{})[l]; if (!ldata) return;
+      Object.entries(ldata).forEach(([n,d]) => {
+        if (f.curso !== 'all' && n !== f.curso) return;
+        if (!merged[n]) {
+          merged[n] = {
+            total:0, by_role:{Instituição:0,Coordenador:0,Professor:0,Aluno:0},
+            monthly:[0,0,0,0,0,0,0,0,0,0,0,0], n_students:0, equip:{}, lojas:[]
+          };
+        }
+        const m = merged[n];
+        m.total += d.total;
+        Object.keys(m.by_role).forEach(r => m.by_role[r] += d.by_role[r]||0);
+        d.monthly.forEach((v,i) => m.monthly[i] += v);
+        m.n_students += d.n_students;
+        Object.entries(d.equip).forEach(([k,v]) => m.equip[k]=(m.equip[k]||0)+v);
+        if(!m.lojas.includes(l)) m.lojas.push(l);
+      });
+    });
+  });
+  return Object.entries(merged);
+}
+
+
+function getCursoValue(d, f) {
+  if (f.cat !== 'all') return d.by_role[f.cat] || 0;
+  if (f.mes !== 'all') return d.monthly[parseInt(f.mes)-1] || 0;
+  return d.total;
+}
+
+// ============================================================
+// CHARTS INIT
+// ============================================================
+const CH = {};
+
+function initCharts() {
+  CH.tri = new Chart(document.getElementById('cTri'), {
+    type:'bar',
+    data:{ labels:[], datasets:[] },
+    options:{ responsive:true, maintainAspectRatio:true,
+      plugins:{ legend:{position:'bottom',labels:{font:{size:10}}}, tooltip:{callbacks:{label:c=>ffull(c.raw)}} },
+      scales:{ y:{ticks:{callback:v=>ff(v),font:{size:9}},grid:{color:'#f0e8f8'}}, x:{ticks:{font:{size:9}}} } }
+  });
+
+  CH.sem = new Chart(document.getElementById('cSem'), {
+    type:'bar',
+    data:{ labels:[], datasets:[] },
+    options:{ responsive:true, maintainAspectRatio:true,
+      plugins:{ legend:{position:'bottom',labels:{font:{size:10}}}, tooltip:{callbacks:{label:c=>ffull(c.raw)}} },
+      scales:{ y:{ticks:{callback:v=>ff(v),font:{size:9}},grid:{color:'#f0e8f8'}}, x:{ticks:{font:{size:9}}} } }
+  });
+
+  CH.cat = new Chart(document.getElementById('cCat'), {
+    type:'pie',
+    data:{ labels:['Alunos','Instituição','Professor','Coordenador'], datasets:[{data:[0,0,0,0],backgroundColor:['#9b59b6','#1abc9c','#e8d5f0','#c39bd3'],borderWidth:1}] },
+    options:{ responsive:true, maintainAspectRatio:true,
+      plugins:{ legend:{position:'right',labels:{font:{size:10},boxWidth:12}}, tooltip:{callbacks:{label:c=>`${c.label}: ${ffull(c.raw)}`}} } }
+  });
+
+  CH.anual = new Chart(document.getElementById('cAnual'), {
+    type:'bar',
+    data:{ labels:MONTHS, datasets:[] },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{position:'bottom',labels:{font:{size:10},boxWidth:10}}, tooltip:{callbacks:{label:c=>ffull(c.raw)}} },
+      scales:{ y:{ticks:{callback:v=>ff(v),font:{size:9}},grid:{color:'#f0e8f8'}}, x:{ticks:{font:{size:9}}} } }
+  });
+
+  CH.equip = new Chart(document.getElementById('cEquip'), {
+    type:'bar',
+    data:{ labels:[], datasets:[{data:[],backgroundColor:'#c39bd3',borderRadius:3}] },
+    options:{ responsive:true, maintainAspectRatio:true,
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>`${c.raw} kits`}} },
+      scales:{ y:{ticks:{font:{size:9}},grid:{color:'#f0e8f8'}}, x:{ticks:{font:{size:10}}} } }
+  });
+
+  CH.fat = new Chart(document.getElementById('cFat'), {
+    type:'bar',
+    data:{ labels:[], datasets:[] },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{position:'bottom',labels:{font:{size:10},boxWidth:10}}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${c.raw}`}} },
+      scales:{
+        y:{type:'linear',position:'left',ticks:{callback:v=>ff(v),font:{size:9}},grid:{color:'#f0e8f8'}},
+        y1:{type:'linear',position:'right',max:60,ticks:{callback:v=>v+'%',font:{size:9}},grid:{drawOnChartArea:false}}
+      } }
+  });
+
+  updateCursoFilter();
+  update();
+}
+
+function updateCursoFilter() {
+  const f = getF();
+  const years = f.ano === 'all' ? ['2024','2025','2026'] : [f.ano];
+  const lojas = f.loja === 'all' ? ['TO','SLZ','ITZ'] : [f.loja];
+  const allCursos = new Set();
+  years.forEach(y => lojas.forEach(l => {
+    const ld = (DB[y]||{})[l]; if(ld) Object.keys(ld).forEach(n => allCursos.add(n));
+  }));
+  const sel = document.getElementById('fCurso');
+  const prev = sel.value;
+  sel.innerHTML = '<option value="all">📚 Curso — Todos</option>';
+  allCursos.forEach(n => {
+    const opt = document.createElement('option');
+    opt.value = n; opt.textContent = n;
+    if (n === prev) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+// ============================================================
+// UPDATE — todos os gráficos reagem a TODOS os filtros
+// ============================================================
+function update() {
+  const f = getF();
+  const filtered = getFiltered();
+
+  // ---- helper: retorna array mensal respeitando filtro de categoria ----
+  function getMonthly(d) {
+    if (f.cat === 'all') return d.monthly;
+    // Se categoria selecionada, distribui o valor da categoria proporcionalmente pelos meses
+    const roleTotal = d.total || 1;
+    const roleVal   = d.by_role[f.cat] || 0;
+    const ratio     = roleTotal > 0 ? roleVal / roleTotal : 0;
+    return d.monthly.map(v => Math.round(v * ratio));
+  }
+
+  // ---- helper: valor de um curso considerando mês E categoria ----
+  function val(d) {
+    if (f.mes !== 'all' && f.cat !== 'all') {
+      // mês específico + categoria específica
+      const m = parseInt(f.mes) - 1;
+      const roleTotal = d.total || 1;
+      const ratio = d.by_role[f.cat] / roleTotal;
+      return (d.monthly[m] || 0) * ratio;
+    }
+    if (f.mes !== 'all') return d.monthly[parseInt(f.mes)-1] || 0;
+    if (f.cat !== 'all') return d.by_role[f.cat] || 0;
+    return d.total;
+  }
+
+  // ---- KPIs ----
+  const total = filtered.reduce((s,[,d])=>s+val(d), 0);
+  const activeMes = d => d.monthly.filter(v=>v>0).length || 1;
+  const avgMes = filtered.length
+    ? total / (filtered.reduce((s,[,d])=>s+activeMes(d),0) / filtered.length)
+    : 0;
+  document.getElementById('kpiValor').textContent  = ffull(total);
+  document.getElementById('kpiMedia').textContent  = ffull(avgMes);
+  document.getElementById('kpiCursos').textContent = filtered.length;
+  document.getElementById('kpiAlunos').textContent = filtered.reduce((s,[,d])=>s+d.n_students,0);
+
+  // ---- TRIMESTRE — comparativo ano atual vs anterior ----
+  const anoN    = f.ano === 'all' ? 2026 : parseInt(f.ano);
+  const prevYear = f.ano === 'all' ? '2024' : String(anoN - 1);
+  // helper: soma meses de um ano respeitando filtros de curso/loja/cat
+  const compLojas = f.loja === 'all' ? ['TO','SLZ','ITZ'] : [f.loja];
+  const compYears = f.ano === 'all' ? ['2024','2025','2026'] : [f.ano];
+  const triColors = ['#9b59b6','#c39bd3','#d7bde2'];
+
+  function getMergedMonthly(y, idxs) {
+    const merged = {};
+    compLojas.forEach(l => {
+      const ld = (DB[y]||{})[l]; if(!ld) return;
+      Object.entries(ld).forEach(([n,d]) => {
+        if (f.curso !== 'all' && n !== f.curso) return;
+        if (!merged[n]) merged[n] = {monthly:[0,0,0,0,0,0,0,0,0,0,0,0],by_role:{Instituição:0,Coordenador:0,Professor:0,Aluno:0},total:0};
+        d.monthly.forEach((v,i) => merged[n].monthly[i]+=v);
+        Object.keys(merged[n].by_role).forEach(r => merged[n].by_role[r]+=(d.by_role[r]||0));
+        merged[n].total+=d.total;
+      });
+    });
+    return idxs.map(i => Object.values(merged).reduce((s,d) => {
+      const m = f.cat==='all' ? d.monthly : d.monthly.map(v=>Math.round(v*((d.by_role[f.cat]||0)/(d.total||1))));
+      return s+(m[i]||0);
+    },0));
+  }
+
+  // TRIMESTRE
+  CH.tri.data.labels = ['Janeiro','Fevereiro','Março'];
+  CH.tri.data.datasets = compYears.map((y,i) => ({
+    label: y, data: getMergedMonthly(y,[0,1,2]),
+    backgroundColor: triColors[i%triColors.length], borderRadius:3
+  }));
+  CH.tri.update();
+
+  // SEMESTRE
+  CH.sem.data.labels = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho'];
+  CH.sem.data.datasets = compYears.map((y,i) => ({
+    label: y, data: getMergedMonthly(y,[0,1,2,3,4,5]),
+    backgroundColor: triColors[i%triColors.length], borderRadius:3
+  }));
+  CH.sem.update();
+
+
+  updateEvol(filtered, f);
+  updateLojaCompare(f);
+  updateKpiSub(f);
+
+  // ---- CATEGORIA pie — respeita filtro de mês ----
+  const catT = {Aluno:0, Instituição:0, Professor:0, Coordenador:0};
+  filtered.forEach(([,d]) => {
+    const ratio = f.mes !== 'all'
+      ? (d.monthly[parseInt(f.mes)-1]||0) / (d.total||1)
+      : 1;
+    Object.keys(catT).forEach(k => catT[k] += (d.by_role[k]||0) * ratio);
+  });
+  CH.cat.data.datasets[0].data = [catT.Aluno, catT.Instituição, catT.Professor, catT.Coordenador];
+  CH.cat.update();
+
+  // ---- ANUAL — respeita filtro de categoria ----
+  CH.anual.data.datasets = filtered.map(([n,d],i) => ({
+    label: n,
+    data:  getMonthly(d),
+    backgroundColor: CK[n] || PAL[i % PAL.length],
+    borderRadius: 2
+  }));
+  CH.anual.update();
+
+  // ---- EQUIP — sem alteração (não muda por mês/categoria) ----
+  const eqT = {};
+  filtered.forEach(([,d]) => Object.entries(d.equip).forEach(([k,v]) => eqT[k]=(eqT[k]||0)+v));
+  const eqE  = Object.entries(eqT).sort((a,b)=>b[1]-a[1]);
+  const eqLbl = {Motor:'Motor', Kit_cirurgico:'Kit Cirúrg.', Kit_protetico:'Kit Protético',
+    Kit_selecao:'Kit Seleção', Kit_enxerto:'Kit Enxerto', Kit_enx_anc:'Kit Enx.Anc',
+    Kit_curetas:'Kit Curetas', Kit_osteotos:'Kit Osteótomos', Contra_angulo:'Cont.Ângulo'};
+  CH.equip.data.labels = eqE.map(([k]) => eqLbl[k]||k);
+  CH.equip.data.datasets[0].data = eqE.map(([,v]) => v);
+  CH.equip.update();
+
+  // ---- FATURAMENTO + ADESÃO — respeita todos os filtros ----
+  const fatL = filtered.map(([n])=>n);
+  const fatV = filtered.map(([,d])=>val(d));
+  const adesTaxa = filtered.map(([,d]) => {
+    const tot = Object.values(d.equip).reduce((s,v)=>s+v,0);
+    return d.n_students > 0 ? Math.min(60, Math.round((tot/(d.n_students*3))*100)) : 0;
+  });
+  CH.fat.data.labels   = fatL;
+  CH.fat.data.datasets = [
+    {label:'Faturamento (R$)', data:fatV, backgroundColor:'#9b59b6', yAxisID:'y', borderRadius:3},
+    {type:'line', label:'Taxa de Adesão (%)', data:adesTaxa, borderColor:'#c39bd3',
+     backgroundColor:'transparent', yAxisID:'y1', pointRadius:4, tension:.3}
+  ];
+  CH.fat.update();
+
+  // ---- RANKING — respeita todos os filtros ----
+  const rankData = [...filtered].map(([n,d])=>({n,v:val(d)})).sort((a,b)=>b.v-a.v);
+  const maxV = rankData[0]?.v || 1;
+  document.getElementById('tbRank').innerHTML = rankData
+    .map((e,i) => `
+      <div class="rank-badge">
+        <div class="rank-bar" style="width:${Math.round((e.v/maxV)*100)}%"></div>
+        <span class="rank-content" style="font-size:13px;font-weight:800;color:var(--pkm);min-width:20px;">${i+1}.</span>
+        <div class="rank-content">
+          <div style="font-size:12px;font-weight:700;color:var(--txt);">${e.n}</div>
+          <div style="font-size:13px;font-weight:800;color:var(--pk);">${ffull(e.v)}</div>
+        </div>
+      </div>`)
+    .join('');
+
+  // ---- % EQUIP ----
+  document.getElementById('tbPerc').innerHTML = filtered.map(([n,d]) => {
+    const ns = d.n_students||1;
+    const p  = k => d.equip[k]
+      ? `<span class="pv">${Math.round((d.equip[k]/ns)*100)}%</span>`
+      : `<span class="pe">—</span>`;
+    return `<tr><td>${n}</td><td>${p('Motor')}</td><td>${p('Contra_angulo')}</td><td>${p('Kit_cirurgico')}</td><td>${p('Kit_selecao')}</td><td>${p('Kit_protetico')}</td></tr>`;
+  }).join('');
+
+  // ---- CHECKLIST ----
+  document.getElementById('tbAdes').innerHTML = filtered.map(([n,d]) => {
+    const eq = d.equip;
+    const c  = k => `<td class="pv">${eq[k]||0}</td>`;
+    return `<tr><td>${n}</td>${c('Motor')}${c('Contra_angulo')}${c('Kit_cirurgico')}${c('Kit_curetas')}${c('Kit_enx_anc')}${c('Kit_enxerto')}${c('Kit_osteotos')}${c('Kit_protetico')}${c('Kit_selecao')}</tr>`;
+  }).join('');
+}
+
+function applyFilters() {
+  updateCursoFilter();
+  update();
+}
+
+
+// ============================================================
+// EVOLUÇÃO ANO A ANO
+// ============================================================
+function updateEvol(filtered, f) {
+  const anos = ['2024','2025','2026'];
+  const lojas = f.loja === 'all' ? ['TO','SLZ','ITZ'] : [f.loja];
+
+  function totalForYear(y) {
+    let t = 0;
+    lojas.forEach(l => {
+      const ld = (DB[y]||{})[l]; if(!ld) return;
+      Object.entries(ld).forEach(([n,d]) => {
+        if (f.curso !== 'all' && n !== f.curso) return;
+        if (f.cat !== 'all') t += d.by_role[f.cat]||0;
+        else t += d.total;
+      });
+    });
+    return t;
+  }
+
+  const vals = { '2024': totalForYear('2024'), '2025': totalForYear('2025'), '2026': totalForYear('2026') };
+  let cards = '';
+  anos.forEach((y, i) => {
+    if (i === 0) return;
+    const prev = anos[i-1];
+    const cur = vals[y], prv = vals[prev];
+    const pct = prv > 0 ? ((cur - prv) / prv * 100) : 0;
+    const cls = pct > 0 ? 'up' : pct < 0 ? 'down' : 'flat';
+    const arrow = pct > 0 ? '▲' : pct < 0 ? '▼' : '→';
+    cards += `<div class="evol-card">
+      <div class="ec-curso">${prev} → ${y}</div>
+      <div class="ec-pct ${cls}">${arrow} ${Math.abs(pct).toFixed(1)}%</div>
+      <div class="ec-vals">${ff(prv)} → ${ff(cur)}</div>
+    </div>`;
+  });
+  // também mostrar por curso se não filtrado
+  if (f.curso === 'all' && f.ano !== 'all') {
+    // filtrar só ano atual vs anterior
+    const anoN = parseInt(f.ano);
+    const prevY = String(anoN-1);
+    filtered.forEach(([n,d]) => {
+      const prevVal = lojas.reduce((s,l) => s + ((DB[prevY]||{})[l]?.[n]?.total||0), 0);
+      const curVal = d.total;
+      const pct = prevVal > 0 ? ((curVal-prevVal)/prevVal*100) : 0;
+      const cls = pct>0?'up':pct<0?'down':'flat';
+      const arrow = pct>0?'▲':pct<0?'▼':'→';
+      cards += `<div class="evol-card">
+        <div class="ec-curso">${n}</div>
+        <div class="ec-pct ${cls}">${arrow} ${Math.abs(pct).toFixed(1)}%</div>
+        <div class="ec-vals">${ff(prevVal)} → ${ff(curVal)}</div>
+      </div>`;
+    });
+  }
+  document.getElementById('evolRow').innerHTML = cards || '<span style="color:var(--txs);font-size:12px;">Selecione um ano específico para ver evolução por curso</span>';
+}
+
+// ============================================================
+// COMPARATIVO DE LOJAS
+// ============================================================
+function updateLojaCompare(f) {
+  const anos = f.ano === 'all' ? ['2024','2025','2026'] : [f.ano];
+  const lojas = ['TO','SLZ','ITZ'];
+  const nomes = {'TO':'Palmas (TO)','SLZ':'São Luís (SLZ)','ITZ':'Imperatriz (ITZ)',};
+
+  let cols = '';
+  lojas.forEach(loja => {
+    const cursos = {};
+    anos.forEach(y => {
+      const ld = (DB[y]||{})[loja]; if(!ld) return;
+      Object.entries(ld).forEach(([n,d]) => {
+        if (f.curso !== 'all' && n !== f.curso) return;
+        cursos[n] = (cursos[n]||0) + (f.cat !== 'all' ? (d.by_role[f.cat]||0) : d.total);
+      });
+    });
+    const total = Object.values(cursos).reduce((s,v)=>s+v,0);
+    if (total === 0) return;
+    const rows = Object.entries(cursos).sort((a,b)=>b[1]-a[1])
+      .map(([n,v]) => `<div class="lc-row"><span class="lc-curso">${n}</span><span class="lc-val">${ff(v)}</span></div>`).join('');
+    cols += `<div class="lc-card"><h4>${nomes[loja]}<br><span style="font-size:13px;color:var(--pk);">${ff(total)}</span></h4>${rows}</div>`;
+  });
+  document.getElementById('lojaCompare').innerHTML = cols || '<span style="color:var(--txs);font-size:12px;">Sem dados</span>';
+}
+
+// ============================================================
+// KPIs DINÂMICOS
+// ============================================================
+function updateKpiSub(f) {
+  const lojaNames = {'all':'todas as lojas','TO':'Palmas (TO)','SLZ':'São Luís (SLZ)','ITZ':'Imperatriz (ITZ)',};
+  const anoLabel = f.ano === 'all' ? '2024–2026' : f.ano;
+  document.getElementById('kpiSub').textContent = `${lojaNames[f.loja]} · ${anoLabel}`;
+}
+
+// ============================================================
+// EXPORTAR PDF
+// ============================================================
+function exportPDF() {
+  window.print();
+}
+
+
+const COMBO_DATA = {
+  '2026': {
+    '6': { // Junho
+      'Diego':   2,
+      'Jarlene': 1,
+      'Madê':    2,
+    },
+    '7': { // Julho
+      'Diego':  4,
+      'Madê':   8,
+      'Bruna':  3,
+    },
+    '8': { // Agosto
+      'Jarlene': 8,
+      'Diego':   2,
+      'Madê':    2,
+    },
+  }
+};
+const ASSESSORES = ['Bruna','Diego','Francely','Jarlene','Luana','Lizia','Madê'];
+const MESES_NOME = {1:'Jan',2:'Fev',3:'Mar',4:'Abr',5:'Mai',6:'Jun',7:'Jul',8:'Ago',9:'Set',10:'Out',11:'Nov',12:'Dez'};
+
+// ============================================================
+// COMBO ALUNO
+// ============================================================
+let comboAnoAtivo = '2026';
+let comboMesAtivo = null;
+
+function initCombo() {
+  // Tabs de ano
+  const anos = Object.keys(COMBO_DATA).sort();
+  document.getElementById('comboAnoTabs').innerHTML = anos.map(a =>
+    `<div class="combo-ano-tab${a===comboAnoAtivo?' active':''}" onclick="setComboAno('${a}')">${a}</div>`
+  ).join('');
+  renderComboMesTabs();
+}
+
+function setComboAno(ano) {
+  comboAnoAtivo = ano;
+  comboMesAtivo = null;
+  document.querySelectorAll('.combo-ano-tab').forEach(t => t.classList.toggle('active', t.textContent===ano));
+  renderComboMesTabs();
+}
+
+function renderComboMesTabs() {
+  const meses = Object.keys(COMBO_DATA[comboAnoAtivo]||{}).map(Number).sort((a,b)=>a-b);
+  if (!comboMesAtivo && meses.length) comboMesAtivo = String(meses[meses.length-1]);
+  document.getElementById('comboMesTabs').innerHTML = meses.map(m =>
+    `<div class="combo-tab${String(m)===comboMesAtivo?' active':''}" onclick="setComboMes('${m}')">${MESES_NOME[m]}</div>`
+  ).join('');
+  renderComboGrid();
+}
+
+function setComboMes(mes) {
+  comboMesAtivo = String(mes);
+  document.querySelectorAll('.combo-tab').forEach(t => {
+    t.classList.toggle('active', t.textContent === MESES_NOME[parseInt(mes)]);
+  });
+  renderComboGrid();
+}
+
+function renderComboGrid() {
+  const mesData = (COMBO_DATA[comboAnoAtivo]||{})[comboMesAtivo] || {};
+  const temDados = Object.keys(mesData).length > 0;
+
+  if (!temDados) {
+    document.getElementById('comboGrid').innerHTML = '<div class="combo-empty">Sem dados para este período</div>';
+    return;
+  }
+
+  // Mostrar todos os assessores, zero se não vendeu
+  const cards = ASSESSORES.map(a => {
+    const qtd = mesData[a] || 0;
+    return `<div class="combo-card${qtd===0?' zero':''}">
+      <div class="cc-name">${a}</div>
+      <div class="cc-num">${qtd}</div>
+      <div class="cc-label">combo${qtd!==1?'s':''}</div>
+    </div>`;
+  }).join('');
+
+  const total = Object.values(mesData).reduce((s,v)=>s+v,0);
+  document.getElementById('comboGrid').innerHTML = cards +
+    `<div class="combo-card" style="background:var(--pks);border-color:var(--pkm);">
+      <div class="cc-name" style="color:var(--pk);">TOTAL</div>
+      <div class="cc-num">${total}</div>
+      <div class="cc-label">combos</div>
+    </div>`;
+}
+
+document.addEventListener('DOMContentLoaded', () => { initCharts(); initCombo(); });
+</script>
+</body>
+</html>

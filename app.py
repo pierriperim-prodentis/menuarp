@@ -15,6 +15,7 @@ st.markdown(
         footer {visibility: hidden;}
         [data-testid="stToolbar"] {visibility: hidden;}
         [data-testid="stDecoration"] {visibility: hidden;}
+        [data-testid="stSidebarCollapseButton"] {display: none;}
     </style>
     """,
     unsafe_allow_html=True,

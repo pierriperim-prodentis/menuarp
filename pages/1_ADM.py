@@ -1,38 +1,11 @@
 import os
 
 import streamlit as st
-
-st.markdown(
-    """
-    <style>
-        iframe { display: block; border: none !important; width: 100% !important; }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+import streamlit.components.v1 as components
 
 HTML_PATH = os.path.join(os.path.dirname(__file__), "..", "Dashboard_ADM.html")
+
 with open(HTML_PATH, "r", encoding="utf-8") as f:
     html_content = f.read()
 
-auto_resize = """
-<script>
-(function() {
-    function sendHeight() {
-        var h = document.body.scrollHeight || document.documentElement.scrollHeight;
-        window.parent.postMessage({type: 'streamlit:setFrameHeight', height: h}, '*');
-    }
-    window.addEventListener('load', function() {
-        sendHeight();
-        setTimeout(sendHeight, 500);
-        setTimeout(sendHeight, 1500);
-    });
-    window.addEventListener('resize', sendHeight);
-    var obs = new MutationObserver(sendHeight);
-    obs.observe(document.body, {childList: true, subtree: true, attributes: true});
-})();
-</script>
-"""
-html_content = html_content.replace("</body>", auto_resize + "</body>")
-
-st.components.v1.html(html_content, height=1400, scrolling=False)
+components.html(html_content, height=6000, scrolling=False)

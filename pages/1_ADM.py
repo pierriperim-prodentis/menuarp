@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 import streamlit as st
@@ -20,8 +19,14 @@ auto_resize = """
         setTimeout(sendHeight, 1500);
     });
     window.addEventListener('resize', sendHeight);
+    document.addEventListener('click', function() {
+        setTimeout(sendHeight, 100);
+        setTimeout(sendHeight, 400);
+    });
     var obs = new MutationObserver(sendHeight);
     obs.observe(document.body, {childList: true, subtree: true, attributes: true});
+    // checagem contínua, a cada 1 segundo, como garantia extra
+    setInterval(sendHeight, 1000);
 })();
 </script>
 """

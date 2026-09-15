@@ -48,7 +48,8 @@ pages = [
     st.Page("pages/3_Cursos.py", title="Cursos", icon="🎓"),
     st.Page("pages/4_Fabrica.py", title="Fábrica", icon="🏭"),
     st.Page("pages/5_Vendas.py", title="Vendas", icon="📈"),
+    st.Page("pages/6_PainelDiario.py", title="Painel Diário", icon="📅"),
+    st.Page("pages/7_LancarDiario.py", title="Lançar Diário", icon="📝"),
 ]
-
 nav = st.navigation(pages, position="sidebar")
 nav.run()

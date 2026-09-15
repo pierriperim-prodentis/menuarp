@@ -19,13 +19,10 @@ ASSESSOR_LOJA = {
     "jarlene": "ITZ",
 }
 
-# fabrica_data.json fica na raiz do repo, não dentro de pages/
 DATA_PATH = Path(__file__).parent.parent / "fabrica_data.json"
 
 
 def split_value(v):
-    """Aceita tanto o formato antigo (número único) quanto o novo
-    (dict com faturadas/digitais/total) e sempre devolve os três."""
     if isinstance(v, dict):
         fat = v.get("faturadas", 0)
         dig = v.get("digitais", 0)
@@ -33,13 +30,6 @@ def split_value(v):
         return fat, dig, tot
     v = v or 0
     return v, 0, v
-
-
-def norm(s: str) -> str:
-    s = str(s or "")
-    s = unicodedata.normalize("NFD", s)
-    s = "".join(c for c in s if unicodedata.category(c) != "Mn")
-    return s.lower().strip()
 
 
 def title_case(s: str) -> str:
@@ -74,31 +64,66 @@ def fmt_money(v: float) -> str:
 
 try:
     DATA = load_data()
-    st.success(f"Dados carregados: {len(DATA)} meses encontrados.")
-except Exception as e:
-    st.error("Erro ao carregar os dados:")
-    st.exception(e)
-    st.stop()
+    st.write("✅ Checkpoint 1: dados carregados")
 
-# ------------------------------------------------------------------
-# Aggregate
-# ------------------------------------------------------------------
-month_totals = []
-store_totals = {"PMW": 0.0, "SLZ": 0.0, "ITZ": 0.0}
-grand_total = 0.0
+    month_totals = []
+    store_totals = {"PMW": 0.0, "SLZ": 0.0, "ITZ": 0.0}
+    grand_total = 0.0
 
-for label in MONTH_LABELS:
-    entry = DATA.get(label, {})
+    for label in MONTH_LABELS:
+        entry = DATA.get(label, {})
+        totals = entry.get("totals_by_assessora", {})
+        m_total = sum(split_value(v)[2] for v in totals.values())
+        month_totals.append(m_total)
+        for a, v in totals.items():
+            loja = ASSESSOR_LOJA.get(a)
+            subtotal = split_value(v)[2]
+            if loja:
+                store_totals[loja] += subtotal
+            grand_total += subtotal
+
+    st.write("✅ Checkpoint 2: totais calculados")
+
+    st.title("Painel de Vendas de Fábrica")
+    st.write("✅ Checkpoint 3: título ok")
+
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Total no ano", fmt_money(grand_total))
+    c2.metric("PMW", fmt_money(store_totals["PMW"]))
+    c3.metric("SLZ", fmt_money(store_totals["SLZ"]))
+    c4.metric("ITZ", fmt_money(store_totals["ITZ"]))
+    st.write("✅ Checkpoint 4: cards ok")
+
+    chart_df = pd.DataFrame({"Mês": MONTH_SHORT, "Total": month_totals})
+    chart = (
+        alt.Chart(chart_df)
+        .mark_bar(color="#1B2A4A")
+        .encode(x=alt.X("Mês:N", sort=MONTH_SHORT), y="Total:Q")
+        .properties(height=320)
+    )
+    st.altair_chart(chart, use_container_width=True)
+    st.write("✅ Checkpoint 5: gráfico ok")
+
+    months_with_data = [MONTH_LABELS[i] for i, t in enumerate(month_totals) if t > 0] or [MONTH_LABELS[0]]
+    sel_label = st.selectbox("Mês", months_with_data, index=len(months_with_data) - 1)
+    st.write("✅ Checkpoint 6: selectbox ok")
+
+    entry = DATA.get(sel_label, {})
     totals = entry.get("totals_by_assessora", {})
-    m_total = sum(split_value(v)[2] for v in totals.values())
-    month_totals.append(m_total)
-    for a, v in totals.items():
-        loja = ASSESSOR_LOJA.get(a)
-        subtotal = split_value(v)[2]
-        if loja:
-            store_totals[loja] += subtotal
-        grand_total += subtotal
+    rows = []
+    for a, v in sorted(totals.items(), key=lambda kv: -split_value(kv[1])[2]):
+        fat, dig, tot = split_value(v)
+        rows.append({
+            "Assessora": title_case(a),
+            "Loja": ASSESSOR_LOJA.get(a, "—"),
+            "Faturadas": fmt_money(fat),
+            "Digitais": fmt_money(dig),
+            "Total": fmt_money(tot),
+        })
+    detail_df = pd.DataFrame(rows)
+    st.dataframe(detail_df, use_container_width=True, hide_index=True)
+    st.write("✅ Checkpoint 7: tabela ok — chegou até o fim!")
 
-# ------------------------------------------------------------------
-# Header
-# --------------------------------------------
+except Exception as e:
+    st.error("Erro encontrado:")
+    st.exception(e)

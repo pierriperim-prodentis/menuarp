@@ -7,12 +7,13 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Esconde o menu/rodapé padrão do Streamlit
+# Esconde o menu/rodapé/cabeçalho padrão do Streamlit
 st.markdown(
     """
     <style>
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
+        header {visibility: hidden; height: 0;}
         [data-testid="stToolbar"] {visibility: hidden;}
         [data-testid="stDecoration"] {visibility: hidden;}
     </style>
@@ -21,7 +22,6 @@ st.markdown(
 )
 
 # ── Proteção por chave de acesso na URL (?chave=prodentis2026) ──
-# Feita aqui uma única vez — vale pra todas as páginas do app.
 CHAVE_CORRETA = "prodentis2026"
 chave_informada = st.query_params.get("chave", "")
 

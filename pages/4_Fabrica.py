@@ -72,7 +72,13 @@ def fmt_money(v: float) -> str:
     return f"R$ {s}"
 
 
-DATA = load_data()
+try:
+    DATA = load_data()
+    st.success(f"Dados carregados: {len(DATA)} meses encontrados.")
+except Exception as e:
+    st.error("Erro ao carregar os dados:")
+    st.exception(e)
+    st.stop()
 
 # ------------------------------------------------------------------
 # Aggregate

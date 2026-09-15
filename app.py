@@ -23,9 +23,15 @@ st.markdown(
 
 # ── Proteção por chave de acesso na URL (?chave=prodentis2026) ──
 CHAVE_CORRETA = "prodentis2026"
-chave_informada = st.query_params.get("chave", "")
 
-if chave_informada != CHAVE_CORRETA:
+if "autenticado" not in st.session_state:
+    st.session_state.autenticado = False
+
+chave_informada = st.query_params.get("chave", "")
+if chave_informada == CHAVE_CORRETA:
+    st.session_state.autenticado = True
+
+if not st.session_state.autenticado:
     st.title("🔒 Acesso restrito")
     st.write("Adicione `?chave=SUACHAVE` no final do link para acessar.")
     st.stop()

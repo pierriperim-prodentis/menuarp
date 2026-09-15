@@ -65,12 +65,29 @@ def fmt_money(v: float) -> str:
     return f"R$ {s}"
 
 
+def render_table(df: pd.DataFrame) -> str:
+    """Monta uma tabela HTML clara, no mesmo estilo roxo/branco do painel."""
+    header_html = "".join(f"<th>{col}</th>" for col in df.columns)
+    rows_html = ""
+    for _, row in df.iterrows():
+        cells = "".join(f"<td>{row[col]}</td>" for col in df.columns)
+        rows_html += f"<tr>{cells}</tr>"
+    return f"""
+    <div class="fab-table-wrap">
+        <table class="fab-table">
+            <thead><tr>{header_html}</tr></thead>
+            <tbody>{rows_html}</tbody>
+        </table>
+    </div>
+    """
+
+
 st.markdown(
     f"""
     <style>
         section[data-testid="stMain"] {{
-    background-color: {BG} !important;
-}}
+            background-color: {BG} !important;
+        }}
         section[data-testid="stMain"] .block-container {{
             padding: 1rem 2rem 3rem 2rem !important;
             max-width: 100% !important;
@@ -83,16 +100,16 @@ st.markdown(
             color: white;
         }}
         section[data-testid="stMain"] .fab-header h1 {{
-    font-size: 22px;
-    margin: 0;
-    color: white !important;
-}}
-section[data-testid="stMain"] .fab-header p {{
-    margin: 4px 0 0 0;
-    font-size: 13px;
-    color: white !important;
-    opacity: 0.85;
-}}
+            font-size: 22px;
+            margin: 0;
+            color: white !important;
+        }}
+        section[data-testid="stMain"] .fab-header p {{
+            margin: 4px 0 0 0;
+            font-size: 13px;
+            color: white !important;
+            opacity: 0.85;
+        }}
         .fab-cards {{
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -126,19 +143,66 @@ section[data-testid="stMain"] .fab-header p {{
             letter-spacing: 0.03em;
             margin: 24px 0 10px 0;
         }}
-        [data-testid="stDataFrame"] {{
+        section[data-testid="stMain"] h1,
+        section[data-testid="stMain"] h2,
+        section[data-testid="stMain"] h3,
+        section[data-testid="stMain"] p,
+        section[data-testid="stMain"] label,
+        section[data-testid="stMain"] .stMarkdown {{
+            color: #2c2440;
+        }}
+
+        /* Caixa de seleção (Mês / Assessora) */
+        section[data-testid="stMain"] [data-baseweb="select"] > div {{
+            background-color: white !important;
+            color: #2c2440 !important;
+            border: 1px solid #e0d6ee !important;
+            border-radius: 8px !important;
+        }}
+        section[data-testid="stMain"] [data-baseweb="select"] svg {{
+            fill: {PURPLE} !important;
+        }}
+        [data-baseweb="popover"] li {{
+            background-color: white !important;
+            color: #2c2440 !important;
+        }}
+        [data-baseweb="popover"] li:hover {{
+            background-color: #f3ecfa !important;
+        }}
+
+        /* Tabelas em HTML puro */
+        .fab-table-wrap {{
             background: white;
             border-radius: 10px;
-            padding: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            overflow-x: auto;
+            margin-bottom: 16px;
         }}
-        section[data-testid="stMain"] h1,
-section[data-testid="stMain"] h2,
-section[data-testid="stMain"] h3,
-section[data-testid="stMain"] p,
-section[data-testid="stMain"] label,
-section[data-testid="stMain"] .stMarkdown {{
-    color: #2c2440;
-}}
+        .fab-table {{
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }}
+        .fab-table th {{
+            background: {PURPLE};
+            color: white;
+            text-align: left;
+            padding: 10px 14px;
+            font-weight: 600;
+            white-space: nowrap;
+        }}
+        .fab-table td {{
+            padding: 9px 14px;
+            border-bottom: 1px solid #f0e9f8;
+            color: #2c2440;
+            white-space: nowrap;
+        }}
+        .fab-table tr:last-child td {{
+            border-bottom: none;
+        }}
+        .fab-table tr:nth-child(even) td {{
+            background: #faf7fd;
+        }}
     </style>
     """,
     unsafe_allow_html=True,
@@ -217,7 +281,7 @@ for a, v in sorted(totals.items(), key=lambda kv: -split_value(kv[1])[2]):
         "Total": fmt_money(tot),
     })
 detail_df = pd.DataFrame(rows)
-st.dataframe(detail_df, use_container_width=True, hide_index=True)
+st.markdown(render_table(detail_df), unsafe_allow_html=True)
 
 total_fat = sum(split_value(v)[0] for v in totals.values())
 total_dig = sum(split_value(v)[1] for v in totals.values())
@@ -257,6 +321,6 @@ if details:
 
     det_df["Valor"] = det_df["Valor"].apply(fmt_money)
     det_df = det_df[["Tipo", "Assessora", "Cliente", "Data", "Instituição", "Rastreio", "Valor"]]
-    st.dataframe(det_df, use_container_width=True, hide_index=True)
+    st.markdown(render_table(det_df), unsafe_allow_html=True)
 else:
     st.info("Sem lançamentos detalhados para este mês.")

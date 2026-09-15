@@ -82,16 +82,17 @@ st.markdown(
             margin-bottom: 20px;
             color: white;
         }}
-        .fab-header h1 {{
-            font-size: 22px;
-            margin: 0;
-            color: white;
-        }}
-        .fab-header p {{
-            margin: 4px 0 0 0;
-            font-size: 13px;
-            opacity: 0.85;
-        }}
+        section[data-testid="stMain"] .fab-header h1 {{
+    font-size: 22px;
+    margin: 0;
+    color: white !important;
+}}
+section[data-testid="stMain"] .fab-header p {{
+    margin: 4px 0 0 0;
+    font-size: 13px;
+    color: white !important;
+    opacity: 0.85;
+}}
         .fab-cards {{
             display: grid;
             grid-template-columns: repeat(4, 1fr);

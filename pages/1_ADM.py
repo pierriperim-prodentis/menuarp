@@ -1,35 +1,11 @@
-from pathlib import Path
+import os
 
 import streamlit as st
 import streamlit.components.v1 as components
 
-HTML_PATH = Path(__file__).parent.parent / "Dashboard_ADM.html"
-html_content = HTML_PATH.read_text(encoding="utf-8")
+HTML_PATH = os.path.join(os.path.dirname(__file__), "..", "Dashboard_ADM.html")
 
-auto_resize = """
-<script>
-(function() {
-    function sendHeight() {
-        var h = document.body.scrollHeight || document.documentElement.scrollHeight;
-        window.parent.postMessage({type: 'streamlit:setFrameHeight', height: h}, '*');
-    }
-    window.addEventListener('load', function() {
-        sendHeight();
-        setTimeout(sendHeight, 500);
-        setTimeout(sendHeight, 1500);
-    });
-    window.addEventListener('resize', sendHeight);
-    document.addEventListener('click', function() {
-        setTimeout(sendHeight, 100);
-        setTimeout(sendHeight, 400);
-    });
-    var obs = new MutationObserver(sendHeight);
-    obs.observe(document.body, {childList: true, subtree: true, attributes: true});
-    // checagem contínua, a cada 1 segundo, como garantia extra
-    setInterval(sendHeight, 1000);
-})();
-</script>
-"""
-html_content = html_content.replace("</body>", auto_resize + "</body>")
+with open(HTML_PATH, "r", encoding="utf-8") as f:
+    html_content = f.read()
 
-components.html(html_content, height=1400, scrolling=False)
+components.html(html_content, height=8000, scrolling=False)

@@ -68,9 +68,9 @@ def fmt_money(v: float) -> str:
 st.markdown(
     f"""
     <style>
-        html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {{
-            background-color: {BG} !important;
-        }}
+        section[data-testid="stMain"] {{
+    background-color: {BG} !important;
+}}
         section[data-testid="stMain"] .block-container {{
             padding: 1rem 2rem 3rem 2rem !important;
             max-width: 100% !important;

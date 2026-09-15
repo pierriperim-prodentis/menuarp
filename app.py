@@ -16,6 +16,10 @@ st.markdown(
         [data-testid="stToolbar"] {visibility: hidden;}
         [data-testid="stDecoration"] {visibility: hidden;}
         [data-testid="stSidebarCollapseButton"] {display: none;}
+        section[data-testid="stMain"] .block-container {
+            padding: 0 !important;
+            max-width: 100% !important;
+        }
     </style>
     """,
     unsafe_allow_html=True,

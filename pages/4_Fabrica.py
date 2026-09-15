@@ -153,15 +153,21 @@ st.markdown(
         }}
 
         /* Caixa de seleção (Mês / Assessora) */
-        section[data-testid="stMain"] [data-baseweb="select"] > div {{
-            background-color: white !important;
-            color: #2c2440 !important;
-            border: 1px solid #e0d6ee !important;
-            border-radius: 8px !important;
-        }}
-        section[data-testid="stMain"] [data-baseweb="select"] svg {{
-            fill: {PURPLE} !important;
-        }}
+section[data-testid="stMain"] [data-baseweb="select"] {{
+    background-color: white !important;
+}}
+section[data-testid="stMain"] [data-baseweb="select"] > div,
+section[data-testid="stMain"] [data-baseweb="select"] div {{
+    background-color: white !important;
+    color: #2c2440 !important;
+}}
+section[data-testid="stMain"] [data-baseweb="select"] > div {{
+    border: 1px solid #e0d6ee !important;
+    border-radius: 8px !important;
+}}
+section[data-testid="stMain"] [data-baseweb="select"] svg {{
+    fill: {PURPLE} !important;
+}}
         [data-baseweb="popover"] li {{
             background-color: white !important;
             color: #2c2440 !important;

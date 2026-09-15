@@ -130,9 +130,14 @@ st.markdown(
             border-radius: 10px;
             padding: 6px;
         }}
-        h1, h2, h3, p, label, .stMarkdown {{
-            color: #2c2440;
-        }}
+        section[data-testid="stMain"] h1,
+section[data-testid="stMain"] h2,
+section[data-testid="stMain"] h3,
+section[data-testid="stMain"] p,
+section[data-testid="stMain"] label,
+section[data-testid="stMain"] .stMarkdown {{
+    color: #2c2440;
+}}
     </style>
     """,
     unsafe_allow_html=True,

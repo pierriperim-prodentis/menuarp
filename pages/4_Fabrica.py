@@ -1,5 +1,4 @@
 import json
-import unicodedata
 from pathlib import Path
 
 import altair as alt
@@ -64,7 +63,6 @@ def fmt_money(v: float) -> str:
 
 try:
     DATA = load_data()
-    st.write("✅ Checkpoint 1: dados carregados")
 
     month_totals = []
     store_totals = {"PMW": 0.0, "SLZ": 0.0, "ITZ": 0.0}
@@ -82,17 +80,13 @@ try:
                 store_totals[loja] += subtotal
             grand_total += subtotal
 
-    st.write("✅ Checkpoint 2: totais calculados")
-
     st.title("Painel de Vendas de Fábrica")
-    st.write("✅ Checkpoint 3: título ok")
 
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Total no ano", fmt_money(grand_total))
     c2.metric("PMW", fmt_money(store_totals["PMW"]))
     c3.metric("SLZ", fmt_money(store_totals["SLZ"]))
     c4.metric("ITZ", fmt_money(store_totals["ITZ"]))
-    st.write("✅ Checkpoint 4: cards ok")
 
     chart_df = pd.DataFrame({"Mês": MONTH_SHORT, "Total": month_totals})
     chart = (
@@ -102,11 +96,9 @@ try:
         .properties(height=320)
     )
     st.altair_chart(chart, use_container_width=True)
-    st.write("✅ Checkpoint 5: gráfico ok")
 
     months_with_data = [MONTH_LABELS[i] for i, t in enumerate(month_totals) if t > 0] or [MONTH_LABELS[0]]
     sel_label = st.selectbox("Mês", months_with_data, index=len(months_with_data) - 1)
-    st.write("✅ Checkpoint 6: selectbox ok")
 
     entry = DATA.get(sel_label, {})
     totals = entry.get("totals_by_assessora", {})
@@ -122,7 +114,54 @@ try:
         })
     detail_df = pd.DataFrame(rows)
     st.dataframe(detail_df, use_container_width=True, hide_index=True)
-    st.write("✅ Checkpoint 7: tabela ok — chegou até o fim!")
+    st.write("✅ Checkpoint A: tabela por assessora ok")
+
+    total_fat = sum(split_value(v)[0] for v in totals.values())
+    total_dig = sum(split_value(v)[1] for v in totals.values())
+    total_geral = sum(split_value(v)[2] for v in totals.values())
+
+    def esc_money(v: float) -> str:
+        return fmt_money(v).replace("$", "\\$")
+
+    st.markdown(
+        f"**Total do mês:** {esc_money(total_geral)}  ·  "
+        f"Faturadas: {esc_money(total_fat)}  ·  Digitais: {esc_money(total_dig)}"
+    )
+    st.write("✅ Checkpoint B: linha de totais ok")
+
+    details = entry.get("details", [])
+    st.write(f"✅ Checkpoint C: {len(details)} lançamentos detalhados encontrados")
+
+    if details:
+        det_df = pd.DataFrame(details)
+        st.write("✅ Checkpoint D: DataFrame de detalhes criado")
+        st.write("Colunas encontradas:", list(det_df.columns))
+
+        if "tipo" not in det_df.columns:
+            det_df["tipo"] = ""
+        det_df = det_df.rename(columns={
+            "assessora": "Assessora", "cliente": "Cliente", "data": "Data",
+            "valor": "Valor", "instituicao": "Instituição", "tipo": "Tipo",
+            "rastreio": "Rastreio",
+        })
+        if "Rastreio" not in det_df.columns:
+            det_df["Rastreio"] = ""
+        det_df["Rastreio"] = det_df["Rastreio"].fillna("")
+        det_df["Tipo"] = det_df["Tipo"].map({"faturada": "Faturada", "digital": "Digital"}).fillna(det_df["Tipo"])
+        st.write("✅ Checkpoint E: colunas renomeadas ok")
+
+        assessoras_no_mes = sorted(det_df["Assessora"].dropna().unique().tolist())
+        escolha = st.selectbox("Assessora", ["Todas"] + assessoras_no_mes)
+        if escolha != "Todas":
+            det_df = det_df[det_df["Assessora"] == escolha]
+        st.write("✅ Checkpoint F: filtro de assessora ok")
+
+        det_df["Valor"] = det_df["Valor"].apply(fmt_money)
+        det_df = det_df[["Tipo", "Assessora", "Cliente", "Data", "Instituição", "Rastreio", "Valor"]]
+        st.dataframe(det_df, use_container_width=True, hide_index=True)
+        st.write("✅ Checkpoint G: chegou até o fim!")
+    else:
+        st.info("Sem lançamentos detalhados para este mês.")
 
 except Exception as e:
     st.error("Erro encontrado:")

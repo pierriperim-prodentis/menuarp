@@ -20,6 +20,10 @@ ASSESSOR_LOJA = {
 
 DATA_PATH = Path(__file__).parent.parent / "fabrica_data.json"
 
+PURPLE = "#7c4dbd"
+PURPLE_DARK = "#5b2f92"
+BG = "#f8f4fc"
+
 
 def split_value(v):
     if isinstance(v, dict):
@@ -61,6 +65,79 @@ def fmt_money(v: float) -> str:
     return f"R$ {s}"
 
 
+st.markdown(
+    f"""
+    <style>
+        html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {{
+            background-color: {BG} !important;
+        }}
+        section[data-testid="stMain"] .block-container {{
+            padding: 1rem 2rem 3rem 2rem !important;
+            max-width: 100% !important;
+        }}
+        .fab-header {{
+            background: linear-gradient(90deg, {PURPLE_DARK}, {PURPLE});
+            border-radius: 10px;
+            padding: 18px 24px;
+            margin-bottom: 20px;
+            color: white;
+        }}
+        .fab-header h1 {{
+            font-size: 22px;
+            margin: 0;
+            color: white;
+        }}
+        .fab-header p {{
+            margin: 4px 0 0 0;
+            font-size: 13px;
+            opacity: 0.85;
+        }}
+        .fab-cards {{
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }}
+        .fab-card {{
+            background: white;
+            border-radius: 10px;
+            padding: 16px 18px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }}
+        .fab-card .label {{
+            font-size: 11px;
+            font-weight: 600;
+            color: #8b7a9e;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }}
+        .fab-card .value {{
+            font-size: 24px;
+            font-weight: 700;
+            color: {PURPLE_DARK};
+            margin-top: 4px;
+        }}
+        .fab-section-title {{
+            font-size: 13px;
+            font-weight: 700;
+            color: {PURPLE_DARK};
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin: 24px 0 10px 0;
+        }}
+        [data-testid="stDataFrame"] {{
+            background: white;
+            border-radius: 10px;
+            padding: 6px;
+        }}
+        h1, h2, h3, p, label, .stMarkdown {{
+            color: #2c2440;
+        }}
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 DATA = load_data()
 
 month_totals = []
@@ -80,37 +157,44 @@ for label in MONTH_LABELS:
         grand_total += subtotal
 
 st.markdown(
-    "<div style='font-family:monospace; letter-spacing:.1em; color:#c9922b; "
-    "font-size:12px; text-transform:uppercase;'>Pródentis / ARP — Fábrica 2026</div>",
+    """
+    <div class="fab-header">
+        <h1>🏭 Painel de Vendas de Fábrica</h1>
+        <p>Pródentis / ARP — Fábrica 2026</p>
+    </div>
+    """,
     unsafe_allow_html=True,
 )
-st.title("Painel de Vendas de Fábrica")
 
-c1, c2, c3, c4 = st.columns(4)
-c1.metric("Total no ano", fmt_money(grand_total))
-c2.metric("PMW · Palmas", fmt_money(store_totals["PMW"]))
-c3.metric("SLZ · São Luís", fmt_money(store_totals["SLZ"]))
-c4.metric("ITZ · Imperatriz", fmt_money(store_totals["ITZ"]))
+st.markdown(
+    f"""
+    <div class="fab-cards">
+        <div class="fab-card"><div class="label">Total no ano</div><div class="value">{fmt_money(grand_total)}</div></div>
+        <div class="fab-card"><div class="label">PMW · Palmas</div><div class="value">{fmt_money(store_totals['PMW'])}</div></div>
+        <div class="fab-card"><div class="label">SLZ · São Luís</div><div class="value">{fmt_money(store_totals['SLZ'])}</div></div>
+        <div class="fab-card"><div class="label">ITZ · Imperatriz</div><div class="value">{fmt_money(store_totals['ITZ'])}</div></div>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
-st.divider()
-
-st.subheader("Total por mês")
+st.markdown('<div class="fab-section-title">Total por mês</div>', unsafe_allow_html=True)
 chart_df = pd.DataFrame({"Mês": MONTH_SHORT, "Total": month_totals})
 chart = (
     alt.Chart(chart_df)
-    .mark_bar(color="#1B2A4A")
+    .mark_bar(color=PURPLE, cornerRadiusTopLeft=4, cornerRadiusTopRight=4)
     .encode(
         x=alt.X("Mês:N", sort=MONTH_SHORT, title=None),
         y=alt.Y("Total:Q", title=None),
         tooltip=[alt.Tooltip("Mês:N"), alt.Tooltip("Total:Q", format=",.2f")],
     )
-    .properties(height=320)
+    .properties(height=300, background=BG)
+    .configure_axis(labelColor="#2c2440", gridColor="#e8def2")
+    .configure_view(strokeWidth=0)
 )
 st.altair_chart(chart, use_container_width=True)
 
-st.divider()
-
-st.subheader("Detalhe por assessora")
+st.markdown('<div class="fab-section-title">Detalhe por assessora</div>', unsafe_allow_html=True)
 months_with_data = [MONTH_LABELS[i] for i, t in enumerate(month_totals) if t > 0] or [MONTH_LABELS[0]]
 sel_label = st.selectbox("Mês", months_with_data, index=len(months_with_data) - 1)
 
@@ -128,6 +212,7 @@ for a, v in sorted(totals.items(), key=lambda kv: -split_value(kv[1])[2]):
     })
 detail_df = pd.DataFrame(rows)
 st.dataframe(detail_df, use_container_width=True, hide_index=True)
+
 total_fat = sum(split_value(v)[0] for v in totals.values())
 total_dig = sum(split_value(v)[1] for v in totals.values())
 total_geral = sum(split_value(v)[2] for v in totals.values())
@@ -142,8 +227,7 @@ st.markdown(
     f"Faturadas: {esc_money(total_fat)}  ·  Digitais: {esc_money(total_dig)}"
 )
 
-st.divider()
-st.subheader("Detalhamento linha a linha")
+st.markdown('<div class="fab-section-title">Detalhamento linha a linha</div>', unsafe_allow_html=True)
 details = entry.get("details", [])
 
 if details:

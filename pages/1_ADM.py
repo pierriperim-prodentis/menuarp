@@ -6,7 +6,6 @@ import streamlit.components.v1 as components
 st.markdown(
     """
     <style>
-        .block-container {padding: 0 !important; max-width: 100% !important;}
         iframe {border: none;}
     </style>
     """,

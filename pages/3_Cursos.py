@@ -8,11 +8,6 @@ st.markdown(
         html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
             background-color: #f8f4fc !important;
         }
-        .block-container {
-            padding: 0 !important;
-            margin: 0 !important;
-            max-width: 100% !important;
-        }
         iframe {
             display: block;
             border: none !important;
@@ -26,7 +21,6 @@ st.markdown(
 HTML_PATH = Path(__file__).parent.parent / "Dashboard_Cursos_2026.html"
 html_content = HTML_PATH.read_text(encoding="utf-8")
 
-# Injeta script de auto-resize antes do </body>
 auto_resize = """
 <script>
 (function() {

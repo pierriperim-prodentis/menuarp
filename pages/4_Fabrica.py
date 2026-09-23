@@ -205,10 +205,42 @@ section[data-testid="stMain"] [data-baseweb="select"] svg {{
         }}
         .fab-table tr:last-child td {{
             border-bottom: none;
-        }}
-        .fab-table tr:nth-child(even) td {{
+                .fab-table tr:nth-child(even) td {{
             background: #faf7fd;
         }}
+
+        /* ── CELULAR ─────────────────────────────────────── */
+        @media (max-width: 640px) {{
+            section[data-testid="stMain"] .block-container {{
+                padding: 0.75rem 1rem 2rem 1rem !important;
+            }}
+            .fab-cards {{
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }}
+            .fab-card {{
+                padding: 12px 14px;
+            }}
+            .fab-card .value {{
+                font-size: 18px;
+            }}
+            .fab-header {{
+                padding: 14px 16px;
+            }}
+            .fab-header h1 {{
+                font-size: 17px;
+            }}
+            .fab-header p {{
+                font-size: 11px;
+            }}
+            .fab-table {{
+                font-size: 12px;
+            }}
+            .fab-table th, .fab-table td {{
+                padding: 7px 10px;
+            }}
+        }}
+    </style>
     </style>
     """,
     unsafe_allow_html=True,

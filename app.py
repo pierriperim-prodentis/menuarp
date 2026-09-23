@@ -16,7 +16,14 @@ st.markdown(
         header {visibility: hidden; height: 0;}
         [data-testid="stToolbar"] {visibility: hidden;}
         [data-testid="stDecoration"] {visibility: hidden;}
-        [data-testid="stSidebarCollapseButton"] {display: none;}
+
+        /* Esconde o botão de recolher a barra lateral só em telas grandes
+           (no celular ele precisa continuar visível, senão não dá pra
+           abrir o menu depois que ele recolhe sozinho) */
+        @media (min-width: 768px) {
+            [data-testid="stSidebarCollapseButton"] {display: none;}
+        }
+
         section[data-testid="stMain"] .block-container {
             padding: 0 !important;
             max-width: 100% !important;
@@ -50,5 +57,6 @@ pages = [
     st.Page("pages/5_Vendas.py", title="Vendas", icon="📈"),
     st.Page("pages/6_PainelDiario.py", title="Painel Diário", icon="📅"),
 ]
+
 nav = st.navigation(pages, position="sidebar")
 nav.run()

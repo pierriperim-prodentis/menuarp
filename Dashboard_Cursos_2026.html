@@ -105,7 +105,19 @@
   body { padding-bottom:0 !important; margin-bottom:0 !important; }
   .footer { margin-bottom:0 !important; padding-bottom:8px !important; }
   .footer { text-align:right; font-size:10px; color:var(--txs); padding:8px 20px 14px; }
-  .footer span { background:var(--pk); color:#fff; padding:3px 10px; border-radius:4px; }
+    .footer span { background:var(--pk); color:#fff; padding:3px 10px; border-radius:4px; }
+
+  /* ── CELULAR ─────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .header { flex-direction:column; align-items:flex-start; gap:8px; }
+    .header > div:last-child { width:100%; justify-content:space-between; }
+    .g3, .g4, .g2 { grid-template-columns:1fr; }
+    .loja-compare { grid-template-columns:1fr; }
+    .kpi .val { font-size:18px; }
+    .combo-grid { grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); }
+    table.t { font-size:11px; }
+    select.fs { font-size:11px; padding:5px 8px; }
+  }
 </style>
 
 <style media="print">

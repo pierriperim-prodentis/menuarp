@@ -326,11 +326,19 @@
     button { display: none !important; }
   }
 
-  @media (max-width: 600px) {
+    @media (max-width: 600px) {
     .panel { padding: 16px 14px; }
     .top-bar, .tabs-bar, .filters-bar { padding-left: 14px; padding-right: 14px; }
     .kpi-value { font-size: 20px; }
     .funil-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .comp-grid { grid-template-columns: 1fr !important; }
+
+    /* Pega os grids escritos direto no HTML (style="...") */
+    div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+
+    /* Tabelas: deixa rolar de lado em vez de cortar */
+    .evo-table-wrap, .leads-wrap { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
   }
 </style>
 </head>

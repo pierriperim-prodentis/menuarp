@@ -1,0 +1,2820 @@
+{
+  "JANEIRO 2026": {
+    "totals_by_assessora": {
+      "bruna": {
+        "faturadas": 73235.46,
+        "digitais": 99900.0,
+        "total": 173135.46
+      },
+      "made": {
+        "faturadas": 35854.26,
+        "digitais": 0.0,
+        "total": 35854.26
+      },
+      "diego": {
+        "faturadas": 50875.74,
+        "digitais": 0.0,
+        "total": 50875.74
+      },
+      "francely": {
+        "faturadas": 731.25,
+        "digitais": 0.0,
+        "total": 731.25
+      },
+      "jarlene": {
+        "faturadas": 33181.0,
+        "digitais": 82900.0,
+        "total": 116081.0
+      },
+      "lizia": {
+        "faturadas": 2767.2,
+        "digitais": 0.0,
+        "total": 2767.2
+      }
+    },
+    "details": [
+      {
+        "assessora": "Bruna",
+        "cliente": "Santana e Borges",
+        "data": "2026-01-06",
+        "valor": 354.5,
+        "instituicao": "",
+        "rastreio": "RETIRADO EM GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dra. Gleiciane borges",
+        "data": "2026-01-06",
+        "valor": 882.05,
+        "instituicao": "",
+        "rastreio": "AB896283149BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Rafael Jorge",
+        "data": "2026-01-16",
+        "valor": 2245.0,
+        "instituicao": "",
+        "rastreio": "DA531522028BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Humanize Odontologia",
+        "data": "2026-01-16",
+        "valor": 3985.0,
+        "instituicao": "",
+        "rastreio": "DA531522456BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dra Wanessa Cabral",
+        "data": "2026-01-19",
+        "valor": 293.0,
+        "instituicao": "",
+        "rastreio": "RETIRADO EM GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Clinica Sorriso Forte",
+        "data": "2026-01-20",
+        "valor": 2091.5,
+        "instituicao": "",
+        "rastreio": "DA531522495BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Santana e Borges",
+        "data": "2026-01-21",
+        "valor": 198.0,
+        "instituicao": "",
+        "rastreio": "RETIRADO EM GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr.Rafael Prado",
+        "data": "2026-01-21",
+        "valor": 909.0,
+        "instituicao": "",
+        "rastreio": "AB946746045BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Santana e Borges",
+        "data": "2026-01-21",
+        "valor": 198.0,
+        "instituicao": "",
+        "rastreio": "RETIRADO EM GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Rafael Prado",
+        "data": "2026-01-28",
+        "valor": 3656.25,
+        "instituicao": "",
+        "rastreio": "DA531525143BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Clinica Sorriso Forte",
+        "data": "2026-01-28",
+        "valor": 11259.0,
+        "instituicao": "",
+        "rastreio": "DA531525320BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dra. Mayara Roberta",
+        "data": "2026-01-29",
+        "valor": 11625.66,
+        "instituicao": "",
+        "rastreio": "AB980114366BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Douglas Andrade",
+        "data": "2026-01-30",
+        "valor": 29190.0,
+        "instituicao": "",
+        "rastreio": "faturado sem rastreio ainda",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Rafael prado",
+        "data": "2026-01-30",
+        "valor": 621.0,
+        "instituicao": "",
+        "rastreio": "AB977360251BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Clinica Humanize",
+        "data": "2026-01-30",
+        "valor": 3037.5,
+        "instituicao": "",
+        "rastreio": "faturado sem rastreio ainda",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Leonardo Brito",
+        "data": "2026-01-31",
+        "valor": 2690.0,
+        "instituicao": "",
+        "rastreio": "faturado sem rastreio ainda",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Clinica odontologica Toledo",
+        "data": "2026-01-20",
+        "valor": 11172.78,
+        "instituicao": "IOA",
+        "rastreio": "DA553810074BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Dr. Vinicius Cardoso",
+        "data": "2026-01-13",
+        "valor": 63.0,
+        "instituicao": "SUCESSODONTO",
+        "rastreio": "RETIRADO EM GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Dra. Aline Alves",
+        "data": "2026-01-27",
+        "valor": 675.0,
+        "instituicao": "FACIT",
+        "rastreio": "AB968499371BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Dr. Vinicius Cardoso",
+        "data": "2026-01-27",
+        "valor": 62.0,
+        "instituicao": "SUCESSODONTO",
+        "rastreio": "RETIRADO EM GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Dr. Rudney Marcos",
+        "data": "2026-01-29",
+        "valor": 11172.48,
+        "instituicao": "IOA",
+        "rastreio": "DA531525775BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Dr. Caíque Braga",
+        "data": "2026-01-30",
+        "valor": 12709.0,
+        "instituicao": "ABO",
+        "rastreio": "DA553810573BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Dr. João José Barroso",
+        "data": "2026-01-23",
+        "valor": 11625.66,
+        "instituicao": "",
+        "rastreio": "DA531524505BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Dr. Gustavo Meneses",
+        "data": "2026-01-29",
+        "valor": 11625.66,
+        "instituicao": "",
+        "rastreio": "DA531525537BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Dr. Marcus Eduardo",
+        "data": "2026-01-29",
+        "valor": 14877.54,
+        "instituicao": "",
+        "rastreio": "DA531526166BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Dra. Amanda Marques",
+        "data": "2026-01-30",
+        "valor": 12746.88,
+        "instituicao": "",
+        "rastreio": "faturado sem rastreio ainda",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Francely",
+        "cliente": "Space Odonto LTDA",
+        "data": "2026-01-30",
+        "valor": 731.25,
+        "instituicao": "",
+        "rastreio": "AB922507085BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dra. Ylana Paiva",
+        "data": "2026-01-08",
+        "valor": 10861.0,
+        "instituicao": "",
+        "rastreio": "DA531520101BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dra. Daiane Silva",
+        "data": "2026-01-16",
+        "valor": 10861.0,
+        "instituicao": "",
+        "rastreio": "DA531522062BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dra. Maria Lucinalva",
+        "data": "2026-01-22",
+        "valor": 10861.0,
+        "instituicao": "",
+        "rastreio": "DA531523615BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dra. Talitha Mendes",
+        "data": "2026-01-30",
+        "valor": 598.0,
+        "instituicao": "",
+        "rastreio": "AB976663675BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Lizia",
+        "cliente": "Decilio Branco",
+        "data": "2026-01-26",
+        "valor": 2767.2,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA531525656BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Hugo Eduardo",
+        "data": "2026-01-31",
+        "valor": 99900.0,
+        "instituicao": "",
+        "rastreio": "",
+        "tipo": "digital"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "K. C. S. ARAUJO ODONTOLGIA",
+        "data": "2026-01-31",
+        "valor": 82900.0,
+        "instituicao": "",
+        "rastreio": "",
+        "tipo": "digital"
+      }
+    ]
+  },
+  "FEVEREIRO 2026": {
+    "totals_by_assessora": {
+      "bruna": {
+        "faturadas": 204907.9,
+        "digitais": 22740.0,
+        "total": 227647.9
+      },
+      "made": {
+        "faturadas": 757.3,
+        "digitais": 0.0,
+        "total": 757.3
+      },
+      "luana": {
+        "faturadas": 1744.0,
+        "digitais": 0.0,
+        "total": 1744.0
+      },
+      "diego": {
+        "faturadas": 40447.29,
+        "digitais": 0.0,
+        "total": 40447.29
+      },
+      "jarlene": {
+        "faturadas": 700.8,
+        "digitais": 82900.0,
+        "total": 83600.8
+      }
+    },
+    "details": [
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Hugo Eduardo",
+        "data": "2026-01-03",
+        "valor": 170100.0,
+        "instituicao": "",
+        "rastreio": "COMBO SIRIOS X3",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "N B PIRES Odontologia",
+        "data": "2026-02-05",
+        "valor": 927.0,
+        "instituicao": "",
+        "rastreio": "AB999476512BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Gutembergue Gomes",
+        "data": "2026-02-02",
+        "valor": 2030.4,
+        "instituicao": "",
+        "rastreio": "DA553810896BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Gutembergue Gomes",
+        "data": "2026-02-02",
+        "valor": 4160.0,
+        "instituicao": "",
+        "rastreio": "DA553832287BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dra Monique Bastos",
+        "data": "2026-02-06",
+        "valor": 437.0,
+        "instituicao": "",
+        "rastreio": "RETIRADA NA FILIAL DE GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Alyson Lira",
+        "data": "2026-02-09",
+        "valor": 12127.5,
+        "instituicao": "",
+        "rastreio": "DA553835204BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Rafael Prado",
+        "data": "2026-02-18",
+        "valor": 379.0,
+        "instituicao": "",
+        "rastreio": "AD122806581BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dra. Talita Azevedo/Clinosp Odontologia",
+        "data": "2026-02-18",
+        "valor": 987.0,
+        "instituicao": "",
+        "rastreio": "AD130662178BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dra. Carla Oliveira",
+        "data": "2026-02-19",
+        "valor": 1296.0,
+        "instituicao": "",
+        "rastreio": "AD130833368BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dra Monique Bastos",
+        "data": "2026-02-19",
+        "valor": 73.0,
+        "instituicao": "",
+        "rastreio": "RETIRADA NA FILIAL DE GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Enias Mello",
+        "data": "2026-02-25",
+        "valor": 12391.0,
+        "instituicao": "",
+        "rastreio": "DA553823245BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Dr. Vinicius Cardoso",
+        "data": "2026-02-05",
+        "valor": 201.5,
+        "instituicao": "",
+        "rastreio": "RETIRADA NA FILIAL DE GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Dra. Edenize Vaz",
+        "data": "2026-02-11",
+        "valor": 421.8,
+        "instituicao": "",
+        "rastreio": "RETIRADA NA FILIAL DE GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Dr. Vinicius Cardoso",
+        "data": "2026-02-25",
+        "valor": 134.0,
+        "instituicao": "",
+        "rastreio": "RETIRADA NA FILIAL DE GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Luana",
+        "cliente": "Dr. Bruno Holanda",
+        "data": "2026-02-06",
+        "valor": 1744.0,
+        "instituicao": "",
+        "rastreio": "DA553811123BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Dr. Gustavo André",
+        "data": "2026-02-13",
+        "valor": 12462.87,
+        "instituicao": "",
+        "rastreio": "AB997496810BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Dra. Laís Ines",
+        "data": "2026-02-24",
+        "valor": 12462.87,
+        "instituicao": "",
+        "rastreio": "DA553822449BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Dra. Frederico Silva",
+        "data": "",
+        "valor": 2892.0,
+        "instituicao": "",
+        "rastreio": "MATERIAL HANDS ON",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Dra. Natalia Oliveira",
+        "data": "",
+        "valor": 12629.55,
+        "instituicao": "",
+        "rastreio": "DA553824127BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dra. Kedma Mayara",
+        "data": "2026-02-03",
+        "valor": 700.8,
+        "instituicao": "",
+        "rastreio": "AB997496810BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dra. Carlissya Alves",
+        "data": "2026-02-18",
+        "valor": 22740.0,
+        "instituicao": "",
+        "rastreio": "",
+        "tipo": "digital"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dra. Alexandra Rocha",
+        "data": "2026-02-19",
+        "valor": 82900.0,
+        "instituicao": "",
+        "rastreio": "",
+        "tipo": "digital"
+      }
+    ]
+  },
+  "MARÇO 2026": {
+    "totals_by_assessora": {
+      "bruna": {
+        "faturadas": 5721.0,
+        "digitais": 201800.0,
+        "total": 207521.0
+      },
+      "made": {
+        "faturadas": 12204.2,
+        "digitais": 0.0,
+        "total": 12204.2
+      },
+      "diego": {
+        "faturadas": 26805.74,
+        "digitais": 0.0,
+        "total": 26805.74
+      },
+      "francely": {
+        "faturadas": 159.0,
+        "digitais": 0.0,
+        "total": 159.0
+      },
+      "jarlene": {
+        "faturadas": 24942.72,
+        "digitais": 78800.0,
+        "total": 103742.72
+      }
+    },
+    "details": [
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Alyson Lira",
+        "data": "2026-02-01",
+        "valor": 5429.0,
+        "instituicao": "",
+        "rastreio": "DA553824612BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Alyson Lira",
+        "data": "2026-02-01",
+        "valor": 0.0,
+        "instituicao": "",
+        "rastreio": "AD173306369BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dra Monique Bastos",
+        "data": "2026-03-17",
+        "valor": 146.0,
+        "instituicao": "",
+        "rastreio": "RETIRADO NA FILIAL DE GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dra. Monique Bastos",
+        "data": "2026-03-25",
+        "valor": 146.0,
+        "instituicao": "",
+        "rastreio": "RETIRADO NA FILIAL DE GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Dra. Edenize Vaz",
+        "data": "2026-03-31",
+        "valor": 11338.2,
+        "instituicao": "",
+        "rastreio": "RETIRADO NA FILIAL DE BRASÍLIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Dra. Edenize Vaz",
+        "data": "2026-03-31",
+        "valor": 866.0,
+        "instituicao": "",
+        "rastreio": "RETIRADO NA FILIAL DE BRASÍLIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Dr. Alissom Emanuel",
+        "data": "2026-03-03",
+        "valor": 14342.87,
+        "instituicao": "",
+        "rastreio": "DA553827083BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Dra. Gracidéia Aguiar",
+        "data": "2026-03-30",
+        "valor": 12462.87,
+        "instituicao": "",
+        "rastreio": "DA553813447BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Francely",
+        "cliente": "R. MONTEIRO CARVALHO -ME",
+        "data": "2026-03-09",
+        "valor": 159.0,
+        "instituicao": "",
+        "rastreio": "AD195994815BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dr. Italo Sucupira",
+        "data": "2026-03-24",
+        "valor": 12379.42,
+        "instituicao": "",
+        "rastreio": "AD253724032BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dr. Italo Sucupira",
+        "data": "2026-03-24",
+        "valor": 0.0,
+        "instituicao": "",
+        "rastreio": "DA553899142BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dr. Kayo Ryan",
+        "data": "2026-03-27",
+        "valor": 11215.3,
+        "instituicao": "",
+        "rastreio": "DA553899394BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dr. Igor Amaral",
+        "data": "2026-03-31",
+        "valor": 1348.0,
+        "instituicao": "",
+        "rastreio": "AD287744138BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dr. Igor Amaral",
+        "data": "2026-03-31",
+        "valor": 0.0,
+        "instituicao": "",
+        "rastreio": "AD287744138BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. André Luiz Lombardi",
+        "data": "2026-03-06",
+        "valor": 100900.0,
+        "instituicao": "",
+        "rastreio": "",
+        "tipo": "digital"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Alex Canales",
+        "data": "2026-03-06",
+        "valor": 100900.0,
+        "instituicao": "",
+        "rastreio": "",
+        "tipo": "digital"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "M.A.R COELHO",
+        "data": "2026-03-27",
+        "valor": 78800.0,
+        "instituicao": "",
+        "rastreio": "",
+        "tipo": "digital"
+      }
+    ]
+  },
+  "ABRIL 2026": {
+    "totals_by_assessora": {
+      "bruna": {
+        "faturadas": 73466.0,
+        "digitais": 82740.0,
+        "total": 156206.0
+      },
+      "made": {
+        "faturadas": 152570.69,
+        "digitais": 0.0,
+        "total": 152570.69
+      },
+      "luana": {
+        "faturadas": 519.0,
+        "digitais": 0.0,
+        "total": 519.0
+      },
+      "diego": {
+        "faturadas": 18379.2,
+        "digitais": 0.0,
+        "total": 18379.2
+      },
+      "jarlene": {
+        "faturadas": 28173.3,
+        "digitais": 0.0,
+        "total": 28173.3
+      }
+    },
+    "details": [
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Rafael Antonio",
+        "data": "2026-03-09",
+        "valor": 1193.0,
+        "instituicao": "",
+        "rastreio": "CONSIGNADO",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dra. Carla Oliveira",
+        "data": "2026-04-06",
+        "valor": 396.0,
+        "instituicao": "",
+        "rastreio": "AD309237458BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Alyson Lira",
+        "data": "2026-02-02",
+        "valor": 1225.0,
+        "instituicao": "",
+        "rastreio": "AD310354292BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Alyson Lira",
+        "data": "2026-02-02",
+        "valor": 0.0,
+        "instituicao": "",
+        "rastreio": "AD310354292BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Heder Lima",
+        "data": "2026-04-20",
+        "valor": 285.0,
+        "instituicao": "",
+        "rastreio": "AD360650275BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Angelo Bonato",
+        "data": "2026-04-24",
+        "valor": 1873.0,
+        "instituicao": "",
+        "rastreio": "AD384594701BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dra. Franciely Negri",
+        "data": "2026-04-27",
+        "valor": 11577.77,
+        "instituicao": "",
+        "rastreio": "DA582812157BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dra. Franciely Negri",
+        "data": "2026-04-27",
+        "valor": 0.0,
+        "instituicao": "",
+        "rastreio": "AD382381394BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Alyson Lira",
+        "data": "2026-04-27",
+        "valor": 47761.63,
+        "instituicao": "",
+        "rastreio": "DA582812449BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Alyson Lira",
+        "data": "2026-04-27",
+        "valor": 0.0,
+        "instituicao": "",
+        "rastreio": "DA497369049BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dra. Luciana Passos",
+        "data": "2026-04-30",
+        "valor": 4577.3,
+        "instituicao": "",
+        "rastreio": "DA569845337BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Ceom odontologia",
+        "data": "2026-04-30",
+        "valor": 4577.3,
+        "instituicao": "",
+        "rastreio": "DA569845178BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Vinicius Cardoso Gama",
+        "data": "2026-04-13",
+        "valor": 154.0,
+        "instituicao": "SucessOdonto",
+        "rastreio": "Retirado pelo laboratório em Goiânia",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Ortodoctor Canaã dos Carajás",
+        "data": "2023-04-14",
+        "valor": 23190.55,
+        "instituicao": "SucessOdonto",
+        "rastreio": "Ainda sem rastreio",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Witor Jacinto de Melo",
+        "data": "2026-04-16",
+        "valor": 3114.24,
+        "instituicao": "Curso ILA - PA",
+        "rastreio": "DA553814487BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Witor Jacinto de Melo",
+        "data": "2026-04-16",
+        "valor": 11395.21,
+        "instituicao": "Curso ILA - PA",
+        "rastreio": "DA582810346BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Witor Jacinto de Melo",
+        "data": "2026-04-16",
+        "valor": 210.0,
+        "instituicao": "Curso ILA - PA",
+        "rastreio": "AD349645248BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Kartchelly Borges da Cunha",
+        "data": "2026-04-16",
+        "valor": 13343.4,
+        "instituicao": "Curso ILA - PA",
+        "rastreio": "DA582810448BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Kartchelly Borges da Cunha",
+        "data": "2026-04-16",
+        "valor": 187.25,
+        "instituicao": "Curso ILA - PA",
+        "rastreio": "AD351918775BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Caíque Braga",
+        "data": "2026-04-16",
+        "valor": 720.0,
+        "instituicao": "Curso ABO - TO",
+        "rastreio": "AD351977204BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Débora da Silva Fernandes",
+        "data": "2026-04-24",
+        "valor": 38929.98,
+        "instituicao": "SucessOdonto",
+        "rastreio": "DA582813268BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Débora da Silva Fernandes",
+        "data": "2026-04-24",
+        "valor": 721.17,
+        "instituicao": "SucessOdonto",
+        "rastreio": "AD385509245BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Débora da Silva Fernandes",
+        "data": "2026-04-24",
+        "valor": 5349.68,
+        "instituicao": "SucessOdonto",
+        "rastreio": "DA497356408BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Ester Santos Silva",
+        "data": "2025-04-24",
+        "valor": 12006.79,
+        "instituicao": "Curso Facit - TO",
+        "rastreio": "DA582812245BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Ester Santos Silva",
+        "data": "2026-04-24",
+        "valor": 0.0,
+        "instituicao": "Curso Facit - TO",
+        "rastreio": "AD382063630BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Lorenna Bueno Martins",
+        "data": "2026-04-28",
+        "valor": 413.72,
+        "instituicao": "Curso IOA - TO",
+        "rastreio": "AD390143272BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Lorenna Bueno Martins",
+        "data": "2026-04-28",
+        "valor": 12797.84,
+        "instituicao": "Curso IOA - TO",
+        "rastreio": "DA582812792BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Juliano Augusto Garcia Guerra",
+        "data": "2025-04-28",
+        "valor": 1290.0,
+        "instituicao": "Cliente convencional",
+        "rastreio": "Retirado pelo laboratório em Goiânia",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Edenize Cristina Vaz",
+        "data": "2026-04-28",
+        "valor": 134.47,
+        "instituicao": "Cliente convencional",
+        "rastreio": "Retirado pelo laboratório em Goiânia",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Vinicius Cardoso Gama",
+        "data": "2026-04-28",
+        "valor": 266.0,
+        "instituicao": "SucessOdonto",
+        "rastreio": "Retirado pelo laboratório em Goiânia",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Marcos Augusto de Jesus da Silva",
+        "data": "2026-04-29",
+        "valor": 11690.24,
+        "instituicao": "Curso Facit - TO",
+        "rastreio": "DA582813254BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Marcos Augusto de Jesus da Silva",
+        "data": "2026-04-29",
+        "valor": 316.55,
+        "instituicao": "Curso Facit - TO",
+        "rastreio": "AD395047851BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Yuri Alves Veloso",
+        "data": "2026-04-29",
+        "valor": 11726.3,
+        "instituicao": "Curso Facit - TO",
+        "rastreio": "AD394818338BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Yuri Alves Veloso",
+        "data": "2026-04-29",
+        "valor": 36.0,
+        "instituicao": "Curso Facit - TO",
+        "rastreio": "DA553814990BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Ana Maria Pimenta Brito",
+        "data": "2026-04-29",
+        "valor": 4577.3,
+        "instituicao": "Curso ILA - PA",
+        "rastreio": "DA569844549BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Luana",
+        "cliente": "Dra. Kaohana Thais",
+        "data": "2026-04-17",
+        "valor": 519.0,
+        "instituicao": "",
+        "rastreio": "AD381201428BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Dra. Daiana Souza",
+        "data": "2026-04-30",
+        "valor": 4647.3,
+        "instituicao": "",
+        "rastreio": "DA553815037BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Dr. Silvio Rafael Amaral",
+        "data": "2026-04-30",
+        "valor": 4577.3,
+        "instituicao": "",
+        "rastreio": "DA582813625BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Instituto Alverne",
+        "data": "2026-04-30",
+        "valor": 4577.3,
+        "instituicao": "",
+        "rastreio": "DA569845782BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Instituto Leandro Araujo",
+        "data": "2026-04-30",
+        "valor": 4577.3,
+        "instituicao": "",
+        "rastreio": "DA569845907BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dra. Fernanda Costa",
+        "data": "2026-04-14",
+        "valor": 2472.6,
+        "instituicao": "",
+        "rastreio": "DA553814337BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dr. Sandoval Chaves",
+        "data": "2026-04-24",
+        "valor": 11630.0,
+        "instituicao": "",
+        "rastreio": "DA569814136BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dr. Higo Sousa",
+        "data": "2026-04-30",
+        "valor": 4916.1,
+        "instituicao": "",
+        "rastreio": "DA553869738BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dra.Mayara rodrigues",
+        "data": "2026-04-30",
+        "valor": 4577.3,
+        "instituicao": "",
+        "rastreio": "DA553815125BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dra. Serena Duarte",
+        "data": "2026-04-30",
+        "valor": 4577.3,
+        "instituicao": "",
+        "rastreio": "DA569846023BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dra. Álida Almeira",
+        "data": "2026-04-17",
+        "valor": 82740.0,
+        "instituicao": "",
+        "rastreio": "",
+        "tipo": "digital"
+      }
+    ]
+  },
+  "MAIO 2026": {
+    "totals_by_assessora": {
+      "bruna": {
+        "faturadas": 21782.51,
+        "digitais": 82740.0,
+        "total": 104522.51
+      },
+      "made": {
+        "faturadas": 32666.86,
+        "digitais": 0.0,
+        "total": 32666.86
+      },
+      "luana": {
+        "faturadas": 342.0,
+        "digitais": 0.0,
+        "total": 342.0
+      },
+      "diego": {
+        "faturadas": 113248.8,
+        "digitais": 99800.0,
+        "total": 213048.8
+      },
+      "jarlene": {
+        "faturadas": 13571.47,
+        "digitais": 0.0,
+        "total": 13571.47
+      },
+      "lizia": {
+        "faturadas": 3483.02,
+        "digitais": 0.0,
+        "total": 3483.02
+      }
+    },
+    "details": [
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Rafael Antonio",
+        "data": "2026-05-06",
+        "valor": 2972.0,
+        "instituicao": "",
+        "rastreio": "AD334114606BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr.Rafael Prado",
+        "data": "2026-05-05",
+        "valor": 4090.5,
+        "instituicao": "",
+        "rastreio": "DA553815235BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dra. Monique Bastos",
+        "data": "2026-05-06",
+        "valor": 141.0,
+        "instituicao": "",
+        "rastreio": "RETIRADA EM GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "SD Centro Odontologico",
+        "data": "2026-05-14",
+        "valor": 363.0,
+        "instituicao": "",
+        "rastreio": "AD454093338BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "COL -  Centro Odontologico Leão LTDA",
+        "data": "2026-05-18",
+        "valor": 4581.0,
+        "instituicao": "",
+        "rastreio": "DA553816077BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Monique Bastos Sponchiado",
+        "data": "2026-05-21",
+        "valor": 425.0,
+        "instituicao": "",
+        "rastreio": "RETIRADA EM GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Monique Bastos Sponchiado",
+        "data": "2026-05-27",
+        "valor": 241.0,
+        "instituicao": "",
+        "rastreio": "RETIRADA EM GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Humanize Odontologia",
+        "data": "2026-05-28",
+        "valor": 8426.01,
+        "instituicao": "",
+        "rastreio": "Aguardando Rastreio",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Humanize Odontologia",
+        "data": "2026-05-28",
+        "valor": 543.0,
+        "instituicao": "",
+        "rastreio": "AD512384037BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Vinicius Cardoso Gama",
+        "data": "2026-05-05",
+        "valor": 66.5,
+        "instituicao": "",
+        "rastreio": "Retirado pelo laboratório em Goiânia",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "CLINICA ODONTOLOGICA TOLEDO LTDA",
+        "data": "2026-05-18",
+        "valor": 19513.37,
+        "instituicao": "",
+        "rastreio": "DA582818013BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Bruno Holanda",
+        "data": "2026-05-01",
+        "valor": 907.5,
+        "instituicao": "",
+        "rastreio": "Remessa faturada",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Edenize Cristina Vaz",
+        "data": "2026-05-22",
+        "valor": 249.99,
+        "instituicao": "",
+        "rastreio": "Retirado pelo laboratório em Goiânia",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "DAYANNY GLÓRIA FERREIRA SAMPAIO SANTOS",
+        "data": "2026-05-29",
+        "valor": 11929.5,
+        "instituicao": "",
+        "rastreio": "DA582822300BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "LUANA",
+        "cliente": "Dr. Glauber Marcelino",
+        "data": "2026-04-05",
+        "valor": 342.0,
+        "instituicao": "",
+        "rastreio": "AD419238243BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Raphael Vale Rodriguês",
+        "data": "2026-05-20",
+        "valor": 46224.0,
+        "instituicao": "",
+        "rastreio": "DA582820683BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Raphael Vale Rodriguês",
+        "data": "2026-05-20",
+        "valor": 8089.2,
+        "instituicao": "",
+        "rastreio": "DA582821485BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Raphael Vale Rodriguês",
+        "data": "2026-05-20",
+        "valor": 8089.2,
+        "instituicao": "",
+        "rastreio": "Faturado sem rastreio",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Raphael Vale Rodriguês",
+        "data": "2026-05-20",
+        "valor": 1155.6,
+        "instituicao": "",
+        "rastreio": "Aguardando rastreio",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Raphael Vale Rodriguês",
+        "data": "2026-05-20",
+        "valor": 3466.8,
+        "instituicao": "",
+        "rastreio": "DA497369494BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Eduardo Santana Mendonça",
+        "data": "2026-05-21",
+        "valor": 20800.8,
+        "instituicao": "",
+        "rastreio": "DA582819019BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Eduardo Santana Mendonça",
+        "data": "2026-05-21",
+        "valor": 2311.2,
+        "instituicao": "",
+        "rastreio": "DA553874415BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Joselio Torres Carvalho",
+        "data": "2026-05-21",
+        "valor": 11556.0,
+        "instituicao": "",
+        "rastreio": "DA582819393BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Leandro Luis Barros Ramos",
+        "data": "2026-05-22",
+        "valor": 11556.0,
+        "instituicao": "",
+        "rastreio": "DA569852718BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Dra. Livia Cristina",
+        "data": "2026-05-07",
+        "valor": 1192.0,
+        "instituicao": "",
+        "rastreio": "AD426588956BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Adailton Pascal do Nascimento",
+        "data": "2026-05-18",
+        "valor": 12354.27,
+        "instituicao": "",
+        "rastreio": "DA582817755BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Adailton Pascal do Nascimento",
+        "data": "2026-05-19",
+        "valor": 25.2,
+        "instituicao": "",
+        "rastreio": "AD463068739BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Lizia",
+        "cliente": "Decilio C. Branco Neto",
+        "data": "2026-05-07",
+        "valor": 3483.02,
+        "instituicao": "",
+        "rastreio": "DA582815391BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "BRUNA",
+        "cliente": "Dr. Durval Palmeira",
+        "data": "2026-05-25",
+        "valor": 82740.0,
+        "instituicao": "",
+        "rastreio": "",
+        "tipo": "digital"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Rodrigo Neves do Rego Freitas",
+        "data": "2026-05-28",
+        "valor": 99800.0,
+        "instituicao": "",
+        "rastreio": "",
+        "tipo": "digital"
+      }
+    ]
+  },
+  "JUNHO 2026": {
+    "totals_by_assessora": {
+      "bruna": {
+        "faturadas": 20966.06,
+        "digitais": 0.0,
+        "total": 20966.06
+      },
+      "made": {
+        "faturadas": 126839.8,
+        "digitais": 0.0,
+        "total": 126839.8
+      },
+      "luana": {
+        "faturadas": 7306.21,
+        "digitais": 0.0,
+        "total": 7306.21
+      },
+      "diego": {
+        "faturadas": 78246.84,
+        "digitais": 0.0,
+        "total": 78246.84
+      },
+      "jarlene": {
+        "faturadas": 56511.41,
+        "digitais": 0.0,
+        "total": 56511.41
+      },
+      "lizia": {
+        "faturadas": 539.0,
+        "digitais": 0.0,
+        "total": 539.0
+      }
+    },
+    "details": [
+      {
+        "assessora": "Bruna",
+        "cliente": "Rafael Jorge",
+        "data": "2026-06-03",
+        "valor": 1004.25,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "AD546068351BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Monique Bastos Sponchiado",
+        "data": "2026-06-10",
+        "valor": 327.5,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "RETIRADA EM GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Monique Bastos Sponchiado",
+        "data": "2026-06-25",
+        "valor": 277.5,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "RETIRADA EM GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Moises Fardim",
+        "data": "2026-06-30",
+        "valor": 4572.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA594871444BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Antônio Kleber Moreira do Nascimento Barbosa",
+        "data": "2026-06-30",
+        "valor": 14671.81,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA553818311BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Antônio Kleber Moreira do Nascimento Barbosa",
+        "data": "2026-06-30",
+        "valor": 113.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "AD629564764BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Vinicius Cardoso Gama",
+        "data": "2026-06-12",
+        "valor": 266.0,
+        "instituicao": "SucessOdonto",
+        "rastreio": "Retirado pelo laboratório em Goiânia",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Vinicius Cardoso Gama",
+        "data": "2026-06-12",
+        "valor": 266.0,
+        "instituicao": "SucessOdonto",
+        "rastreio": "Retirado pelo laboratório em Goiânia",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Célio Alves Guedes Junior",
+        "data": "2026-06-15",
+        "valor": 8820.0,
+        "instituicao": "Clinicorp",
+        "rastreio": "DA582826139BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Vinicius Cardoso Gama",
+        "data": "2026-06-24",
+        "valor": 44415.36,
+        "instituicao": "SucessOdonto",
+        "rastreio": "DA582828568BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Witor Jacinto de Melo",
+        "data": "2026-06-24",
+        "valor": 20025.0,
+        "instituicao": "Curso ILA - PA",
+        "rastreio": "DA582828625BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Vinicius Cardoso Gama",
+        "data": "2026-06-26",
+        "valor": 600.0,
+        "instituicao": "SucessOdonto",
+        "rastreio": "AD616432950BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Hawill Moura Coelho Junior",
+        "data": "2026-06-30",
+        "valor": 11929.44,
+        "instituicao": "Curso Facit - TO",
+        "rastreio": "DA594871926BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Clínica Odontológica Renato Zanetti Eireli",
+        "data": "2026-06-30",
+        "valor": 13350.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA594871775BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Sara Rocha de Melo",
+        "data": "2026-06-30",
+        "valor": 14958.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA594871798BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Renner Ribeiro Modesto",
+        "data": "2026-06-30",
+        "valor": 12210.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA594871767BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Luana",
+        "cliente": "Glauber Marcelino Rabelo",
+        "data": "2026-06-22",
+        "valor": 297.5,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "AD600273116BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Luana",
+        "cliente": "José Combas Alameda Neto",
+        "data": "2026-06-26",
+        "valor": 7008.71,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "THIAGO DE SOUSA NUNES BARBOSA",
+        "data": "2026-06-10",
+        "valor": 12391.77,
+        "instituicao": "IOA SÃO LUIS",
+        "rastreio": "DA582824725BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "JOSELIO TORRES DE CARVALHO",
+        "data": "2026-06-16",
+        "valor": 13350.0,
+        "instituicao": "ABO IMPERATRIZ",
+        "rastreio": "DA582826522BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "BORGES VIEIRA DE MELO JUNIOR",
+        "data": "2026-06-17",
+        "valor": 13350.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA569891107BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "FREDERICO SILVA DE FREITAS FERNANDDES",
+        "data": "2026-06-19",
+        "valor": 13350.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "PRISCILLA FERREIRA COSTA",
+        "data": "2026-06-23",
+        "valor": 10806.73,
+        "instituicao": "IOA SÃO LUIS",
+        "rastreio": "DA582828245BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "PRISCILLA FERREIRA COSTA",
+        "data": "2026-06-23",
+        "valor": 1648.34,
+        "instituicao": "IOA SÃO LUIS",
+        "rastreio": "AD605209344BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "ROMULO CARVALHO ROCHA",
+        "data": "2026-06-25",
+        "valor": 13350.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA582829055BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "VINICIUS PIRES DE BARROS",
+        "data": "2026-06-17",
+        "valor": 1571.4,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "AD585287416BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "RAFAEL DA SILVA REINALDO",
+        "data": "2026-06-17",
+        "valor": 13350.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA582826791BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "WALMIR ALVES MAGALHÃES JUNIOR",
+        "data": "2026-06-18",
+        "valor": 8081.69,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA582827117BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "M A R COELHO",
+        "data": "2026-06-19",
+        "valor": 6502.95,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA582827559BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "M A R COELHO",
+        "data": "2026-06-19",
+        "valor": 9243.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA569891756BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "ANA JULIA OLIVEIRA DE LIMA",
+        "data": "2026-06-30",
+        "valor": 11565.42,
+        "instituicao": "ALUNO IOA IMPERATRIZ-MA",
+        "rastreio": "",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "LEONILSON GAIÃO DE MELO",
+        "data": "2026-06-30",
+        "valor": 6196.95,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA582830031BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Lizia",
+        "cliente": "R MONTEIRO CARVALHO ME",
+        "data": "2026-05-09",
+        "valor": 539.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "",
+        "tipo": "faturada"
+      }
+    ]
+  },
+  "JULHO 2026": {
+    "totals_by_assessora": {
+      "bruna": {
+        "faturadas": 64250.05,
+        "digitais": 0.0,
+        "total": 64250.05
+      },
+      "made": {
+        "faturadas": 91741.43,
+        "digitais": 0.0,
+        "total": 91741.43
+      },
+      "diego": {
+        "faturadas": 70875.21,
+        "digitais": 0.0,
+        "total": 70875.21
+      },
+      "jarlene": {
+        "faturadas": 4978.4,
+        "digitais": 0.0,
+        "total": 4978.4
+      }
+    },
+    "details": [
+      {
+        "assessora": "Bruna",
+        "cliente": "Max Sweel Carvalho",
+        "data": "2026-07-07",
+        "valor": 14903.67,
+        "instituicao": "Bruno Simião",
+        "rastreio": "DA594873105BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Monique Bastos",
+        "data": "2026-07-08",
+        "valor": 188.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "RETIRADA NA FILIAL DE GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Marco Tulio Passos",
+        "data": "2026-07-09",
+        "valor": 12896.79,
+        "instituicao": "FACIT",
+        "rastreio": "DA594873808BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Jefferson de Souza",
+        "data": "2026-07-10",
+        "valor": 10491.93,
+        "instituicao": "Bruno Simião",
+        "rastreio": "DA594874879BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Jefferson de Souza",
+        "data": "2026-07-10",
+        "valor": 3200.64,
+        "instituicao": "Bruno Simião",
+        "rastreio": "DA553818807BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Jefferson de Souza",
+        "data": "2026-07-10",
+        "valor": 20.34,
+        "instituicao": "Bruno Simião",
+        "rastreio": "AD691251740BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Jonathan Pereira",
+        "data": "2026-07-13",
+        "valor": 4842.25,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "AD682690592BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Jonathan Pereira",
+        "data": "2026-07-13",
+        "valor": 367.5,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "AD682690592BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Jonathan Pereira",
+        "data": "2026-07-14",
+        "valor": 56.5,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "AGUARDANDO ESTOQUE",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Clinosp - Talita Azevedo",
+        "data": "2026-07-15",
+        "valor": 1541.75,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "RETIRADA NA FILIAL DE GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Alyson Lira",
+        "data": "2026-07-21",
+        "valor": 12024.18,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA595164028BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Alyson Lira",
+        "data": "2026-07-22",
+        "valor": 2268.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA594617858BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Alyson Lira",
+        "data": "2026-07-23",
+        "valor": 882.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "AD706925215BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Monique Bastos",
+        "data": "2026-07-28",
+        "valor": 215.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "RETIRADA NA FILIAL DE GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Clinosp - Talita Azevedo",
+        "data": "2026-07-28",
+        "valor": 351.5,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "RETIRADA NA FILIAL DE GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Gessica karolainy Pires Silva ribeiro",
+        "data": "2026-07-07",
+        "valor": 13530.4,
+        "instituicao": "Curso ILA - PA",
+        "rastreio": "DA594873989BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Marcos Rodrigo Silva Pereira",
+        "data": "2026-07-13",
+        "valor": 10714.96,
+        "instituicao": "Curso IOA - TO",
+        "rastreio": "DA594874825BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Marcos Rodrigo Silva Pereira",
+        "data": "2026-07-13",
+        "valor": 1216.0,
+        "instituicao": "Curso IOA - TO",
+        "rastreio": "AD681282699BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Marcos Rodrigo Silva Pereira",
+        "data": "2026-07-13",
+        "valor": 20.34,
+        "instituicao": "Curso IOA - TO",
+        "rastreio": "AD691251740BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Angelo Martin Colmenares Anaguari",
+        "data": "2026-07-15",
+        "valor": 10571.5,
+        "instituicao": "Curso ILA - PA",
+        "rastreio": "Ja entregue ao cliente",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Samuel Valadares dos Santos",
+        "data": "2026-07-23",
+        "valor": 11909.16,
+        "instituicao": "Curso Facit - TO",
+        "rastreio": "DA594876883BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Samuel Valadares dos Santos",
+        "data": "2026-07-23",
+        "valor": 20.34,
+        "instituicao": "Curso Facit - TO",
+        "rastreio": "AD716504963BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Luana Martins Oliveira",
+        "data": "2026-07-28",
+        "valor": 12875.66,
+        "instituicao": "Curso IOA - TO",
+        "rastreio": "DA594877708BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Luana Martins Oliveira",
+        "data": "2026-07-28",
+        "valor": 20.34,
+        "instituicao": "Curso IOA - TO",
+        "rastreio": "AD731749186BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Wellington Alves Vieira",
+        "data": "2026-07-28",
+        "valor": 16220.41,
+        "instituicao": "Curso Abrange - TO",
+        "rastreio": "DA594878133BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Wellington Alves Vieira",
+        "data": "2026-07-28",
+        "valor": 20.34,
+        "instituicao": "Curso Abrange - TO",
+        "rastreio": "AD733521895BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Eduardo Cardoso Ramos",
+        "data": "2026-07-29",
+        "valor": 14355.98,
+        "instituicao": "Curso ILA - PA",
+        "rastreio": "DA594878425BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Odontomaster clinica odontologica ltda",
+        "data": "2026-07-30",
+        "valor": 133.0,
+        "instituicao": "Cliente convencional",
+        "rastreio": "Retirada no laboratório em Goiânia",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Odontomaster clinica odontologica ltda",
+        "data": "2026-07-31",
+        "valor": 133.0,
+        "instituicao": "Cliente convencional",
+        "rastreio": "Retirada no laboratório em Goiânia",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "INSTITUTO DE EDUCAÇÃO E SAUDE DO MARANHÃO LTDA",
+        "data": "2026-07-03",
+        "valor": 361.8,
+        "instituicao": "Curso IOA",
+        "rastreio": "AD641657124BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "RAFAEL NASCIMENTO DOS SANTOS",
+        "data": "2026-07-20",
+        "valor": 20025.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA594875724BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "LEONARDO ANDRADE DIAS PESSOA",
+        "data": "2026-07-21",
+        "valor": 10726.48,
+        "instituicao": "CREIO",
+        "rastreio": "AD709286358BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "LEONARDO ANDRADE DIAS PESSOA",
+        "data": "2026-07-21",
+        "valor": 1652.99,
+        "instituicao": "CREIO",
+        "rastreio": "AD708954373BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "PEDRO HENRIQUE PINTO BRANDÃO",
+        "data": "2026-07-30",
+        "valor": 12359.13,
+        "instituicao": "IOA SÃO LUIS",
+        "rastreio": "",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "PEDRO HENRIQUE PINTO BRANDÃO",
+        "data": "2026-07-30",
+        "valor": 20.34,
+        "instituicao": "IOA SÃO LUIS",
+        "rastreio": "",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "GUSTAVO DE MORAES GARCÊS",
+        "data": "2026-07-30",
+        "valor": 13350.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "TYARA DWAN SILVA LEAL DA SILVA",
+        "data": "2026-07-30",
+        "valor": 10487.07,
+        "instituicao": "Instituto Mont Alverne",
+        "rastreio": "",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "TYARA DWAN SILVA LEAL DA SILVA",
+        "data": "2026-07-30",
+        "valor": 1892.4,
+        "instituicao": "Instituto Mont Alverne",
+        "rastreio": "",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Hellem Rachel Chaves Vieira",
+        "data": "2026-07-07",
+        "valor": 2711.4,
+        "instituicao": "CLiente Convencional",
+        "rastreio": "DA594873414BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "LEONILSON GAIAO MELO",
+        "data": "2026-07-22",
+        "valor": 2267.0,
+        "instituicao": "CLiente Convencional",
+        "rastreio": "AD710061860BR",
+        "tipo": "faturada"
+      }
+    ]
+  },
+  "AGOSTO 2026": {
+    "totals_by_assessora": {
+      "bruna": {
+        "faturadas": 25692.66,
+        "digitais": 0.0,
+        "total": 25692.66
+      },
+      "made": {
+        "faturadas": 129093.61,
+        "digitais": 0.0,
+        "total": 129093.61
+      },
+      "luana": {
+        "faturadas": 931.0,
+        "digitais": 0.0,
+        "total": 931.0
+      },
+      "diego": {
+        "faturadas": 51514.74,
+        "digitais": 0.0,
+        "total": 51514.74
+      },
+      "francely": {
+        "faturadas": 62824.2,
+        "digitais": 0.0,
+        "total": 62824.2
+      },
+      "jarlene": {
+        "faturadas": 110045.73,
+        "digitais": 0.0,
+        "total": 110045.73
+      },
+      "lizia": {
+        "faturadas": 7008.56,
+        "digitais": 0.0,
+        "total": 7008.56
+      }
+    },
+    "details": [
+      {
+        "assessora": "Bruna",
+        "cliente": "Clinosp - Talita Azevedo",
+        "data": "2026-08-05",
+        "valor": 351.5,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "RETIRADO NA FILIAL DE GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Henrique Rezende",
+        "data": "2026-08-11",
+        "valor": 1636.5,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "AD789833660BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Rafael Nery",
+        "data": "2026-08-11",
+        "valor": 1004.25,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "AD789832426BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Moises Fardim",
+        "data": "2026-08-18",
+        "valor": 4685.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA594883425BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Clinosp - Talita Azevedo",
+        "data": "2026-08-25",
+        "valor": 508.25,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "RETIRADO NA FILIAL DE GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Dr. Alyson Lira",
+        "data": "2026-08-25",
+        "valor": 17273.16,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA594886537BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Monique Bastos",
+        "data": "2026-08-27",
+        "valor": 234.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "RETIRADO NA FILIAL DE GOIÂNIA",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Edenize Cristina Vaz",
+        "data": "2026-08-04",
+        "valor": 305.9,
+        "instituicao": "Cliente convencional",
+        "rastreio": "retirada no labóratorio de Brasilia",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Emanuel Rozette Vicente Barbosa",
+        "data": "2026-08-06",
+        "valor": 5509.61,
+        "instituicao": "Curso Abrange - TO",
+        "rastreio": "DA594880945BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Emanuel Rozette Vicente Barbosa",
+        "data": "2026-08-06",
+        "valor": 13812.95,
+        "instituicao": "Curso Abrange - TO",
+        "rastreio": "DA594882230BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Emanuel Rozette Vicente Barbosa",
+        "data": "2026-08-06",
+        "valor": 25.2,
+        "instituicao": "Curso Abrange - TO",
+        "rastreio": "AD769543703BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Eduarda Vinhal Parrião",
+        "data": "2026-08-07",
+        "valor": 4791.6,
+        "instituicao": "Curso Facit - TO",
+        "rastreio": "DA594881282BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Tainara Merotto",
+        "data": "2026-08-17",
+        "valor": 18244.97,
+        "instituicao": "SucessOdonto",
+        "rastreio": "material entregue 20/08",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Talissa Iurko Martins Pereira",
+        "data": "2026-08-17",
+        "valor": 16201.44,
+        "instituicao": "Curso Abrange - TO",
+        "rastreio": "DA594883147BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Alexsandro Lopes Cardoso",
+        "data": "2026-08-20",
+        "valor": 9057.27,
+        "instituicao": "Curso Facit - TO",
+        "rastreio": "Transportadora   - SAFETY LOG",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Otoni Clinic Ltda",
+        "data": "2026-08-20",
+        "valor": 7200.79,
+        "instituicao": "Cliente convencional",
+        "rastreio": "DA594884195BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Débora da Silva Fernandes",
+        "data": "2026-08-20",
+        "valor": 18408.46,
+        "instituicao": "SucessOdonto",
+        "rastreio": "DA594884845BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Wedja Jessyca Pinto Saraiva de Sá",
+        "data": "2026-08-24",
+        "valor": 1597.13,
+        "instituicao": "Cliente convencional",
+        "rastreio": "DA594887078BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Wedja Jessyca Pinto Saraiva de Sá",
+        "data": "2026-08-24",
+        "valor": 5919.59,
+        "instituicao": "Cliente convencional",
+        "rastreio": "DA594887078BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "João Antônio Proenço",
+        "data": "2026-08-27",
+        "valor": 21171.1,
+        "instituicao": "Cliente convencional",
+        "rastreio": "DA594886245BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Sara Ritielly Pacheco Costa Macedo",
+        "data": "2026-08-27",
+        "valor": 6847.6,
+        "instituicao": "Curso ABO - TO",
+        "rastreio": "DA594886418BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Luana",
+        "cliente": "Marcelo Paluan",
+        "data": "2026-08-10",
+        "valor": 931.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "AD783099574BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "DIEGO",
+        "cliente": "CIS CENTRO INTEGRADO EM SAUDE LTDA",
+        "data": "2026-08-18",
+        "valor": 18657.0,
+        "instituicao": "CIS CENTRO INTEGRADO EM SAUDE",
+        "rastreio": "DA594885182BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "DIEGO",
+        "cliente": "NAARI MARGLI ALVES DE ANDRADE",
+        "data": "2026-08-24",
+        "valor": 12717.37,
+        "instituicao": "ABO IMPERATRIZ",
+        "rastreio": "DA594885103BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "DIEGO",
+        "cliente": "FREDERICK ADAM SOUSA ARAUJO",
+        "data": "2026-08-26",
+        "valor": 12717.37,
+        "instituicao": "IOA SÃO LUIS",
+        "rastreio": "DA594886109BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "DIEGO",
+        "cliente": "IGOR RODRIGUES DE VASCONCELOS",
+        "data": "2026-08-31",
+        "valor": 7423.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA594887299BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "FRANCELY",
+        "cliente": "DERCILIO C. BRANCO NETO",
+        "data": "2026-07-22",
+        "valor": 2320.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA594879607BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "FRANCELY",
+        "cliente": "PAULO HENRIQUE FURTADO DA SILVA",
+        "data": "2026-08-31",
+        "valor": 60504.2,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA594887492BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "SUZANY NASCIMENTO COSTA",
+        "data": "2026-08-04",
+        "valor": 1192.0,
+        "instituicao": "ALUNA IOA",
+        "rastreio": "Transportadora SAFETYLOG",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "JAIRA LIMA SOUSA SANTOS",
+        "data": "2026-08-07",
+        "valor": 10487.07,
+        "instituicao": "ALUNA IOA",
+        "rastreio": "DA594881194BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "JAIRA LIMA SOUSA SANTOS",
+        "data": "2026-08-07",
+        "valor": 2218.0,
+        "instituicao": "ALUNA IOA",
+        "rastreio": "DA569811497BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "JEFERSON VIANA DE ALBUQUERQUE",
+        "data": "2026-08-11",
+        "valor": 12659.53,
+        "instituicao": "ALUNO IOA",
+        "rastreio": "AD812664596BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "JEFERSON VIANA DE ALBUQUERQUE",
+        "data": "2026-08-11",
+        "valor": 45.54,
+        "instituicao": "ALUNO IOA",
+        "rastreio": "AD808204015BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "M DE S M ARAUJO LTDA",
+        "data": "2026-08-14",
+        "valor": 12679.87,
+        "instituicao": "ALUNO IOA",
+        "rastreio": "DA594882495BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "M DE S M ARAUJO LTDA",
+        "data": "2026-08-14",
+        "valor": 25.2,
+        "instituicao": "ALUNO IOA",
+        "rastreio": "AD797024307BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "CLORISVALDO DA SILVA BARROS",
+        "data": "2026-08-18",
+        "valor": 12705.02,
+        "instituicao": "ALUNO IOA",
+        "rastreio": "DA594883442BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "LUCAS MORAES DA SILVA",
+        "data": "2026-08-18",
+        "valor": 12705.05,
+        "instituicao": "ALUNO ABO",
+        "rastreio": "DA594883527BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "ROMUALDO GETRO DE SANTANA JÚNIOR",
+        "data": "2026-08-20",
+        "valor": 12705.05,
+        "instituicao": "ALUNO IOA",
+        "rastreio": "DA594884261BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "RICARDO PEREIRA DE ANDRADE JÚNIOR",
+        "data": "2026-08-24",
+        "valor": 12705.05,
+        "instituicao": "ALUNO IOA",
+        "rastreio": "DA594885151BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "MATEUS MACIEL DA SILVA",
+        "data": "2026-08-27",
+        "valor": 12705.05,
+        "instituicao": "ALUNO IOA",
+        "rastreio": "DA594886395BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "JARLENE",
+        "cliente": "KAIQUE DLUCAS SOUZA LEITE GIROUX",
+        "data": "2026-08-31",
+        "valor": 7213.3,
+        "instituicao": "ALUNO IOA",
+        "rastreio": "DA594887475BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Lizia",
+        "cliente": "IVES ODONTOLOGIA LTDA",
+        "data": "2026-08-20",
+        "valor": 7008.56,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA594884187BR",
+        "tipo": "faturada"
+      }
+    ]
+  },
+  "SETEMBRO 2026": {
+    "totals_by_assessora": {
+      "made": {
+        "faturadas": 61972.16,
+        "digitais": 0.0,
+        "total": 61972.16
+      },
+      "luana": {
+        "faturadas": 268.0,
+        "digitais": 0.0,
+        "total": 268.0
+      },
+      "diego": {
+        "faturadas": 222282.59,
+        "digitais": 78300.0,
+        "total": 300582.59
+      },
+      "francely": {
+        "faturadas": 7008.71,
+        "digitais": 0.0,
+        "total": 7008.71
+      },
+      "lizia": {
+        "faturadas": 2552.01,
+        "digitais": 0.0,
+        "total": 2552.01
+      },
+      "bruna": {
+        "faturadas": 370.0,
+        "digitais": 15629.71,
+        "total": 15999.71
+      }
+    },
+    "details": [
+      {
+        "assessora": "Madê",
+        "cliente": "Miranda Saude Odontologica Ltda",
+        "data": "2026-09-15",
+        "valor": 14828.0,
+        "instituicao": "Aluna Curso IOA",
+        "rastreio": "DA617774955BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Bianca Rabelo Alves Mendonça",
+        "data": "2026-09-15",
+        "valor": 15990.44,
+        "instituicao": "Aluna Curso Abrange",
+        "rastreio": "DA617775770BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Studio Oral Sacardo Odontologia",
+        "data": "2026-09-21",
+        "valor": 18257.78,
+        "instituicao": "SucessOdonto",
+        "rastreio": "",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Luana",
+        "cliente": "Glauber Marcelino Rabelo",
+        "data": "2026-09-14",
+        "valor": 268.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "Zigoma Action LTDA",
+        "data": "2026-09-08",
+        "valor": 32814.99,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA594889476BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "George Seixas Abreu Junior",
+        "data": "2026-09-10",
+        "valor": 168067.6,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA595182168BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "TBC GOES",
+        "data": "2026-09-17",
+        "valor": 21400.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA617775179BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Francely",
+        "cliente": "RONAN GOMES SILVA",
+        "data": "2026-09-04",
+        "valor": 7008.71,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA594889051BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Lizia",
+        "cliente": "Dercilio Branco",
+        "data": "2026-09-17",
+        "valor": 2552.01,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "BRUNO RICARDO HUBER SIMIAO",
+        "data": "2026-09-02",
+        "valor": 2229.71,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "AD876536555BR",
+        "tipo": "digital"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "BRUNO RICARDO HUBER SIMIAO",
+        "data": "2026-08-31",
+        "valor": 13400.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "NF: 195659",
+        "tipo": "digital"
+      },
+      {
+        "assessora": "Diego",
+        "cliente": "George Seixas Abreu Junior",
+        "data": "2026-09-10",
+        "valor": 78300.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "DA595182168BR",
+        "tipo": "digital"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Monique Bastos Sponchiado",
+        "data": "2026-09-22",
+        "valor": 370.0,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Clara Brito D'assunção",
+        "data": "2026-09-16",
+        "valor": 12895.94,
+        "instituicao": "Aluna Curso IOA",
+        "rastreio": "",
+        "tipo": "faturada"
+      }
+    ]
+  },
+  "OUTUBRO 2026": {
+    "totals_by_assessora": {},
+    "details": []
+  },
+  "NOVEMBRO 2026": {
+    "totals_by_assessora": {},
+    "details": []
+  },
+  "DEZEMBRO 2026": {
+    "totals_by_assessora": {},
+    "details": []
+  }
+}

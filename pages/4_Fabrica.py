@@ -1,4 +1,6 @@
+import copy
 import json
+import unicodedata
 from pathlib import Path
 
 import altair as alt
@@ -37,6 +39,34 @@ def split_value(v):
 
 def title_case(s: str) -> str:
     return " ".join(w.capitalize() for w in s.split())
+
+
+def norm(s: str) -> str:
+    """Tira acentos e deixa minúsculo (Madê -> made) para casar nomes."""
+    s = unicodedata.normalize("NFD", str(s or ""))
+    s = "".join(c for c in s if unicodedata.category(c) != "Mn")
+    return s.lower().strip()
+
+
+def is_a_faturar(det: dict) -> bool:
+    return str(det.get("rastreio", "")).strip().lower().startswith("não faturado")
+
+
+def ajustar_a_faturar(data: dict) -> dict:
+    """Tira do faturado (Faturadas e Total) os lançamentos 'Não Faturado'.
+    Eles continuam nos detalhes e aparecem só na coluna 'A Faturar'."""
+    data = copy.deepcopy(data)
+    for entry_ in data.values():
+        totals_ = entry_.get("totals_by_assessora", {})
+        for d_ in entry_.get("details", []):
+            if is_a_faturar(d_):
+                k_ = norm(d_.get("assessora", ""))
+                v_ = float(d_.get("valor", 0) or 0)
+                t_ = totals_.get(k_)
+                if isinstance(t_, dict):
+                    t_["faturadas"] = round(t_.get("faturadas", 0) - v_, 2)
+                    t_["total"] = round(t_.get("total", 0) - v_, 2)
+    return data
 
 
 @st.cache_data(ttl=60)
@@ -239,7 +269,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-DATA = load_data()
+DATA = ajustar_a_faturar(load_data())
 
 month_totals = []
 store_totals = {"PMW": 0.0, "SLZ": 0.0, "ITZ": 0.0}
@@ -301,15 +331,26 @@ sel_label = st.selectbox("Mês", months_with_data, index=len(months_with_data) -
 
 entry = DATA.get(sel_label, {})
 totals = entry.get("totals_by_assessora", {})
+a_faturar = {}
+for d_ in entry.get("details", []):
+    if is_a_faturar(d_):
+        k_ = norm(d_.get("assessora", ""))
+        a_faturar[k_] = a_faturar.get(k_, 0.0) + float(d_.get("valor", 0) or 0)
+
 rows = []
 for a, v in sorted(totals.items(), key=lambda kv: -split_value(kv[1])[2]):
     fat, dig, tot = split_value(v)
+    af = a_faturar.get(norm(a), 0.0)
+    af_txt = fmt_money(af)
+    if af > 0:
+        af_txt = f'<span style="color:#d32f2f;font-weight:600">{af_txt}</span>'
     rows.append({
         "Assessora": title_case(a),
         "Loja": ASSESSOR_LOJA.get(a, "—"),
         "Faturadas": fmt_money(fat),
         "Digitais": fmt_money(dig),
         "Total": fmt_money(tot),
+        "A Faturar": af_txt,
     })
 detail_df = pd.DataFrame(rows)
 st.markdown(render_table(detail_df), unsafe_allow_html=True)
@@ -325,7 +366,8 @@ def esc_money(v: float) -> str:
 
 st.markdown(
     f"**Total do mês:** {esc_money(total_geral)}  ·  "
-    f"Faturadas: {esc_money(total_fat)}  ·  Digitais: {esc_money(total_dig)}"
+    f"Faturadas: {esc_money(total_fat)}  ·  Digitais: {esc_money(total_dig)}  ·  "
+    f"A faturar: {esc_money(sum(a_faturar.values()))}"
 )
 
 st.markdown('<div class="fab-section-title">Detalhamento linha a linha</div>', unsafe_allow_html=True)

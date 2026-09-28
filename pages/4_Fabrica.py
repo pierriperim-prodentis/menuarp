@@ -39,24 +39,10 @@ def title_case(s: str) -> str:
     return " ".join(w.capitalize() for w in s.split())
 
 
-JSONBIN_BIN_ID = "6a91c5cff5f4af5e294ebcf0"
-JSONBIN_MASTER_KEY = "$2a$10$kDShjgaHn/S8k124l8ehU.lw9To/Dt0VHer/KXhF6XMT2CvljlxKm"
-
-
 @st.cache_data(ttl=60)
 def load_data():
-    import requests
-    try:
-        res = requests.get(
-            f"https://api.jsonbin.io/v3/b/{JSONBIN_BIN_ID}/latest",
-            headers={"X-Master-Key": JSONBIN_MASTER_KEY},
-            timeout=10,
-        )
-        res.raise_for_status()
-        return res.json()["record"]
-    except Exception:
-        with open(DATA_PATH, encoding="utf-8") as f:
-            return json.load(f)
+    with open(DATA_PATH, encoding="utf-8") as f:
+        return json.load(f)
 
 
 def fmt_money(v: float) -> str:
@@ -71,7 +57,10 @@ def render_table(df: pd.DataFrame) -> str:
     rows_html = ""
     for _, row in df.iterrows():
         cells = "".join(f"<td>{row[col]}</td>" for col in df.columns)
-        rows_html += f"<tr>{cells}</tr>"
+        # Linha inteira em vermelho quando o rastreio indica "Não Faturado"
+        is_red = str(row.get("Rastreio", "")).strip().lower().startswith("não faturado")
+        row_class = ' class="fab-row-red"' if is_red else ""
+        rows_html += f"<tr{row_class}>{cells}</tr>"
     return f"""
     <div class="fab-table-wrap">
         <table class="fab-table">
@@ -208,6 +197,10 @@ st.markdown(
         }}
         .fab-table tr:nth-child(even) td {{
             background: #faf7fd;
+        }}
+        .fab-table tr.fab-row-red td {{
+            color: #d32f2f !important;
+            font-weight: 600;
         }}
 
         /* ── CELULAR ─────────────────────────────────────── */

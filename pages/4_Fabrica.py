@@ -272,6 +272,7 @@ st.markdown(
 DATA = ajustar_a_faturar(load_data())
 
 month_totals = []
+month_store_totals = []  # um dict {PMW, SLZ, ITZ} por mês, na ordem de MONTH_LABELS
 store_totals = {"PMW": 0.0, "SLZ": 0.0, "ITZ": 0.0}
 grand_total = 0.0
 
@@ -280,12 +281,15 @@ for label in MONTH_LABELS:
     totals = entry.get("totals_by_assessora", {})
     m_total = sum(split_value(v)[2] for v in totals.values())
     month_totals.append(m_total)
+    m_store = {"PMW": 0.0, "SLZ": 0.0, "ITZ": 0.0}
     for a, v in totals.items():
         loja = ASSESSOR_LOJA.get(a)
         subtotal = split_value(v)[2]
         if loja:
             store_totals[loja] += subtotal
+            m_store[loja] += subtotal
         grand_total += subtotal
+    month_store_totals.append(m_store)
 
 st.markdown(
     """
@@ -309,21 +313,47 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.markdown('<div class="fab-section-title">Total por mês</div>', unsafe_allow_html=True)
-chart_df = pd.DataFrame({"Mês": MONTH_SHORT, "Total": month_totals})
+st.markdown('<div class="fab-section-title">Total por mês, por loja</div>', unsafe_allow_html=True)
+STORE_COLORS = {"PMW": PURPLE_DARK, "SLZ": PURPLE, "ITZ": "#c9a8e8"}
+stacked_rows = []
+for i, label in enumerate(MONTH_SHORT):
+    for loja, cor in STORE_COLORS.items():
+        stacked_rows.append({"Mês": label, "Loja": loja, "Valor": month_store_totals[i][loja]})
+stacked_df = pd.DataFrame(stacked_rows)
 chart = (
-    alt.Chart(chart_df)
-    .mark_bar(color=PURPLE, cornerRadiusTopLeft=4, cornerRadiusTopRight=4)
+    alt.Chart(stacked_df)
+    .mark_bar(cornerRadiusTopLeft=3, cornerRadiusTopRight=3)
     .encode(
         x=alt.X("Mês:N", sort=MONTH_SHORT, title=None),
-        y=alt.Y("Total:Q", title=None),
-        tooltip=[alt.Tooltip("Mês:N"), alt.Tooltip("Total:Q", format=",.2f")],
+        y=alt.Y("Valor:Q", title=None, stack="zero"),
+        color=alt.Color(
+            "Loja:N",
+            scale=alt.Scale(domain=list(STORE_COLORS.keys()), range=list(STORE_COLORS.values())),
+            legend=alt.Legend(title=None, orient="top"),
+        ),
+        order=alt.Order("Loja:N"),
+        tooltip=[alt.Tooltip("Mês:N"), alt.Tooltip("Loja:N"), alt.Tooltip("Valor:Q", format=",.2f")],
     )
-    .properties(height=300, background=BG)
+    .properties(height=320, background=BG)
     .configure_axis(labelColor="#2c2440", gridColor="#e8def2")
     .configure_view(strokeWidth=0)
+    .configure_legend(labelColor="#2c2440", titleColor="#2c2440")
 )
 st.altair_chart(chart, use_container_width=True)
+
+st.markdown('<div class="fab-section-title">Detalhamento por loja</div>', unsafe_allow_html=True)
+table_rows = []
+for i, label in enumerate(MONTH_SHORT):
+    m_total = month_totals[i]
+    row = {"Mês": label}
+    for loja in ("PMW", "SLZ", "ITZ"):
+        v = month_store_totals[i][loja]
+        pct = f" ({v / m_total * 100:.0f}%)" if m_total else ""
+        row[loja] = fmt_money(v) + pct
+    row["Total"] = fmt_money(m_total)
+    table_rows.append(row)
+table_df = pd.DataFrame(table_rows)
+st.markdown(render_table(table_df), unsafe_allow_html=True)
 
 st.markdown('<div class="fab-section-title">Detalhe por assessora</div>', unsafe_allow_html=True)
 months_with_data = [MONTH_LABELS[i] for i, t in enumerate(month_totals) if t > 0] or [MONTH_LABELS[0]]
@@ -385,7 +415,7 @@ if details:
     if "Rastreio" not in det_df.columns:
         det_df["Rastreio"] = ""
     det_df["Rastreio"] = det_df["Rastreio"].fillna("")
-    det_df["Tipo"] = det_df["Tipo"].map({"faturada": "Faturada", "digital": "Digital"}).fillna(det_df["Tipo"])
+    det_df["Tipo"] = det_df["Tipo"].map({"faturada": "Direta", "digital": "Digital"}).fillna(det_df["Tipo"])
 
     assessoras_no_mes = sorted(det_df["Assessora"].dropna().unique().tolist())
     escolha = st.selectbox("Assessora", ["Todas"] + assessoras_no_mes)

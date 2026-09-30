@@ -2646,9 +2646,9 @@
   "SETEMBRO 2026": {
     "totals_by_assessora": {
       "made": {
-        "faturadas": 74791.66,
+        "faturadas": 93948.94,
         "digitais": 0.0,
-        "total": 74791.66
+        "total": 93948.94
       },
       "luana": {
         "faturadas": 268.0,
@@ -2656,9 +2656,9 @@
         "total": 268.0
       },
       "diego": {
-        "faturadas": 324023.56,
+        "faturadas": 294544.58,
         "digitais": 78300.0,
-        "total": 402323.56
+        "total": 372844.58
       },
       "francely": {
         "faturadas": 7008.71,
@@ -2671,14 +2671,14 @@
         "total": 2552.01
       },
       "bruna": {
-        "faturadas": 32078.06,
+        "faturadas": 34288.31,
         "digitais": 15629.71,
-        "total": 47707.77
+        "total": 49918.02
       },
       "jarlene": {
-        "faturadas": 357.5,
+        "faturadas": 538.25,
         "digitais": 0.0,
-        "total": 357.5
+        "total": 538.25
       }
     },
     "details": [
@@ -2839,7 +2839,7 @@
         "assessora": "Diego",
         "cliente": "Zigoma Action LTDA",
         "data": "2026-09-23",
-        "valor": 82785.4,
+        "valor": 53350.4,
         "instituicao": "Cliente Convencional",
         "rastreio": "Não Faturado - Aguardando",
         "tipo": "faturada"
@@ -2850,16 +2850,16 @@
         "data": "2026-09-23",
         "valor": 6238.2,
         "instituicao": "Cliente Convencional",
-        "rastreio": "Não Faturado - Aguardando",
+        "rastreio": "NF: 110534",
         "tipo": "faturada"
       },
       {
         "assessora": "Diego",
         "cliente": "Patricia Cristina do Rego Lima",
         "data": "2026-09-24",
-        "valor": 12717.37,
+        "valor": 12673.39,
         "instituicao": "IOA São Luis",
-        "rastreio": "NF: 550585",
+        "rastreio": "DA617777807BR",
         "tipo": "faturada"
       },
       {
@@ -2869,6 +2869,42 @@
         "valor": 357.5,
         "instituicao": "Cliente Convencional",
         "rastreio": "DA963105554BR",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Bruna",
+        "cliente": "Henrique Rezende",
+        "data": "2026-09-29",
+        "valor": 2210.25,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "Não Faturado - Aguardando",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Jarlene",
+        "cliente": "Suzany Nascimento Costa",
+        "data": "",
+        "valor": 180.75,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "NF: 188227",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "J P M de Oliveira Ltda",
+        "data": "2026-09-25",
+        "valor": 7008.78,
+        "instituicao": "Cliente Convencional",
+        "rastreio": "NF: 487293",
+        "tipo": "faturada"
+      },
+      {
+        "assessora": "Madê",
+        "cliente": "Witor Jacinto de Melo",
+        "data": "2026-09-30",
+        "valor": 12148.5,
+        "instituicao": "Curso ILA - PA",
+        "rastreio": "Não Faturado - Aguardando",
         "tipo": "faturada"
       }
     ]

@@ -417,6 +417,10 @@ if details:
     det_df["Rastreio"] = det_df["Rastreio"].fillna("")
     det_df["Tipo"] = det_df["Tipo"].map({"faturada": "Direta", "digital": "Digital"}).fillna(det_df["Tipo"])
 
+    # Ordena por data (lançamentos sem data vão para o final)
+    det_df["_data_ord"] = det_df["Data"].replace("", "9999-99-99")
+    det_df = det_df.sort_values("_data_ord").drop(columns="_data_ord")
+
     assessoras_no_mes = sorted(det_df["Assessora"].dropna().unique().tolist())
     escolha = st.selectbox("Assessora", ["Todas"] + assessoras_no_mes)
     if escolha != "Todas":

@@ -41,4 +41,4 @@ auto_resize = """
 """
 html_content = html_content.replace("</body>", auto_resize + "</body>")
 
-st.components.v1.html(html_content, height=2500, scrolling=False)
+st.components.v1.html(html_content, height=2200, scrolling=False)

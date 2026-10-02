@@ -356,7 +356,10 @@ table_df = pd.DataFrame(table_rows)
 st.markdown(render_table(table_df), unsafe_allow_html=True)
 
 st.markdown('<div class="fab-section-title">Detalhe por assessora</div>', unsafe_allow_html=True)
-months_with_data = [MONTH_LABELS[i] for i, t in enumerate(month_totals) if t > 0] or [MONTH_LABELS[0]]
+months_with_data = [
+    label for label in MONTH_LABELS
+    if DATA.get(label, {}).get("details") or DATA.get(label, {}).get("totals_by_assessora")
+] or [MONTH_LABELS[0]]
 sel_label = st.selectbox("Mês", months_with_data, index=len(months_with_data) - 1)
 
 entry = DATA.get(sel_label, {})

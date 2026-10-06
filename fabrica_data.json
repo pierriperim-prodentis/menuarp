@@ -2921,9 +2921,9 @@
   "OUTUBRO 2026": {
     "totals_by_assessora": {
       "bruna": {
-        "faturadas": 889.0,
+        "faturadas": 331.0,
         "digitais": 0.0,
-        "total": 889.0
+        "total": 331.0
       },
       "made": {
         "faturadas": 28138.94,
@@ -2932,15 +2932,6 @@
       }
     },
     "details": [
-      {
-        "assessora": "Bruna",
-        "cliente": "Lucas Cajado",
-        "data": "2026-09-24",
-        "valor": 558.0,
-        "instituicao": "Cliente Convencional",
-        "rastreio": "Não Faturado - Aguardando",
-        "tipo": "faturada"
-      },
       {
         "assessora": "Bruna",
         "cliente": "Rafael Prado",

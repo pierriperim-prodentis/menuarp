@@ -295,7 +295,7 @@ st.markdown(
     """
     <div class="fab-header">
         <h1>🏭 Painel de Vendas de Fábrica</h1>
-        <p>Pródentis / ARP — Fábrica 2026</p>
+        <p>Pródentis / ARP — Fábrica</p>
     </div>
     """,
     unsafe_allow_html=True,

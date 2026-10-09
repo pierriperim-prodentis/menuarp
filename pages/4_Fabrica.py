@@ -343,8 +343,29 @@ def _css_pills(key: str, radius: str, pad: str, size: str, weight: str) -> str:
     )
 
 
+
+LIGHT_WIDGETS_CSS = """
+[data-testid="stExpander"] { background: #fff !important; border: 1px solid #e0d6ee !important; border-radius: 10px !important; }
+[data-testid="stExpander"] details, [data-testid="stExpander"] summary { background: #fff !important; color: #2c2440 !important; border-radius: 10px; }
+[data-testid="stExpander"] summary *, [data-testid="stExpander"] summary p { color: #2c2440 !important; fill: #7c4dbd !important; }
+[data-testid="stSelectbox"] [data-baseweb="select"] > div { background: #fff !important; border: 1px solid #e0d6ee !important; border-radius: 8px !important; }
+[data-testid="stSelectbox"] [data-baseweb="select"] * { color: #2c2440 !important; }
+[data-testid="stSelectbox"] [data-baseweb="select"] svg { fill: #7c4dbd !important; }
+[data-testid="stSelectbox"] [role="group"] { background: #fff !important; border: 1px solid #e0d6ee !important; border-radius: 8px !important; }
+[data-testid="stSelectbox"] input { background: transparent !important; color: #2c2440 !important; -webkit-text-fill-color: #2c2440 !important; }
+[data-testid="stSelectbox"] button, [data-testid="stSelectbox"] button svg { color: #7c4dbd !important; fill: #7c4dbd !important; }
+[role="listbox"], [role="listbox"] [role="option"] { background: #fff !important; color: #2c2440 !important; }
+[role="listbox"] [role="option"] * { color: #2c2440 !important; }
+[role="listbox"] [role="option"]:hover, [role="listbox"] [role="option"][data-focused="true"] { background: #f3ecfa !important; }
+[data-baseweb="popover"] ul, [data-baseweb="popover"] [role="listbox"], [data-baseweb="popover"] [role="option"] { background: #fff !important; color: #2c2440 !important; }
+[data-baseweb="popover"] [role="option"] *, [data-baseweb="popover"] li * { color: #2c2440 !important; }
+[data-baseweb="popover"] [role="option"]:hover, [data-baseweb="popover"] li:hover { background: #f3ecfa !important; }
+"""
+
+
 st.markdown(
     "<style>"
+    + LIGHT_WIDGETS_CSS
     + _css_pills("periodo", "999px", "8px 16px", "13px", "600")
     + _css_pills("lanc_status", "999px", "8px 16px", "13px", "600")
     + _css_pills("visao", "10px", "9px 22px", "14px", "700")

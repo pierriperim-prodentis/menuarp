@@ -7,4 +7,4 @@ html_path = os.path.join(os.path.dirname(__file__), "..", "relatorio.html")
 with open(html_path, "r", encoding="utf-8") as f:
     html_content = f.read()
 
-st.components.v1.html(html_content, height=5200, scrolling=False)
+st.components.v1.html(html_content, height=3000, scrolling=False)

@@ -81,12 +81,17 @@ def fmt_money(v: float) -> str:
     return f"R$ {s}"
 
 
+WRAP_COLS = {"Cliente", "Instituição", "Rastreio"}
+
+
 def render_table(df: pd.DataFrame) -> str:
     """Monta uma tabela HTML clara, no mesmo estilo roxo/branco do painel."""
     header_html = "".join(f"<th>{col}</th>" for col in df.columns)
     rows_html = ""
     for _, row in df.iterrows():
-        cells = "".join(f"<td>{row[col]}</td>" for col in df.columns)
+        cells = "".join(
+            f'<td class="{"wrap" if col in WRAP_COLS else ""}">{row[col]}</td>' for col in df.columns
+        )
         # Linha inteira em vermelho quando o rastreio indica "Não Faturado"
         is_red = str(row.get("Rastreio", "")).strip().lower().startswith("não faturado")
         row_class = ' class="fab-row-red"' if is_red else ""
@@ -212,15 +217,21 @@ st.markdown(
             background: {PURPLE};
             color: white;
             text-align: left;
-            padding: 10px 14px;
+            padding: 10px 10px;
             font-weight: 600;
             white-space: nowrap;
         }}
         .fab-table td {{
-            padding: 9px 14px;
+            padding: 9px 10px;
             border-bottom: 1px solid #f0e9f8;
             color: #2c2440;
             white-space: nowrap;
+        }}
+        .fab-table td.wrap {{
+            white-space: normal;
+            min-width: 120px;
+            max-width: 260px;
+            word-break: break-word;
         }}
         .fab-table tr:last-child td {{
             border-bottom: none;
